@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Contracts;
-internal class iBoard
+internal class IBoard
 {
 }

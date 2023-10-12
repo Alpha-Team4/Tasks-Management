@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Contracts;
-internal class iComment
+public interface IComment
 {
+    string Content { get; }
+
+    string Author { get; }
 }
