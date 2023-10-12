@@ -5,6 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Contracts;
-internal class ITeam
+public interface ITeam
 {
+    string Name { get; }
+
+    IList<IMember> Members { get; }
+
+    IList<IBoard> Borders { get; }
+
 }

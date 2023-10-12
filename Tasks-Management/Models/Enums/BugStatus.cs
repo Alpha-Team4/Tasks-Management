@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-internal class BugStatus
+public enum BugStatus
 {
+    Active,
+    Fixed
 }

@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-internal class BugSeverity
+public enum BugSeverity
 {
+    Critical,
+    Major,
+    Minor
 }

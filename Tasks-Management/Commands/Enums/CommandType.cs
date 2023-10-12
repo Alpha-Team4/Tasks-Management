@@ -1,4 +1,34 @@
 ﻿namespace TasksManagement.Commands.Enums;
-internal class CommandType
+public enum CommandType
 {
+    AddMemberToTeam,
+    AssignTaskToMember,
+    CreateMember,
+    ShowAllMembers,
+    ShowMemberActivity,
+    UnassignTaskToMember,
+    AddComment,
+    ChangeBugPriority,
+    ChangeBugSeverity,
+    ChangeBugStatus,
+    ChangeFeedbackRating,
+    ChangeFeedbackStatus,
+    ChangeStoryPriority,
+    ChangeStorySize,
+    ChangeStoryStatus,
+    CreateBug,
+    CreateFeedback,
+    CreateStory,
+    ListAllTasks,
+    ListBugs,
+    ListFeedback,
+    ListStories,
+    ListTasksWithAssignee,
+    CreateNewBoard,
+    CreateTeam,
+    ShowAllTeamBoards,
+    ShowAllTeamMembers,
+    ShowAllTeams,
+    ShowBoardActivity,
+    ShowTeamsActivity
 }
