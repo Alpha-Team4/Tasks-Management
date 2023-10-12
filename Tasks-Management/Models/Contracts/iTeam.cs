@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tasks_Management.Models.Contracts;
+namespace TasksManagement.Models.Contracts;
 internal class iTeam
 {
 }
