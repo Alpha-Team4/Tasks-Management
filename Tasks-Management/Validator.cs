@@ -2,7 +2,6 @@
 using TasksManagement.Exceptions;
 
 namespace TasksManagement;
-
 public static class Validator
 {
     public static void ValidateIntRange(int value, int min, int max, string message)
@@ -34,6 +33,14 @@ public static class Validator
         var regex = new Regex(pattern, RegexOptions.IgnoreCase);
 
         if (!regex.IsMatch(value))
+        {
+            throw new InvalidUserInputException(message);
+        }
+    }
+
+    public static void ValidateNotNull(object value, string message)
+    {
+        if (value == null)
         {
             throw new InvalidUserInputException(message);
         }
