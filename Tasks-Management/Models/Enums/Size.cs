@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-public enum StorySize
+public enum Size
 {
     Large,
     Medium,
