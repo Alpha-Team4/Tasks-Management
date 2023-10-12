@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TasksManagement.Models.Contracts;
-internal class ITask
+﻿namespace TasksManagement.Models.Contracts;
+public interface ITask
 {
+    public int Id { get; }
+
+    public string Title { get; }
+
+    public string Description { get; }
+
+    public string AddComment(IComment comment);
+
+    public string DeleteComment(IComment comment);
+
+    public string ShowAllComments();
+
+    public string ShowAllEvents();
 }
