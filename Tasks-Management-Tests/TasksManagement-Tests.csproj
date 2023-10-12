@@ -24,4 +24,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Tasks-Management\TasksManagement.csproj" />
+  </ItemGroup>
+
 </Project>
