@@ -1,4 +1,7 @@
 ﻿namespace TasksManagement.Models.Contracts;
-internal class IHasTasks
+public interface IHasTasks
 {
+    public IList<ITask> Tasks { get; }
+
+    public void AddTask(ITask task);
 }
