@@ -5,5 +5,5 @@ public interface IFeedback
 {
     public int Rating { get; set; }
 
-    public FeedbackStatus Status { get; set; }
+    public StatusFeedback Status { get; set; }
 }

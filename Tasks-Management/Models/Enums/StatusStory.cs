@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-public enum BugSeverity
+public enum StatusStory
 {
-    Critical,
-    Major,
-    Minor
+    NotDone,
+    InProgress,
+    Done
 }

@@ -8,7 +8,7 @@ public interface IStory : ITask
 
     public Size Size { get; set; }
 
-    public StoryStatus Status { get; set; }
+    public StatusStory Status { get; set; }
 
     public IMember Assignee { get; set; }
 }

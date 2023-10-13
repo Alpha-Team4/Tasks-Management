@@ -11,8 +11,8 @@ public class Bug : Task, IBug
     private const string AssigneeChangedMessage = "Assignee changed from '{0}' to '{1}'";
 
     private Priority priority;
-    private BugSeverity severity;
-    private BugStatus status;
+    private Severity severity;
+    private StatusBug status;
     private IMember assignee;
     private readonly IList<string> reproductionSteps = new List<string>();
 
@@ -22,8 +22,8 @@ public class Bug : Task, IBug
         this.assignee = assignee;
 
         priority = Priority.Low;
-        severity = BugSeverity.Minor;
-        status = BugStatus.Active;
+        severity = Severity.Minor;
+        status = StatusBug.Active;
     }
     
     public Priority Priority
@@ -38,7 +38,7 @@ public class Bug : Task, IBug
         }
     }
 
-    public BugSeverity Severity
+    public Severity Severity
     {
         get => severity;
         set
@@ -50,7 +50,7 @@ public class Bug : Task, IBug
         }
     }
 
-    public BugStatus Status
+    public StatusBug Status
     {
         get => status;
         set

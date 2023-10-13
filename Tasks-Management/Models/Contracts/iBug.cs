@@ -6,9 +6,9 @@ public interface IBug : ITask
 {
     public Priority Priority { get; set; }
 
-    public BugSeverity Severity { get; set; }
+    public Severity Severity { get; set; }
 
-    public BugStatus Status { get; set; }
+    public StatusBug Status { get; set; }
 
     public IMember Assignee { get; set; }
 

@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-public enum BugStatus
+public enum StatusFeedback
 {
-    Active,
-    Fixed
+    New,
+    Unscheduled, 
+    Scheduled,
+    Done
 }

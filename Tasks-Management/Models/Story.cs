@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TasksManagement.Commands.Enums;
+﻿using TasksManagement.Commands.Enums;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
@@ -17,7 +12,7 @@ internal class Story : Task, IStory
 
     private Priority priority;
     private Size size;
-    private StoryStatus status;
+    private StatusStory status;
     private IMember assignee;
 
     public Story(string title, string description, IMember assignee)
@@ -27,7 +22,7 @@ internal class Story : Task, IStory
 
         priority = Priority.Low;
         size = Size.Small;
-        status = StoryStatus.NotDone;
+        status = StatusStory.NotDone;
     }
 
     public Priority Priority
@@ -54,7 +49,7 @@ internal class Story : Task, IStory
         }
     }
 
-    public StoryStatus Status
+    public StatusStory Status
     {
         get => status;
         set

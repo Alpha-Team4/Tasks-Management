@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-public enum FeedbackStatus
+public enum Severity
 {
-    New,
-    Unscheduled, 
-    Scheduled,
-    Done
+    Critical,
+    Major,
+    Minor
 }

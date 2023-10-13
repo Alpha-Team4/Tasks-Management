@@ -1,5 +1,4 @@
-﻿using System.Text;
-using TasksManagement.Models.Contracts;
+﻿using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
 public class Event : IEvent

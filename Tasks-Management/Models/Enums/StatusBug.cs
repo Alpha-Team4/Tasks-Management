@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TasksManagement.Models.Enums;
-public enum StoryStatus
+public enum StatusBug
 {
-    NotDone,
-    InProgress,
-    Done
+    Active,
+    Fixed
 }

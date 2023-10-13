@@ -12,7 +12,7 @@ internal class Feedback : Task, IFeedback
     private const string StatusChangeMessage = "Feedback status changed from {0} to {1}.";
 
     private int rating;
-    private FeedbackStatus status;
+    private StatusFeedback status;
 
     public Feedback(string title, string description, int rating)
         : base(title, description)
@@ -20,7 +20,7 @@ internal class Feedback : Task, IFeedback
         isInitializing = true;
 
         Rating = rating;
-        status = FeedbackStatus.New;
+        status = StatusFeedback.New;
 
         isInitializing = false;
     }
@@ -43,7 +43,7 @@ internal class Feedback : Task, IFeedback
         }
     }
 
-    public FeedbackStatus Status
+    public StatusFeedback Status
     {
         get => status;
         set
