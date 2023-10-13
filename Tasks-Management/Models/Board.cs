@@ -7,7 +7,7 @@ internal class Board : IBoard
 {
     private const int BoardNameMinLength = 5;
     private const int BoardNameMaxLength = 10;
-    private string MemberNameErrorMessage = "Board name must be between {0} and {1} characters.";
+    private string BoardNameErrorMessage = "Board name must be between {0} and {1} characters.";
 
     private string name;
     private IList<IEvent> history = new List<IEvent>();
@@ -23,7 +23,7 @@ internal class Board : IBoard
         private set
         {
             Validator.ValidateStringLength(value, BoardNameMinLength, BoardNameMaxLength,
-                string.Format(MemberNameErrorMessage, BoardNameMinLength, BoardNameMaxLength));
+                string.Format(BoardNameErrorMessage, BoardNameMinLength, BoardNameMaxLength));
             this.name = value;
         }
     }
