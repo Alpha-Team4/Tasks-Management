@@ -1,9 +1,8 @@
 ﻿using TasksManagement.Commands.Contracts;
 
-namespace TasksManagement.Core.Contracts
+namespace TasksManagement.Core.Contracts;
+
+public interface ICommandFactory
 {
-    public interface ICommandFactory
-    {
-        ICommand Create(string commandLine);
-    }
+    ICommand Create(string commandLine);
 }

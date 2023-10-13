@@ -1,7 +1,6 @@
-﻿namespace TasksManagement.Core.Contracts
+﻿namespace TasksManagement.Core.Contracts;
+
+public interface IEngine
 {
-    public interface IEngine
-    {
-        void Start();
-    }
+    void Start();
 }

@@ -1,4 +1,6 @@
-﻿using TasksManagement.Commands.Contracts;
+﻿using TasksManagement.Commands;
+using TasksManagement.Commands.Contracts;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Core.Contracts;
 
 namespace TasksManagement.Core;
@@ -22,7 +24,16 @@ public class CommandFactory : ICommandFactory
 
         switch (commandType)
         {
-            // TODO
+            case CommandType.CreateTeam:
+                return new CreateTeamCommand(commandParameters, repository);
+            case CommandType.CreateBoard:
+                return new CreateBoardCommand(commandParameters, repository);
+            case CommandType.CreateMember:
+                return new CreateMemberCommand(commandParameters, repository);
+            case CommandType.CreateBug:
+                return new CreateBugCommand(commandParameters, repository);
+            default:
+                throw new InvalidOperationException($"Command with name: {commandType} doesn't exist!");
         }
     }
 
