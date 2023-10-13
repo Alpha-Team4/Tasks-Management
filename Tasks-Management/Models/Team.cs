@@ -24,9 +24,14 @@ public class Team : ITeam
     public string Name
     {
         get => this.name;
-        private set =>
+        private set
+        {
             Validator.ValidateStringLength(value,TeamNameMinLength, TeamNameMaxLength, 
                 string.Format(TeamNameErrorMessage, TeamNameMinLength, TeamNameMaxLength));
+
+            name = value;
+        }
+
     }
 
     public IList<IMember> Members
@@ -35,7 +40,7 @@ public class Team : ITeam
 
     }
 
-    public IList<IBoard> Borders
+    public IList<IBoard> Boards
     {
         get => new List<IBoard>(boards);
     }
