@@ -6,5 +6,4 @@ public interface ITeam
     IList<IMember> Members { get; }
 
     IList<IBoard> Borders { get; }
-
 }
