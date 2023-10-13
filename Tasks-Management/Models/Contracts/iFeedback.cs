@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Models.Contracts;
-internal class IFeedback
+public interface IFeedback
 {
+    public int Rating { get; set; }
+
+    public FeedbackStatus Status { get; set; }
 }

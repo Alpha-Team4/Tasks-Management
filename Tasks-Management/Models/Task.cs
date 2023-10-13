@@ -60,7 +60,7 @@ public abstract class Task : ITask
             if (!isInitializing)
             {
                 var changeMessage = string.Format(TitleChangedMessage, title, value);
-                eventsList.Add(new Event(changeMessage));
+                AddEvent(changeMessage);
             }
 
             title = value;
@@ -84,7 +84,7 @@ public abstract class Task : ITask
             if (!isInitializing)
             {
                 var changeMessage = string.Format(DescriptionChangedMessage, description, value);
-                eventsList.Add(new Event(changeMessage));
+                AddEvent(changeMessage);
             }
 
             description = value;
@@ -101,7 +101,7 @@ public abstract class Task : ITask
         comments.Add(comment);
 
         var successMessage = string.Format(CommentAddedSuccessMessage, comment.Content);
-        eventsList.Add(new Event(successMessage));
+        AddEvent(successMessage);
 
         return successMessage;
     }
@@ -116,7 +116,7 @@ public abstract class Task : ITask
         comments.Remove(comment);
 
         var successMessage = string.Format(CommentDeletedSuccessMessage, comment.Content);
-        eventsList.Add(new Event(successMessage));
+        AddEvent(successMessage);
 
         return successMessage;
     }
@@ -131,6 +131,11 @@ public abstract class Task : ITask
         }
 
         return sb.ToString().Trim();
+    }
+
+    protected void AddEvent(string message)
+    {
+        eventsList.Add(new Event(message));
     }
 
     public string ShowAllEvents()
