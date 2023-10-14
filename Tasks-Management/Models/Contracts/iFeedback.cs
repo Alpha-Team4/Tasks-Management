@@ -1,7 +1,7 @@
 ﻿using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Models.Contracts;
-public interface IFeedback
+public interface IFeedback : ITask
 {
     public int Rating { get; set; }
 

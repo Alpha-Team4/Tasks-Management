@@ -72,4 +72,24 @@ internal class Story : Task, IStory
             assignee = value;
         }
     }
+
+    public override string GetCurrentStatus()
+    {
+        return Status.ToString();
+    }
+
+    public override string ToString()
+    {
+        return $"""
+                Story (ID: {Id})
+                  Title: {Title}
+                  Description: {Description}
+                  Status: {status}
+                  Size: {size}
+                  Priority: {priority}
+                  Assignee: {assignee}
+                    Comments:
+                      {ShowAllComments}
+                """;
+    }
 }

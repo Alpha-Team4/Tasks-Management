@@ -1,4 +1,5 @@
-﻿using TasksManagement.Models.Contracts;
+﻿using TasksManagement.Commands.Enums;
+using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Models;
@@ -53,5 +54,23 @@ internal class Feedback : Task, IFeedback
 
             status = value;
         }
+    }
+
+    public override string GetCurrentStatus()
+    {
+        return Status.ToString();
+    }
+
+    public override string ToString()
+    {
+        return $"""
+                Feedback (ID: {Id})
+                  Title: {Title}
+                  Description: {Description}
+                  Status: {status}
+                  Rating: {rating}
+                    Comments:
+                      {ShowAllComments}
+                """;
     }
 }

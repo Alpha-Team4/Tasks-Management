@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
 
@@ -148,5 +149,17 @@ public abstract class Task : ITask
         }
 
         return sb.ToString().Trim();
+    }
+
+    public abstract string GetCurrentStatus();
+
+    public override string ToString()
+    {
+        return $"""
+                {GetType().Name} (ID: #{Id})
+                  Title: {Title}
+                  Description: {Description}
+                  Status: {GetCurrentStatus()}
+                """;
     }
 }

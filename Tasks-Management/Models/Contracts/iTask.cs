@@ -14,4 +14,6 @@ public interface ITask
     public string ShowAllComments();
 
     public string ShowAllEvents();
+
+    public string GetCurrentStatus();
 }

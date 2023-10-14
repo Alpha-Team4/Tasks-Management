@@ -75,4 +75,25 @@ public class Bug : Task, IBug
     }
 
     public IList<string> ReproductionSteps => reproductionSteps;
+
+    public override string GetCurrentStatus()
+    {
+        return Status.ToString();
+    }
+
+    public override string ToString()
+    {
+        return $"""
+                Bug (ID: {Id})
+                  Title: {Title}
+                  Description: {Description}
+                  Status: {status}
+                  Reproduction Steps: {reproductionSteps}
+                  Priority: {priority}
+                  Severity: {severity}
+                  Assignee: {assignee}
+                    Comments:
+                      {ShowAllComments}
+                """;
+    }
 }
