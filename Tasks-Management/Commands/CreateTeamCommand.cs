@@ -20,6 +20,7 @@ public class CreateTeamCommand : BaseCommand
         }
 
         var teamName = CommandParameters[0];
+
         Repository.CreateTeam(teamName);
 
         return $"Team with name '{teamName}' was created.";

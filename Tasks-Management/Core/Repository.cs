@@ -15,6 +15,13 @@ public class Repository : IRepository
 
     public ITeam CreateTeam(string teamName)
     {
+        var teamNameExists = teams.Any(t => t.Name == teamName);
+
+        if (teamNameExists)
+        {
+            throw new NameAlreadyExistsException($"Team '{teamName} already exists.'");
+        }
+
         var team = new Team(teamName);
         teams.Add(team);
         return team;
@@ -22,9 +29,16 @@ public class Repository : IRepository
 
     public IBoard CreateBoard(string boardName, string teamName)
     {
-        var board = new Board(boardName);
-
         var team = FindTeamByName(teamName);
+
+        var boardNameExists = team.Boards.Any(b => b.Name == boardName);
+
+        if (boardNameExists)
+        {
+            throw new NameAlreadyExistsException($"Board '{boardName}' already exists in '{teamName}'.");
+        }
+
+        var board = new Board(boardName);
         team.AddBoard(board);
 
         return board;
@@ -32,6 +46,13 @@ public class Repository : IRepository
 
     public IMember CreateMember(string memberName)
     {
+        var memberNameExists = members.Any(m => m.Name == memberName);
+
+        if (memberNameExists)
+        {
+            throw new NameAlreadyExistsException($"Member '{memberName}' already exists.");
+        }
+
         var member = new Member(memberName);
         members.Add(member);
 
@@ -40,6 +61,13 @@ public class Repository : IRepository
 
     public IMember CreateMember(string memberName, string teamName)
     {
+        var memberNameExists = members.Any(m => m.Name == memberName);
+
+        if (memberNameExists)
+        {
+            throw new NameAlreadyExistsException($"Member '{memberName}' already exists.");
+        }
+
         var member = new Member(memberName);
         members.Add(member);
 
