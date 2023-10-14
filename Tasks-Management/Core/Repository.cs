@@ -20,6 +20,16 @@ public class Repository : IRepository
         return team;
     }
 
+    public IBoard CreateBoard(string boardName, string teamName)
+    {
+        var board = new Board(boardName);
+
+        var team = FindTeamByName(teamName);
+        team.AddBoard(board);
+
+        return board;
+    }
+
     public IMember CreateMember(string memberName)
     {
         var member = new Member(memberName);
@@ -37,16 +47,6 @@ public class Repository : IRepository
         team.AddMember(member);
         
         return member;
-    }
-
-    public IBoard CreateBoard(string boardName, string teamName)
-    {
-        var board = new Board(boardName);
-
-        var team = FindTeamByName(teamName);
-        team.AddBoard(board);
-
-        return board;
     }
 
     public IBug CreateBug(string title, string description, string teamName, string boardName)

@@ -33,7 +33,7 @@ public class CommandFactory : ICommandFactory
             case CommandType.CreateBug:
                 return new CreateBugCommand(commandParameters, repository);
             default:
-                throw new InvalidOperationException($"Command with name: {commandType} doesn't exist!");
+                throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");
         }
     }
 
@@ -48,7 +48,7 @@ public class CommandFactory : ICommandFactory
             return result;
         }
 
-        throw new InvalidOperationException($"Command with name: {value} doesn't exist!");
+        throw new InvalidOperationException($"Command with name '{value}' doesn't exist!");
     }
 
     // Receives a full line and extracts the parameters that are needed for the command to execute.
