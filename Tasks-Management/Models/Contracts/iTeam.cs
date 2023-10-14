@@ -5,5 +5,9 @@ public interface ITeam
 
     IList<IMember> Members { get; }
 
-    IList<IBoard> Borders { get; }
+    IList<IBoard> Boards { get; }
+
+    public void AddMember(IMember member);
+
+    public void AddBoard(IBoard board);
 }

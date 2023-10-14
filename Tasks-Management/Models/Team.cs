@@ -13,8 +13,8 @@ public class Team : ITeam
     private const string TeamNameErrorMessage = "Team name must be between {0} and {1} characters.";
 
     private string name;
-    private readonly IList<IMember> members = new List<IMember>();
     private readonly IList<IBoard> boards = new List<IBoard>();
+    private readonly IList<IMember> members = new List<IMember>();
 
     public Team(string name)
     {

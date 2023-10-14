@@ -5,13 +5,14 @@ namespace TasksManagement.Core.Contracts;
 
 public interface IRepository
 {
-    public List<ITask> Tasks { get; }
     public List<ITeam> Teams { get; }
+    public List<IMember> Members { get; }
 
-    IBug CreateBug(string title, string description, IMember assignee);
+    IBug CreateBug(string title, string description, string team, string board);
     ITeam CreateTeam(string name);
-    IBoard CreateBoard(string name, ITeam team);
-    IMember CreateMember(string name, ITeam team);
+    IBoard CreateBoard(string name, string teamName);
+    IMember CreateMember(string memberName);
+    IMember CreateMember(string memberName, string teamName);
     IMember FindMemberByName(string member);
     ITeam FindTeamByName(string team);
 }

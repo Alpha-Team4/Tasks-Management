@@ -21,10 +21,9 @@ public class CreateBoardCommand : BaseCommand
 
         var boardName = CommandParameters[0];
         var teamName = CommandParameters[1];
-        var team = Repository.FindTeamByName(teamName);
 
-        var board = Repository.CreateBoard(boardName, team);
-        team.AddBoard(board);
-        return $"Board '{boardName}' was created for team '{team.Name}'.";
+        Repository.CreateBoard(boardName, teamName);
+
+        return $"Board '{boardName}' was created for team '{teamName}'.";
     }
 }

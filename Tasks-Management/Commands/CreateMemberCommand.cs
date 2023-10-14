@@ -5,7 +5,8 @@ using TasksManagement.Exceptions;
 namespace TasksManagement.Commands;
 public class CreateMemberCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 2;
+    public const int MinExpectedNumberOfArguments = 1;
+    public const int MaxExpectedNumberOfArguments = 2;
 
     public CreateMemberCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -14,17 +15,24 @@ public class CreateMemberCommand : BaseCommand
 
     public override string Execute()
     {
-        if (this.CommandParameters.Count < ExpectedNumberOfArguments)
+        if (this.CommandParameters.Count < MinExpectedNumberOfArguments || CommandParameters.Count > MaxExpectedNumberOfArguments)
         {
-            throw new InvalidUserInputException($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments}, Received: {this.CommandParameters.Count}");
+            throw new InvalidUserInputException
+                ($"Invalid number of arguments. Expected: {MinExpectedNumberOfArguments} - {MaxExpectedNumberOfArguments}" +
+                $", Received: {CommandParameters.Count}");
+        }
+        
+        var memberName = CommandParameters[0];
+
+        if (CommandParameters.Count == MinExpectedNumberOfArguments)
+        {
+            Repository.CreateMember(memberName);
+            return $"Member '{memberName}' was created.";
         }
 
-        var memberName = CommandParameters[0];
         var teamName = CommandParameters[1];
-        var team = Repository.FindTeamByName(teamName);
+        Repository.CreateMember(memberName, teamName);
 
-        var member = Repository.CreateMember(memberName, team);
-        team.AddMember(member);
-        return $"Member '{memberName}' was created in team '{team.Name}'.";
+        return $"Member '{memberName}' was created in team '{teamName}'.";
     }
 }

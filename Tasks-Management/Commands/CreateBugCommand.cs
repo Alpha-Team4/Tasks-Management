@@ -6,7 +6,7 @@ using TasksManagement.Models.Contracts;
 namespace TasksManagement.Commands;
 public class CreateBugCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 3;
+    public const int ExpectedNumberOfArguments = 4;
 
     public CreateBugCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -22,9 +22,10 @@ public class CreateBugCommand : BaseCommand
 
         var title = CommandParameters[0];
         var description = CommandParameters[1];
-        IMember assignee = Repository.FindMemberByName(CommandParameters[2]);
+        var teamName = CommandParameters[2];
+        var boardName = CommandParameters[3];
 
-        var bug = Repository.CreateBug(title, description, assignee);
+        var bug = Repository.CreateBug(title, description, teamName, boardName);
         return $"Bug with ID '{bug.Id}' was created.";
     }
 }

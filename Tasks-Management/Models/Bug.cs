@@ -16,14 +16,14 @@ public class Bug : Task, IBug
     private IMember assignee;
     private readonly IList<string> reproductionSteps = new List<string>();
 
-    public Bug(string title, string description, IMember assignee)
+    public Bug(string title, string description, IBoard board)
             : base(title, description)
     {
-        this.assignee = assignee;
-
         priority = Priority.Low;
         severity = Severity.Minor;
         status = StatusBug.Active;
+
+        board.Tasks.Add(this);
     }
     
     public Priority Priority

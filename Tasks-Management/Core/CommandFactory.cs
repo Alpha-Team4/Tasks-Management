@@ -41,8 +41,14 @@ public class CommandFactory : ICommandFactory
     // If successful, returns the command enum value, otherwise returns null
     private CommandType ParseCommandType(string value)
     {
-        Enum.TryParse(value, true, out CommandType result);
-        return result;
+        var parseSuccess = Enum.TryParse(value, true, out CommandType result);
+
+        if (parseSuccess)
+        {
+            return result;
+        }
+
+        throw new InvalidOperationException($"Command with name: {value} doesn't exist!");
     }
 
     // Receives a full line and extracts the parameters that are needed for the command to execute.
