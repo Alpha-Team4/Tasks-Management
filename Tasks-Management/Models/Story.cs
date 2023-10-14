@@ -82,14 +82,14 @@ internal class Story : Task, IStory
     {
         return $"""
                 Story (ID: {Id})
-                  Title: {Title}
-                  Description: {Description}
-                  Status: {status}
-                  Size: {size}
-                  Priority: {priority}
-                  Assignee: {assignee}
-                    Comments:
-                      {ShowAllComments}
+                   Title: {Title}
+                   Description: {Description}
+                   Status: {status}
+                   Size: {size}
+                   Priority: {priority}
+                   Assignee: {assignee}
+                     Comments:
+                       {ShowAllComments}
                 """;
     }
 }

@@ -7,8 +7,10 @@ public class Engine : IEngine
 {
     private const string TerminationCommand = "exit";
     private const string EmptyCommandError = "Command cannot be empty.";
+    private const string OperationSeparator = "--------------------";
 
     private const ConsoleColor ConsoleInputColor = ConsoleColor.Gray;
+    private const ConsoleColor ConsoleOutputColor = ConsoleColor.DarkGray;
     private const ConsoleColor ConsoleErrorColor = ConsoleColor.DarkRed;
     private const ConsoleColor ConsoleSuccessColor = ConsoleColor.DarkGreen;
 
@@ -41,37 +43,48 @@ public class Engine : IEngine
                 ICommand command = commandFactory.Create(inputLine);
                 var result = command.Execute();
 
-                Console.ForegroundColor = ConsoleSuccessColor;
-                Console.WriteLine(result.Trim());
-                Console.ForegroundColor = ConsoleInputColor;
+                var commandName = command.GetType().Name; // get command type to determine color output
+
+                // different output color for success / list messages
+                if (commandName.StartsWith("List"))
+                {
+                    PrintColoredLine(result.Trim(), ConsoleOutputColor);
+                }
+                else
+                {
+                    PrintColoredLine(result.Trim(), ConsoleSuccessColor);
+                }
             }
             catch (InvalidUserInputException ex)
             {
-                Console.ForegroundColor = ConsoleErrorColor;
-                Console.WriteLine(ex.Message);
-                Console.ForegroundColor = ConsoleInputColor;
+                PrintColoredLine(ex.Message, ConsoleErrorColor);
             }
             catch (EntityNotFoundException ex)
             {
-                Console.ForegroundColor = ConsoleErrorColor;
-                Console.WriteLine(ex.Message);
-                Console.ForegroundColor = ConsoleInputColor;
+                PrintColoredLine(ex.Message, ConsoleErrorColor);
             }
             catch (Exception ex)
             {
                 if (!string.IsNullOrEmpty(ex.Message))
                 {
-                    Console.ForegroundColor = ConsoleErrorColor;
-                    Console.WriteLine(ex.Message);
-                    Console.ForegroundColor = ConsoleInputColor;
+                    PrintColoredLine(ex.Message, ConsoleErrorColor);
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleErrorColor;
-                    Console.WriteLine(ex);
-                    Console.ForegroundColor = ConsoleInputColor;
+                    PrintColoredLine(ex.Message, ConsoleErrorColor);
                 }
             }
+            finally
+            {
+                PrintColoredLine(OperationSeparator, ConsoleOutputColor);
+            }
         }
+    }
+
+    static void PrintColoredLine(string message, ConsoleColor color)
+    {
+        Console.ForegroundColor = color;
+        Console.WriteLine(message);
+        Console.ForegroundColor = ConsoleColor.Gray;
     }
 }

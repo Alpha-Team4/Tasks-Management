@@ -1,4 +1,5 @@
-﻿using TasksManagement.Commands.Enums;
+﻿using System.Text;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
@@ -81,19 +82,33 @@ public class Bug : Task, IBug
         return Status.ToString();
     }
 
+    private string PrintReproductionSteps()
+    {
+        StringBuilder sb = new();
+
+        var stepIndex = 0;
+
+        foreach (var step in ReproductionSteps)
+        {
+            sb.Append($"{stepIndex}. {step} ");
+        }
+
+        return sb.ToString().TrimEnd();
+    }
+
     public override string ToString()
     {
         return $"""
                 Bug (ID: {Id})
-                  Title: {Title}
-                  Description: {Description}
-                  Status: {status}
-                  Reproduction Steps: {reproductionSteps}
-                  Priority: {priority}
-                  Severity: {severity}
-                  Assignee: {assignee}
-                    Comments:
-                      {ShowAllComments}
+                   Title: {Title}
+                   Description: {Description}
+                   Status: {status}
+                   Reproduction Steps: {PrintReproductionSteps()}
+                   Priority: {priority}
+                   Severity: {severity}
+                   Assignee: {assignee}
+                     Comments:
+                       {ShowAllComments}
                 """;
     }
 }

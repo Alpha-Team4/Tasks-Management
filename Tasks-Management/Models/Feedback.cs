@@ -65,12 +65,12 @@ internal class Feedback : Task, IFeedback
     {
         return $"""
                 Feedback (ID: {Id})
-                  Title: {Title}
-                  Description: {Description}
-                  Status: {status}
-                  Rating: {rating}
-                    Comments:
-                      {ShowAllComments}
+                   Title: {Title}
+                   Description: {Description}
+                   Status: {status}
+                   Rating: {rating}
+                     Comments:
+                       {ShowAllComments}
                 """;
     }
 }

@@ -1,4 +1,5 @@
-﻿using TasksManagement.Commands.Abstracts;
+﻿using System.Windows.Input;
+using TasksManagement.Commands.Abstracts;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 

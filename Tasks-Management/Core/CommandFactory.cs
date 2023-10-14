@@ -17,7 +17,7 @@ public class CommandFactory : ICommandFactory
     public ICommand Create(string commandLine)
     {
         // RemoveEmptyEntries makes sure no empty strings are added to the result of the split operation.
-        string[] arguments = commandLine.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+        var arguments = commandLine.Split(" ", StringSplitOptions.RemoveEmptyEntries);
 
         CommandType commandType = ParseCommandType(arguments[0]);
         List<string> commandParameters = ExtractCommandParameters(arguments);
@@ -32,6 +32,8 @@ public class CommandFactory : ICommandFactory
                 return new CreateMemberCommand(commandParameters, repository);
             case CommandType.CreateBug:
                 return new CreateBugCommand(commandParameters, repository);
+            case CommandType.ListTasks:
+                return new ListTasksCommand(commandParameters, repository);
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");
         }

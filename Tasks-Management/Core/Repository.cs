@@ -83,6 +83,7 @@ public class Repository : IRepository
         var board = FindBoardByName(boardName, team);
 
         var bug = new Bug(title, description, board);
+        board.AddTask(bug);
         return bug;
     }
 
