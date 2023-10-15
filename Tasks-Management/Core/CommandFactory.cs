@@ -36,6 +36,8 @@ public class CommandFactory : ICommandFactory
                 return new CreateStoryCommand(commandParameters, repository);
             case CommandType.ShowTeams:
                 return new ShowTeamsCommand(repository);
+            case CommandType.ShowBoards:
+                return new ShowBoardsCommand(commandParameters, repository);
             case CommandType.ListTasks:
                 return new ListTasksCommand(commandParameters, repository);
             default:
