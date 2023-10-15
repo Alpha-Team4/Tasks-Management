@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
-internal class Board : IBoard
+public class Board : IBoard
 {
     private const int BoardNameMinLength = 5;
     private const int BoardNameMaxLength = 10;
