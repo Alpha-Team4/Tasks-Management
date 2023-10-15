@@ -87,6 +87,16 @@ public class Repository : IRepository
         return bug;
     }
 
+    public IStory CreateStory(string title, string description, string teamName, string boardName)
+    {
+        var team = FindTeamByName(teamName);
+        var board = FindBoardByName(boardName, team);
+
+        var story = new Story(title, description, board);
+        board.AddTask(story);
+        return story;
+    }
+
     public IMember FindMemberByName(string memberName)
     {
         IMember? member = members.SingleOrDefault(member => member.Name == memberName);

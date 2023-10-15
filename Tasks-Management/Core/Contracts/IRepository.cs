@@ -13,6 +13,7 @@ public interface IRepository
     IMember CreateMember(string memberName);
     IMember CreateMember(string memberName, string teamName);
     IBug CreateBug(string title, string description, string team, string board);
+    IStory CreateStory(string title, string description, string team, string board);
     ITeam FindTeamByName(string team);
     IMember FindMemberByName(string member);
 }

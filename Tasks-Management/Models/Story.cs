@@ -15,7 +15,7 @@ internal class Story : Task, IStory
     private StatusStory status;
     private IMember assignee;
 
-    public Story(string title, string description, IMember assignee)
+    public Story(string title, string description, IBoard board)
         : base(title, description)
     {
         this.assignee = assignee;
