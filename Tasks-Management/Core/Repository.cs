@@ -149,16 +149,18 @@ public class Repository : IRepository
         return board;
     }
 
-    public ITask FindTaskByTitle(string taskName) 
+    public ITask FindTaskByTitle(string taskName)
     {
-        foreach(var task in tasks)
+        var foundTask = Teams
+            .SelectMany(team => team.Boards)
+            .SelectMany(board => board.Tasks)
+            .FirstOrDefault(task => task.Title == taskName);
+
+        if (foundTask == null)
         {
-            if (task.Title == taskName)
-            {
-                return task;
-            }
-            
+            throw new EntityNotFoundException($"Task with name '{taskName}' was not found!");
         }
-        throw new EntityNotFoundException($"Task with name '{taskName}' was not found!");
+
+        return foundTask;
     }
 }

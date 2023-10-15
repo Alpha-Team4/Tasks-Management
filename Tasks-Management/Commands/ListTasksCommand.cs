@@ -2,6 +2,7 @@
 using TasksManagement.Commands.Abstracts;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
+using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Commands;
@@ -27,20 +28,11 @@ public class ListTasksCommand : BaseCommand
                 $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }
 
-        //IList<ITask> foundTasks = new List<ITask>();
+        var foundTasks = Repository.Teams
+            .SelectMany(team => team.Boards)
+            .SelectMany(board => board.Tasks);
 
-        //foreach (var team in Repository.Teams)
-        //{
-        //    foreach (var board in team.Boards)
-        //    {
-        //        foreach (var task in board.Tasks)
-        //        {
-        //            foundTasks.Add(task);
-        //        }
-        //    }
-        //}
-
-        if (Repository.Tasks.Count == 0)
+        if (!foundTasks.Any())
         {
             throw new EntityNotFoundException(NoTasksMessage);
         }
