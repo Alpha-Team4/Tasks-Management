@@ -3,7 +3,7 @@ using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Models;
-internal class Feedback : Task, IFeedback
+public class Feedback : Task, IFeedback
 {
     private const int RatingMinValue = 0;
     private const int RatingMaxValue = 5;

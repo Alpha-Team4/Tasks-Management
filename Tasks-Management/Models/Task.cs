@@ -21,7 +21,13 @@ public abstract class Task : ITask
     private const string CommentDeletedErrorMessage = "Comment doesn't exist.";
 
     private const string TitleChangedMessage = "Title changed from '{0}' to '{1}'";
+    private const string TitleSameMessage = "The new title is the same as the current title.";
     private const string DescriptionChangedMessage = "Description changed from '{0}' to '{1}'";
+    private const string DescriptionSameMessage = "The new description is the same as the current description.";
+
+    private const string NoCommentsHeader = "--NO COMMENTS--";
+    private const string CommentsSeparator = "----------";
+    private const string CommentsHeader = "--COMMENTS--;";
 
     private static int lastIssuedId = 0;
     protected bool isInitializing = false;
@@ -51,7 +57,7 @@ public abstract class Task : ITask
         {
             if (title == value)
             {
-                return;
+                throw new InvalidUserInputException(TitleSameMessage);
             }
 
             var errorMessage = string.Format(TitleLengthErrorMessage, TitleMinLength, TitleMaxLength);
@@ -75,7 +81,7 @@ public abstract class Task : ITask
         {
             if (description == value)
             {
-                return;
+                throw new InvalidUserInputException(DescriptionSameMessage);
             }
 
             var errorMessage = string.Format(DescriptionLengthErrorMessage, DescriptionMinLength, DescriptionMaxLength);
@@ -124,12 +130,23 @@ public abstract class Task : ITask
 
     public string ShowAllComments()
     {
+        if (!comments.Any())
+        {
+            return NoCommentsHeader;
+        }
+
         StringBuilder sb = new();
+
+        sb.AppendLine(CommentsHeader);
 
         foreach (var comment in comments)
         {
+            sb.AppendLine(CommentsSeparator);
             sb.AppendLine(comment.ToString());
+            sb.AppendLine(CommentsSeparator);
         }
+
+        sb.AppendLine(CommentsHeader);
 
         return sb.ToString().Trim();
     }

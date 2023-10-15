@@ -75,14 +75,14 @@ public class Bug : Task, IBug
         }
     }
 
-    public IList<string> ReproductionSteps => reproductionSteps;
+    public IList<string> ReproductionSteps => new List<string>(reproductionSteps);
 
-    public override string GetCurrentStatus()
+    public void AddReproductionStep(string step)
     {
-        return Status.ToString();
+        reproductionSteps.Add(step);
     }
 
-    private string PrintReproductionSteps()
+    public string PrintReproductionSteps()
     {
         StringBuilder sb = new();
 
@@ -90,10 +90,15 @@ public class Bug : Task, IBug
 
         foreach (var step in ReproductionSteps)
         {
-            sb.Append($"{stepIndex}. {step} ");
+            sb.AppendLine($"{++stepIndex}. {step}");
         }
 
         return sb.ToString().TrimEnd();
+    }
+
+    public override string GetCurrentStatus()
+    {
+        return Status.ToString();
     }
 
     public override string ToString()
@@ -107,8 +112,7 @@ public class Bug : Task, IBug
                    Priority: {priority}
                    Severity: {severity}
                    Assignee: {assignee}
-                     Comments:
-                       {ShowAllComments}
+                     {ShowAllComments()}
                 """;
     }
 }
