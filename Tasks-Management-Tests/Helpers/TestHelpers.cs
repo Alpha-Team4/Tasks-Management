@@ -5,19 +5,14 @@ using static TasksManagement_Tests.Helpers.TestData;
 namespace TasksManagement_Tests.Helpers;
 public class TestHelpers
 {
-    public static string GetTestString(int size)
-    {
-        return new string('x', size);
-    }
-
     public static ITeam InitializeTestTeam()
     {
-        return new Team(TeamData.ValidTitle);
+        return new Team(TeamData.ValidName);
     }
 
     public static IMember InitializeTestMember()
     {
-        return new Member(MemberData.ValidTitle);
+        return new Member(MemberData.ValidName);
     }
 
     public static IBoard InitializeTestBoard()

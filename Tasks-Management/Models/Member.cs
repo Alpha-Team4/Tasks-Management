@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TasksManagement.Models.Contracts;
+﻿using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
 public class Member : IMember

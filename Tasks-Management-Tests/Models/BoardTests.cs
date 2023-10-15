@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TasksManagement_Tests.Helpers;
-using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestData.BoardData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
@@ -38,6 +36,4 @@ public class BoardTests
 
         Assert.AreEqual(testEvent, board.History.FirstOrDefault());
     }
-
-
 }

@@ -1,28 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TasksManagement_Tests.Helpers;
+﻿namespace TasksManagement_Tests.Helpers;
 public static class TestData
 {
     public static class TeamData
     {
-        public const int TitleMinLength = 5;
-        public const int TitleMaxLength = 15;
-        public const string ValidTitle = "Valid Title";
-        public const string TooShortTitle = "test";
-        public const string TooLongTitle = "This title should be too long.";
+        public const int NameMinLength = 5;
+        public const int NameMaxLength = 15;
+        public const string ValidName = "Valid Name";
+        public const string TooShortName = "test";
+        public const string TooLongName = "This name should be too long.";
     }
 
     public static class MemberData
     {
-        public const int TitleMinLength = 5;
-        public const int TitleMaxLength = 15;
-        public const string ValidTitle = "Valid Title";
-        public const string TooShortTitle = "test";
-        public const string TooLongTitle = "This title should be too long.";
+        public const int NameMinLength = 5;
+        public const int NameMaxLength = 15;
+        public const string ValidName = "Valid Name";
+        public const string TooShortName = "test";
+        public const string TooLongName = "This name should be too long.";
     }
 
     public static class BoardData
