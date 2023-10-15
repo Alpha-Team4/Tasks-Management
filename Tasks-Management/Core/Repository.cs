@@ -8,13 +8,13 @@ namespace TasksManagement.Core;
 
 public class Repository : IRepository
 {
+    public const string NoTasksMessage = "No tasks found.";
+
     private readonly List<ITeam> teams = new();
     private readonly List<IMember> members = new();
-    private readonly List<ITask> tasks = new();
 
     public List<ITeam> Teams => new(teams);
     public List<IMember> Members => new(members);
-    public List<ITask> Tasks => new(tasks); 
 
     public ITeam CreateTeam(string teamName)
     {
@@ -87,7 +87,6 @@ public class Repository : IRepository
 
         var bug = new Bug(title, description, board);
         board.AddTask(bug);
-        this.tasks.Add(bug);
         return bug;
     }
 
@@ -98,7 +97,6 @@ public class Repository : IRepository
 
         var story = new Story(title, description, board);
         board.AddTask(story);
-        this.tasks.Add(story);
         return story;
     }
 
@@ -109,7 +107,6 @@ public class Repository : IRepository
 
         var feedback = new Feedback(title, description, rating);
         board.AddTask(feedback);
-        this.tasks.Add(feedback);
         return feedback;
     }
 
@@ -149,16 +146,31 @@ public class Repository : IRepository
         return board;
     }
 
-    public ITask FindTaskByTitle(string taskName)
+    public IList<ITask> FindAllTasks()
+    {
+        var foundTasks = Teams
+            .SelectMany(team => team.Boards)
+            .SelectMany(board => board.Tasks)
+            .ToList();
+
+        if (foundTasks == null)
+        {
+            throw new EntityNotFoundException(NoTasksMessage);
+        }
+
+        return foundTasks;
+    }
+
+    public ITask FindTaskByTitle(string taskTitle)
     {
         var foundTask = Teams
             .SelectMany(team => team.Boards)
             .SelectMany(board => board.Tasks)
-            .FirstOrDefault(task => task.Title == taskName);
+            .FirstOrDefault(task => task.Title == taskTitle);
 
         if (foundTask == null)
         {
-            throw new EntityNotFoundException($"Task with name '{taskName}' was not found!");
+            throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
         }
 
         return foundTask;

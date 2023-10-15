@@ -7,7 +7,6 @@ public interface IRepository
 {
     public List<ITeam> Teams { get; }
     public List<IMember> Members { get; }
-    public List<ITask> Tasks { get; }
 
     ITeam CreateTeam(string name);
     IBoard CreateBoard(string name, string teamName);
@@ -17,4 +16,6 @@ public interface IRepository
     IStory CreateStory(string title, string description, string team, string board);
     ITeam FindTeamByName(string team);
     IMember FindMemberByName(string member);
+    IList<ITask> FindAllTasks();
+    ITask FindTaskByTitle(string taskTitle);
 }
