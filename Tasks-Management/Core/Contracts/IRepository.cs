@@ -16,6 +16,7 @@ public interface IRepository
     IStory CreateStory(string title, string description, string team, string board);
     ITeam FindTeamByName(string team);
     IMember FindMemberByName(string member);
+    IBoard FindBoardByName(string boardName, ITeam team);
     IList<ITask> FindAllTasks();
     ITask FindTaskByTitle(string taskTitle);
 }

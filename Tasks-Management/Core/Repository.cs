@@ -136,11 +136,11 @@ public class Repository : IRepository
 
     public IBoard FindBoardByName(string boardName, ITeam team)
     {
-        IBoard? board = team.Boards.SingleOrDefault(team => team.Name == boardName);
+        IBoard? board = team.Boards.SingleOrDefault(board => board.Name == boardName);
 
         if (board == null)
         {
-            throw new EntityNotFoundException($"Team with name '{boardName}' was not found!");
+            throw new EntityNotFoundException($"Board with name '{boardName}' was not found!");
         }
 
         return board;
