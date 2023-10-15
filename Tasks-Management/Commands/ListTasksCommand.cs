@@ -27,20 +27,20 @@ public class ListTasksCommand : BaseCommand
                 $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }
 
-        IList<ITask> foundTasks = new List<ITask>();
+        //IList<ITask> foundTasks = new List<ITask>();
 
-        foreach (var team in Repository.Teams)
-        {
-            foreach (var board in team.Boards)
-            {
-                foreach (var task in board.Tasks)
-                {
-                    foundTasks.Add(task);
-                }
-            }
-        }
+        //foreach (var team in Repository.Teams)
+        //{
+        //    foreach (var board in team.Boards)
+        //    {
+        //        foreach (var task in board.Tasks)
+        //        {
+        //            foundTasks.Add(task);
+        //        }
+        //    }
+        //}
 
-        if (!foundTasks.Any())
+        if (Repository.Tasks.Count == 0)
         {
             throw new EntityNotFoundException(NoTasksMessage);
         }
@@ -51,7 +51,7 @@ public class ListTasksCommand : BaseCommand
         if (CommandParameters.Count == 0)
         {
 
-            foreach (var task in foundTasks)
+            foreach (var task in Repository.Tasks)
             {
                 sb.Append($"{++taskIndex}. ");
                 sb.AppendLine(task.ToString());
@@ -61,7 +61,7 @@ public class ListTasksCommand : BaseCommand
         }
 
         var titleFilter = CommandParameters[0];
-        var filteredTasks = foundTasks.Where
+        var filteredTasks = Repository.Tasks.Where
             (task => task.Title.Contains(titleFilter, StringComparison.OrdinalIgnoreCase)).ToList();
 
         foreach (var task in filteredTasks)

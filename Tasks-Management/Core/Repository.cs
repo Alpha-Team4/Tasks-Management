@@ -1,4 +1,5 @@
-﻿using TasksManagement.Core.Contracts;
+﻿using TasksManagement.Commands.TeamCommands;
+using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
@@ -9,9 +10,11 @@ public class Repository : IRepository
 {
     private readonly List<ITeam> teams = new();
     private readonly List<IMember> members = new();
+    private readonly List<ITask> tasks = new();
 
     public List<ITeam> Teams => new(teams);
     public List<IMember> Members => new(members);
+    public List<ITask> Tasks => new(tasks); 
 
     public ITeam CreateTeam(string teamName)
     {
@@ -84,6 +87,7 @@ public class Repository : IRepository
 
         var bug = new Bug(title, description, board);
         board.AddTask(bug);
+        this.tasks.Add(bug);
         return bug;
     }
 
@@ -94,7 +98,19 @@ public class Repository : IRepository
 
         var story = new Story(title, description, board);
         board.AddTask(story);
+        this.tasks.Add(story);
         return story;
+    }
+
+    public IFeedback CreateFeedback(string title, string description, int rating, string teamName, string boardName)
+    {
+        var team = FindTeamByName(teamName);
+        var board = FindBoardByName(boardName, team);
+
+        var feedback = new Feedback(title, description, rating);
+        board.AddTask(feedback);
+        this.tasks.Add(feedback);
+        return feedback;
     }
 
     public IMember FindMemberByName(string memberName)
@@ -131,5 +147,18 @@ public class Repository : IRepository
         }
 
         return board;
+    }
+
+    public ITask FindTaskByTitle(string taskName) 
+    {
+        foreach(var task in tasks)
+        {
+            if (task.Title == taskName)
+            {
+                return task;
+            }
+            
+        }
+        throw new EntityNotFoundException($"Task with name '{taskName}' was not found!");
     }
 }

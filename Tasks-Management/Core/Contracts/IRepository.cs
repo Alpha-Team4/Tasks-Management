@@ -7,6 +7,7 @@ public interface IRepository
 {
     public List<ITeam> Teams { get; }
     public List<IMember> Members { get; }
+    public List<ITask> Tasks { get; }
 
     ITeam CreateTeam(string name);
     IBoard CreateBoard(string name, string teamName);
