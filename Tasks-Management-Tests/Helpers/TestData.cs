@@ -27,11 +27,11 @@ public static class TestData
 
     public static class BoardData
     {
-        public const int TitleMinLength = 5;
-        public const int TitleMaxLength = 10;
-        public const string ValidTitle = "ValidTitle";
-        public const string TooShortTitle = "test";
-        public const string TooLongTitle = "Title too long";
+        public const int NameMinLength = 5;
+        public const int NameMaxLength = 10;
+        public const string ValidName = "ValidName";
+        public const string TooShortName = "test";
+        public const string TooLongName = "Name too long";
     }
 
     public static class TaskData

@@ -22,7 +22,7 @@ public class TestHelpers
 
     public static IBoard InitializeTestBoard()
     {
-        return new Board(BoardData.ValidTitle);
+        return new Board(BoardData.ValidName);
     }
 
     public static ITask InitializeTestBug()
@@ -39,7 +39,7 @@ public class TestHelpers
         return new Story(
             TaskData.ValidTitle,
             TaskData.ValidDescription,
-            InitializeTestMember()
+            InitializeTestBoard()
             );
     }
 
@@ -50,5 +50,10 @@ public class TestHelpers
             TaskData.ValidDescription,
             0
             );
+    }
+
+    public static IEvent InitializeTestEvent()
+    {
+        return new Event("test description");
     }
 }

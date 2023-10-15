@@ -183,10 +183,7 @@ public class BugTests
     public void ReproductionSteps_Setter_AssignsCorrectValue()
     {
         var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
-        var steps = """
-                    1. first step
-                    2. second step
-                    """;
+        var steps = "1. first step\r\n2. second step";
 
         bug.AddReproductionStep("first step");
         bug.AddReproductionStep("second step");
@@ -206,7 +203,7 @@ public class BugTests
     public void ToString_ReturnsCorrectValues()
     {
         var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
-
+        
         var testOutput = $"""
                           Bug (ID: 1)
                              Title: This is a valid title
@@ -218,6 +215,8 @@ public class BugTests
                              Assignee: 
                                --NO COMMENTS--
                           """;
+
+        //var test = bug.ToString();
 
         Assert.AreEqual(bug.ToString(), testOutput);
     }

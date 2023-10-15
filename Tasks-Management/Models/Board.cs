@@ -1,6 +1,4 @@
-﻿
-using System.Runtime.CompilerServices;
-using TasksManagement.Models.Contracts;
+﻿using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
 public class Board : IBoard
@@ -40,11 +38,11 @@ public class Board : IBoard
 
     public void AddEvent(IEvent eventToAdd)
     {
-        this.history.Add(eventToAdd);   
+        this.history.Add(eventToAdd);
     }
 
     public void AddTask(ITask taskToAdd)
     {
-        this.tasks.Add(taskToAdd);  
+        this.tasks.Add(taskToAdd);
     }
 }
