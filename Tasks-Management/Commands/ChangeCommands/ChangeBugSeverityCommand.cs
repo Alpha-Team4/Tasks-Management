@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.ChangeCommands;
-internal class ChangeStoryStatus
+internal class ChangeBugSeverityCommand
 {
 }

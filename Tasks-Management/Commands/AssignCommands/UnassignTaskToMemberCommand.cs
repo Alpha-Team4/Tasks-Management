@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.AssignCommands;
-internal class AssignTaskToMembers
+internal class UnassignTaskToMemberCommand
 {
 }

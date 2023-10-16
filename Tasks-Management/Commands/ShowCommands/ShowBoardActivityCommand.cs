@@ -3,12 +3,12 @@ using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 
 namespace TasksManagement.Commands.ShowCommands;
-public class ShowBoardActivity : BaseCommand
+public class ShowBoardActivityCommand : BaseCommand
 {
     public const int ExpectedNumberOfArguments = 2;
     private const string NoActivityFoundMessage = "No activity found on board '{0}'.";
 
-    public ShowBoardActivity(IList<string> commandParameters, IRepository repository)
+    public ShowBoardActivityCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
     {
     }
