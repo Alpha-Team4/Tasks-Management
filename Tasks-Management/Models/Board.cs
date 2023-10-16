@@ -6,6 +6,7 @@ public class Board : IBoard
     private const int BoardNameMinLength = 5;
     private const int BoardNameMaxLength = 10;
     private string BoardNameErrorMessage = "Board name must be between {0} and {1} characters.";
+    private string NoTasksFoundMessage = "--NO TASKS--";
 
     private string name;
     private IList<IEvent> history = new List<IEvent>();
@@ -44,5 +45,26 @@ public class Board : IBoard
     public void AddTask(ITask taskToAdd)
     {
         this.tasks.Add(taskToAdd);
+    }
+
+    public string PrintAllTasks()
+    {
+        if (!tasks.Any())
+        {
+            return NoTasksFoundMessage;
+        }
+
+        return string.Join(Environment.NewLine,
+                tasks.Select(task => task.ToString())
+            );
+    }
+
+    public override string ToString()
+    {
+        return $"""
+                Name: {Name}
+                   Tasks:
+                     {PrintAllTasks()}
+                """;
     }
 }
