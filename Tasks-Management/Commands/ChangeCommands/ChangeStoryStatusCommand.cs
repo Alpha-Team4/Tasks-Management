@@ -4,6 +4,7 @@ using TasksManagement.Core;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
+using TasksManagement.Models;
 
 namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeStoryStatusCommand : BaseCommand
@@ -25,11 +26,16 @@ public class ChangeStoryStatusCommand : BaseCommand
         }
 
         IStory story = Repository.FindTaskByTitle<IStory>(CommandParameters[0]);
+        var newStoryStatus = ParseStatus(CommandParameters[1]);
 
-        story.Status = ParseStatus(CommandParameters[1]);
+        if (newStoryStatus == story.Status)
+        {
+            return $"Story {story.Title} status already {newStoryStatus}.";
+        }
+
+        story.Status = newStoryStatus;
 
         return $"Story {story.Title} status changed to {story.Status}.";
-
     }
 
     private StatusStory ParseStatus(string value)

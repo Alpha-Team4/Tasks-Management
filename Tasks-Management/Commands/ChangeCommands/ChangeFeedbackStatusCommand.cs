@@ -24,12 +24,11 @@ public class ChangeFeedbackStatusCommand : BaseCommand
         }
 
         IFeedback feedback = Repository.FindTaskByTitle<IFeedback>(CommandParameters[0]);
-
         var newFeedbackStatus = ParseStatus(CommandParameters[1]);
 
         if (newFeedbackStatus == feedback.Status)
         {
-            return $"Feedback {feedback.Title} status already {feedback.Status}.";
+            return $"Feedback {feedback.Title} status already {newFeedbackStatus}.";
         }
 
         feedback.Status = newFeedbackStatus;
