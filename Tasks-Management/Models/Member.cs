@@ -60,25 +60,12 @@ public class Member : IMember
             tasks.Select(task => task.ToString()));
     }
 
-    public string PrintHistory()
-    {
-        if (!history.Any())
-        {
-            return NoHistoryFoundMessage;
-        }
-
-        return string.Join(Environment.NewLine,
-            history.Select(evt => evt.ToString()));
-    }
-
     public override string ToString()
     {
         return $"""
                 Name: {this.Name}
                    Tasks:
                      {PrintAllTasks()}
-                       History:
-                       {PrintHistory()}
                 """;
     }
 }
