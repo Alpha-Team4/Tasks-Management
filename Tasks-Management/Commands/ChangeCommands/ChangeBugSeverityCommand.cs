@@ -23,13 +23,11 @@ public class ChangeBugSeverityCommand : BaseCommand
         }
 
         IBug bug = (IBug)Repository.FindTaskByTitle(CommandParameters[0]);
-        //IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
-        //IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
 
 
         bug.Severity = ParseSeverity(CommandParameters[1]);
 
-        return $"Story {bug.Title} size changed to {bug.Severity}";
+        return $"Bug {bug.Title} severity changed to {bug.Severity}";
 
     }
 
