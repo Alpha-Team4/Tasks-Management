@@ -29,3 +29,4 @@ public class CreateFeedback : BaseCommand
         var feedback = Repository.CreateFeedback(title, description, rating, teamName, boardName);
         return $"Feedback with ID '{feedback.Id}' was created.";
     }
+}
