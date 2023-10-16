@@ -31,7 +31,7 @@ public class Story : Task, IStory
         set
         {
             var message = string.Format(PriorityChangedMessage, priority, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             priority = value;
         }
@@ -43,7 +43,7 @@ public class Story : Task, IStory
         set
         {
             var message = string.Format(SizeChangedMessage, size, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             size = value;
         }
@@ -55,7 +55,7 @@ public class Story : Task, IStory
         set
         {
             var message = string.Format(StatusChangedMessage, status, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             status = value;
         }
@@ -67,7 +67,7 @@ public class Story : Task, IStory
         set
         {
             var message = string.Format(AssigneeChangedMessage, assignee, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             assignee = value;
         }

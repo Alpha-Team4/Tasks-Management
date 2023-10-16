@@ -18,6 +18,7 @@ public class Team : ITeam
     private string name;
     private readonly IList<IBoard> boards = new List<IBoard>();
     private readonly IList<IMember> members = new List<IMember>();
+    private readonly IList<IEvent> history = new List<IEvent>();
 
     public Team(string name)
     {
@@ -37,16 +38,11 @@ public class Team : ITeam
 
     }
 
-    public IList<IMember> Members
-    {
-        get => new List<IMember>(members);
+    public IList<IMember> Members => new List<IMember>(members);
 
-    }
+    public IList<IBoard> Boards => new List<IBoard>(boards);
 
-    public IList<IBoard> Boards
-    {
-        get => new List<IBoard>(boards);
-    }
+    public IList<IEvent> History => new List<IEvent>(history);
 
     public void AddMember(IMember member)
     {
@@ -56,6 +52,11 @@ public class Team : ITeam
     public void AddBoard(IBoard board)
     {
         this.boards.Add(board);
+    }
+
+    public void AddEvent(string message)
+    {
+        history.Add(new Event(message));
     }
 
     public string PrintAllMembers()

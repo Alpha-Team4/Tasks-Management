@@ -1,5 +1,5 @@
 ﻿namespace TasksManagement.Models.Contracts;
-public interface ITask
+public interface ITask : IHasHistory
 {
     public int Id { get; }
 

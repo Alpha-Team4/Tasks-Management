@@ -1,5 +1,5 @@
 ﻿namespace TasksManagement.Models.Contracts;
-public interface ITeam
+public interface ITeam : IHasHistory
 {
     string Name { get; }
 

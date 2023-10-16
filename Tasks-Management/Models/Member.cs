@@ -1,17 +1,18 @@
-﻿using TasksManagement.Models.Contracts;
+﻿using System.Collections.Generic;
+using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
 public class Member : IMember
 {
     private const int MemberNameMinLength = 5;
     private const int MemberNameMaxLength = 15;
-    private string MemberNameErrorMessage = "Member name must be between {0} and {1} characters.";
-    private string NoTasksFoundMessage = "--NO TASKS--";
-    private string NoHistoryFoundMessage = "--NO HISTORY--";
+    private const string MemberNameErrorMessage = "Member name must be between {0} and {1} characters.";
+    private const string NoTasksFoundMessage = "--NO TASKS--";
+    private const string NoHistoryFoundMessage = "--NO HISTORY--";
 
     private string name;
-    private IList<IEvent> history = new List<IEvent>();
-    private IList<ITask> tasks = new List<ITask>(); 
+    private readonly IList<IEvent> history = new List<IEvent>();
+    private readonly IList<ITask> tasks = new List<ITask>(); 
 
     public Member(string name)
     {
@@ -20,28 +21,22 @@ public class Member : IMember
     } 
     public string Name
     {
-        get { return name; }
+        get => name;
         private set
-        { 
-            Validator.ValidateStringLength(value, MemberNameMinLength, MemberNameMaxLength, 
+        {
+            Validator.ValidateStringLength(value, MemberNameMinLength, MemberNameMaxLength,
                 string.Format(MemberNameErrorMessage, MemberNameMinLength, MemberNameMaxLength));
-            name = value; 
+            name = value;
         }
     }
 
-    public IList<IEvent> History
-    {
-        get { return new List<IEvent>(history); }   
-    } 
+    public IList<IEvent> History => new List<IEvent>(history);
 
-    public IList<ITask> Tasks
-    {
-        get { return new List<ITask>(tasks);}
-    }
+    public IList<ITask> Tasks => new List<ITask>(tasks);
 
-    public void AddEvent(IEvent eventToAdd)
+    public void AddEvent(string message)
     {
-        this.history.Add(eventToAdd);
+        history.Add(new Event(message));
     }
 
     public void AddTask(ITask task)

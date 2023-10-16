@@ -16,7 +16,7 @@ public abstract class Task : ITask
     private const string DescriptionLengthErrorMessage = "Description length must be between {0} and {1} characters.";
     private const string DescriptionNullErrorMessage = "The description cannot be null.";
 
-    private const string CommentAddedSuccessMessage = "Comment '{0}' was added.";
+    private const string CommentAddedSuccessMessage = "'{0}' added a comment '{1}'";
     private const string CommentDeletedSuccessMessage = "Comment '{0}' was deleted.";
     private const string CommentDeletedErrorMessage = "Comment doesn't exist.";
 
@@ -35,7 +35,7 @@ public abstract class Task : ITask
     private string title;
     private string description;
     private readonly IList<IComment> comments = new List<IComment>();
-    protected readonly IList<IEvent> eventsList = new List<IEvent>();
+    protected readonly IList<IEvent> history = new List<IEvent>();
 
     public Task(string title, string description)
     {
@@ -107,7 +107,7 @@ public abstract class Task : ITask
     {
         comments.Add(comment);
 
-        var successMessage = string.Format(CommentAddedSuccessMessage, comment.Content);
+        var successMessage = string.Format(CommentAddedSuccessMessage, comment.Author, comment.Content);
         AddEvent(successMessage);
 
         return successMessage;
@@ -151,16 +151,20 @@ public abstract class Task : ITask
         return sb.ToString().Trim();
     }
 
-    protected void AddEvent(string message)
+    public int MyProperty { get; set; }
+
+    public IList<IEvent> History => new List<IEvent>(history);
+
+    public void AddEvent(string message)
     {
-        eventsList.Add(new Event(message));
+        history.Add(new Event(message));
     }
 
     public string ShowAllEvents()
     {
         StringBuilder sb = new();
 
-        foreach (var evt in eventsList)
+        foreach (var evt in history)
         {
             sb.AppendLine(evt.ToString());
         }

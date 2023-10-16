@@ -44,8 +44,8 @@ public class CommandFactory : ICommandFactory
                 return new ShowTeamsCommand(repository);
             case CommandType.ShowBoards:
                 return new ShowBoardsCommand(commandParameters, repository);
-            case CommandType.ShowActivityBoard:
-                return new ShowActivityBoardCommand(commandParameters, repository);
+            case CommandType.ShowBoardActivity:
+                return new ShowBoardActivityCommand(commandParameters, repository);
             case CommandType.ListTasks:
                 return new ListTasksCommand(commandParameters, repository);
             default:

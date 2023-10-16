@@ -22,10 +22,7 @@ public class Comment : IComment
 
     public string Content
     {
-        get
-        {
-            return this.content;
-        }
+        get => content;
         private set
         {
             Validator.ValidateIntRange(value.Length, CommentMinLength, CommentMaxLength, InvalidCommentError);

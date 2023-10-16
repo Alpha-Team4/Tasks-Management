@@ -33,7 +33,7 @@ public class Bug : Task, IBug
         set
         {
             var message = string.Format(PriorityChangedMessage, priority, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             priority = value;
         }
@@ -45,7 +45,7 @@ public class Bug : Task, IBug
         set
         {
             var message = string.Format(SeverityChangedMessage, severity, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             severity = value;
         }
@@ -57,7 +57,7 @@ public class Bug : Task, IBug
         set
         {
             var message = string.Format(StatusChangedMessage, status, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             status = value;
         }
@@ -69,7 +69,7 @@ public class Bug : Task, IBug
         set
         {
             var message = string.Format(AssigneeChangedMessage, assignee, value);
-            eventsList.Add(new Event(message));
+            AddEvent(message);
 
             assignee = value;
         }
