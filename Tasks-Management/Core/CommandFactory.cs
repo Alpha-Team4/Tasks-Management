@@ -2,6 +2,12 @@
 using TasksManagement.Commands.Contracts;
 using TasksManagement.Commands.Enums;
 using TasksManagement.Core.Contracts;
+using TasksManagement.Commands.AddCommands;
+using TasksManagement.Commands.AssignCommands;
+using TasksManagement.Commands.ChangeCommands;
+using TasksManagement.Commands.CreateCommands;
+using TasksManagement.Commands.ListCommands;
+using TasksManagement.Commands.ShowCommands;
 
 namespace TasksManagement.Core;
 
