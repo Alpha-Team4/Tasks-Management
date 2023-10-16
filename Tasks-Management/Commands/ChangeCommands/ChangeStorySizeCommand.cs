@@ -25,11 +25,11 @@ public class ChangeStorySizeCommand : BaseCommand
 
         story.Size = ParseSize(CommandParameters[1]);
 
-        return $"Story {story.Title} size changed to {story.Size}";
+        return $"Story {story.Title} size changed to {story.Size}.";
 
     }
 
-    protected Size ParseSize(string value)
+    private Size ParseSize(string value)
     {
         if (Enum.TryParse(value, true, out Size result))
         {

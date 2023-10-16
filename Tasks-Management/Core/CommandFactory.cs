@@ -40,6 +40,10 @@ public class CommandFactory : ICommandFactory
                 return new CreateBugCommand(commandParameters, repository);
             case CommandType.CreateStory:
                 return new CreateStoryCommand(commandParameters, repository);
+            case CommandType.ChangeBugStatus:
+                return new ChangeBugStatusCommand(commandParameters, repository);
+            case CommandType.ChangeStorySize:
+                return new ChangeStorySizeCommand(commandParameters, repository);
             case CommandType.ShowTeams:
                 return new ShowTeamsCommand(repository);
             case CommandType.ShowBoards:
