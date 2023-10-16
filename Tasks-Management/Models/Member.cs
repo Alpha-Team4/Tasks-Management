@@ -6,6 +6,8 @@ public class Member : IMember
     private const int MemberNameMinLength = 5;
     private const int MemberNameMaxLength = 15;
     private string MemberNameErrorMessage = "Member name must be between {0} and {1} characters.";
+    private string NoTasksFoundMessage = "--NO TASKS--";
+    private string NoHistoryFoundMessage = "--NO HISTORY--";
 
     private string name;
     private IList<IEvent> history = new List<IEvent>();
@@ -45,5 +47,38 @@ public class Member : IMember
     public void AddTask(ITask task)
     {
         this.tasks.Add(task);
+    }
+
+    public string PrintAllTasks()
+    {
+        if (!tasks.Any())
+        {
+            return NoTasksFoundMessage;
+        }
+
+        return string.Join(Environment.NewLine,
+            tasks.Select(task => task.ToString()));
+    }
+
+    public string PrintHistory()
+    {
+        if (!history.Any())
+        {
+            return NoHistoryFoundMessage;
+        }
+
+        return string.Join(Environment.NewLine,
+            history.Select(evt => evt.ToString()));
+    }
+
+    public override string ToString()
+    {
+        return $"""
+                Name: {this.Name}
+                   Tasks:
+                     {PrintAllTasks()}
+                       History:
+                       {PrintHistory()}
+                """;
     }
 }

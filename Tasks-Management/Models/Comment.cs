@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Models.Contracts;
+using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Models;
 public class Comment : IComment
@@ -8,7 +10,7 @@ public class Comment : IComment
     private const int CommentMaxLength = 300;
     private const string InvalidCommentError = "Content must be between 3 and 300 characters long!";
 
-    private const string CommentHeader = "    **********";
+    private const string CommentHeader = "    ----------";
 
     private string content;
 
@@ -35,13 +37,11 @@ public class Comment : IComment
 
     public override string ToString()
     {
-        var output = new StringBuilder();
-
-        output.AppendLine(CommentHeader);
-        output.AppendLine($"    {this.Content}");
-        output.AppendLine($"      Member: {this.Author}");
-        output.Append(CommentHeader);
-
-        return output.ToString();
+        return $"""
+                {CommentHeader}
+                    {this.Content}
+                    Member: {this.Author}
+                {CommentHeader}
+                """;
     }
 }
