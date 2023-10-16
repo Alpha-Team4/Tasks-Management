@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.ChangeCommands;
-internal class ChangeBugPriority
+internal class ChangeFeedbackRatingCommand
 {
 }

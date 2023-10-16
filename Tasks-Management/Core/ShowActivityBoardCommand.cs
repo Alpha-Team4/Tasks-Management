@@ -12,4 +12,6 @@ internal class ShowActivityBoardCommand : ICommand
         this.commandParameters = commandParameters;
         this.repository = repository;
     }
+
+    public string Execute() => throw new NotImplementedException();
 }

@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.ShowCommands;
-internal class ShowAllTeamBoards
+internal class ShowTeamActivityCommand
 {
 }

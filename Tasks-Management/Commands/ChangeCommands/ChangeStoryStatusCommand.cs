@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.ChangeCommands;
-internal class ChangeFeedbackRating
+internal class ChangeStoryStatusCommand
 {
 }

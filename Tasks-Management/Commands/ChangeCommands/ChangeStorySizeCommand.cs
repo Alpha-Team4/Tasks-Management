@@ -5,11 +5,11 @@ using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Commands.ChangeCommands;
-public class ChangeStorySize : BaseCommand
+public class ChangeStorySizeCommand : BaseCommand
 {
     public const int ExpectedNumberOfArguments = 2;
 
-    public ChangeStorySize(IList<string> commandParameters, IRepository repository) : base(commandParameters, repository)
+    public ChangeStorySizeCommand(IList<string> commandParameters, IRepository repository) : base(commandParameters, repository)
     {
     }
 
@@ -20,7 +20,12 @@ public class ChangeStorySize : BaseCommand
             throw new InvalidUserInputException
                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments} Received: {CommandParameters.Count}");
         }
+
         IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
+        //IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
+        //IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
+
+
         story.Size = ParseSize(CommandParameters[1]);
 
         return $"Story {story.Title} size changed to {story.Size}";

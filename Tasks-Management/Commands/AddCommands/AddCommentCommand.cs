@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.AddCommands;
-internal class AddComment
+internal class AddCommentCommand
 {
 }
