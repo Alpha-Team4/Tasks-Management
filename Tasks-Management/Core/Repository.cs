@@ -161,9 +161,24 @@ public class Repository : IRepository
         return foundTasks;
     }
 
-    public ITask FindTaskByTitle(string taskTitle)
+    //public ITask FindTaskByTitle(string taskTitle)
+    //{
+    //    var foundTask = Teams
+    //        .SelectMany(team => team.Boards)
+    //        .SelectMany(board => board.Tasks)
+    //        .FirstOrDefault(task => task.Title == taskTitle);
+
+    //    if (foundTask == null)
+    //    {
+    //        throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
+    //    }
+
+    //    return foundTask;
+    //}
+
+    public T FindTaskByTitle<T>(string taskTitle) where T : ITask
     {
-        var foundTask = Teams
+        ITask? foundTask = Teams
             .SelectMany(team => team.Boards)
             .SelectMany(board => board.Tasks)
             .FirstOrDefault(task => task.Title == taskTitle);
@@ -173,6 +188,11 @@ public class Repository : IRepository
             throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
         }
 
-        return foundTask;
+        if (foundTask is T typedTask)
+        {
+            return typedTask;
+        }
+
+        throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
     }
 }
