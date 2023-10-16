@@ -22,7 +22,7 @@ public class ChangeBugSeverityCommand : BaseCommand
                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments} Received: {CommandParameters.Count}");
         }
 
-        IBug bug = (IBug)Repository.FindTaskByTitle(CommandParameters[0]);
+        IBug bug = Repository.FindTaskByTitle<IBug>(CommandParameters[0]);
 
 
         bug.Severity = ParseSeverity(CommandParameters[1]);
