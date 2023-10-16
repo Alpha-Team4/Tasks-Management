@@ -19,6 +19,7 @@ public enum CommandType
     ChangeAssignee,
     ChangeSeverity,
     ChangeStorySize,
+    ChangeStoryStatus,
     ChangeRating,
     ListTasks,
     ListBugs,

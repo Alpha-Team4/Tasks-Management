@@ -8,7 +8,7 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 2;
-    private const string InvalidStatusError = "None of the enums in Status match the value {0}.";
+    private const string InvalidStatusError = "None of the enums in BugStatus match the value {0}.";
 
     public ChangeBugStatusCommand(IList<string> commandParameters, IRepository repository) 
         : base(commandParameters, repository)
