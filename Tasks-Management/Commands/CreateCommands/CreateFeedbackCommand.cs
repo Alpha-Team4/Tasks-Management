@@ -4,11 +4,11 @@ using TasksManagement.Exceptions;
 using TasksManagement.Commands.Abstracts;
 
 namespace TasksManagement.Commands.CreateCommands;
-public class CreateFeedback : BaseCommand
+public class CreateFeedbackCommand : BaseCommand
 {
     public const int ExpectedNumberOfArguments = 5;
 
-    public CreateFeedback(IList<string> commandParameters, IRepository repository)
+    public CreateFeedbackCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
     {
     }
