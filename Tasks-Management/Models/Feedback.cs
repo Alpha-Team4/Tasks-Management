@@ -7,36 +7,31 @@ public class Feedback : Task, IFeedback
 {
     private const int RatingMinValue = 0;
     private const int RatingMaxValue = 5;
-    private const string RatingChangeMessage = "Feedback rating changed from {0} to {1}.";
-    private const string RatingErrorMessage = "Feedback rating must be between {0} and {1}.";
+    private const string RatingChangeMessage = "Feedback '{0}' rating changed from {1} to {2}.";
+    private const string StatusChangeMessage = "Feedback '{0}' status changed from {1} to {2}.";
 
-    private const string StatusChangeMessage = "Feedback status changed from {0} to {1}.";
-
-    private int rating;
+    private Rating rating;
     private StatusFeedback status;
 
-    public Feedback(string title, string description, int rating)
+    public Feedback(string title, string description)
         : base(title, description)
     {
         isInitializing = true;
 
-        Rating = rating;
+        rating = Rating.NoRating;
         status = StatusFeedback.New;
 
         isInitializing = false;
     }
 
-    public int Rating
+    public Rating Rating
     {
         get => rating;
         set
         {
-            var errorMessage = string.Format(RatingErrorMessage, RatingMinValue, RatingMaxValue);
-            Validator.ValidateIntRange(value, RatingMinValue, RatingMaxValue, errorMessage);
-
             if (!isInitializing)
             {
-                var changeMessage = string.Format(RatingChangeMessage, rating, value);
+                var changeMessage = string.Format(RatingChangeMessage, Title, rating, value);
                 AddEvent(changeMessage);
             }
 
@@ -49,7 +44,7 @@ public class Feedback : Task, IFeedback
         get => status;
         set
         {
-            var changeMessage = string.Format(StatusChangeMessage, status, value);
+            var changeMessage = string.Format(StatusChangeMessage, Title, status, value);
             AddEvent(changeMessage);
 
             status = value;

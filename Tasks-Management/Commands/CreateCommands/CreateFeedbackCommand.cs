@@ -6,7 +6,7 @@ using TasksManagement.Commands.Abstracts;
 namespace TasksManagement.Commands.CreateCommands;
 public class CreateFeedbackCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 5;
+    public const int ExpectedNumberOfArguments = 4;
 
     public CreateFeedbackCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -22,11 +22,10 @@ public class CreateFeedbackCommand : BaseCommand
 
         var title = CommandParameters[0];
         var description = CommandParameters[1];
-        var rating = ParseIntParameter(CommandParameters[2], "rating");
-        var teamName = CommandParameters[3];
-        var boardName = CommandParameters[4];
+        var teamName = CommandParameters[2];
+        var boardName = CommandParameters[3];
 
-        var feedback = Repository.CreateFeedback(title, description, rating, teamName, boardName);
+        var feedback = Repository.CreateFeedback(title, description, teamName, boardName);
         return $"Feedback with ID '{feedback.Id}' was created.";
     }
 }

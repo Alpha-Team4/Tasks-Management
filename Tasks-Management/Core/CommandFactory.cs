@@ -32,12 +32,16 @@ public class CommandFactory : ICommandFactory
         {
             case CommandType.CreateTeam:
                 return new CreateTeamCommand(commandParameters, repository);
+
             case CommandType.CreateBoard:
                 return new CreateBoardCommand(commandParameters, repository);
+
             case CommandType.CreateMember:
                 return new CreateMemberCommand(commandParameters, repository);
+
             case CommandType.CreateBug:
                 return new CreateBugCommand(commandParameters, repository);
+
             case CommandType.CreateStory:
                 return new CreateStoryCommand(commandParameters, repository);
             case CommandType.CreateFeedback:
@@ -50,14 +54,34 @@ public class CommandFactory : ICommandFactory
                 return new ChangeStoryStatusCommand(commandParameters, repository);
             case CommandType.ChangeFeedbackStatus:
                 return new ChangeFeedbackStatusCommand(commandParameters, repository);
+
+            case CommandType.CreateFeedback:
+                return new CreateFeedbackCommand(commandParameters, repository);
+
+            case CommandType.ChangeRating:
+                return new ChangeRatingCommand(commandParameters, repository);
+
+            //case CommandType.ChangeAssignee:
+            //    return new ChangeAssigneeCommand(commandParameters, repository);
+
+            //case CommandType.ChangeBugStatus:
+            //    return new ChangeBugStatusCommand(commandParameters, repository);
+
+            //case CommandType.ChangeStorySize:
+            //    return new ChangeStorySizeCommand(commandParameters, repository);
+
             case CommandType.ShowTeams:
                 return new ShowTeamsCommand(repository);
+
             case CommandType.ShowBoards:
                 return new ShowBoardsCommand(commandParameters, repository);
+
             case CommandType.ShowBoardActivity:
                 return new ShowBoardActivityCommand(commandParameters, repository);
+
             case CommandType.ListTasks:
                 return new ListTasksCommand(commandParameters, repository);
+
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");
         }

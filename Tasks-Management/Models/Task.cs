@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using TasksManagement.Commands.Enums;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
@@ -160,16 +161,11 @@ public abstract class Task : ITask
         history.Add(new Event(message));
     }
 
-    public string ShowAllEvents()
+    public string PrintTaskActivity()
     {
-        StringBuilder sb = new();
-
-        foreach (var evt in history)
-        {
-            sb.AppendLine(evt.ToString());
-        }
-
-        return sb.ToString().Trim();
+        return string.Join(Environment.NewLine,
+                history.Select(evt => evt.ToString())
+            );
     }
 
     public abstract string GetCurrentStatus();

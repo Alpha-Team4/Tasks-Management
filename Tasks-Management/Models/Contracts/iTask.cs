@@ -13,7 +13,7 @@ public interface ITask : IHasHistory
 
     public string ShowAllComments();
 
-    public string ShowAllEvents();
+    public string PrintTaskActivity();
 
     public string GetCurrentStatus();
 }

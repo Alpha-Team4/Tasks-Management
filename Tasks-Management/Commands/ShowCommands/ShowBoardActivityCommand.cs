@@ -1,6 +1,7 @@
 ﻿using TasksManagement.Commands.Abstracts;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
+using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Commands.ShowCommands;
 public class ShowBoardActivityCommand : BaseCommand
@@ -25,14 +26,19 @@ public class ShowBoardActivityCommand : BaseCommand
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
 
-        if (!board.History.Any())
+        var boardAllActivity = board.Tasks.SelectMany(task => task.History)
+            .Concat(board.History)
+            .OrderBy(evt => evt.Time)
+            .ToList();
+
+        if (!boardAllActivity.Any())
         {
             var errorMessage = string.Format(NoActivityFoundMessage, board.Name);
             throw new EntityNotFoundException(errorMessage);
         }
 
         return string.Join(Environment.NewLine,
-            board.History.Select(evt => evt.ToString()));
+            boardAllActivity.Select(evt => evt.ToString()));
     }
 }
 

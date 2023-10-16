@@ -100,12 +100,12 @@ public class Repository : IRepository
         return story;
     }
 
-    public IFeedback CreateFeedback(string title, string description, int rating, string teamName, string boardName)
+    public IFeedback CreateFeedback(string title, string description, string teamName, string boardName)
     {
         var team = FindTeamByName(teamName);
         var board = FindBoardByName(boardName, team);
 
-        var feedback = new Feedback(title, description, rating);
+        var feedback = new Feedback(title, description);
         board.AddTask(feedback);
         return feedback;
     }
@@ -176,11 +176,29 @@ public class Repository : IRepository
     //    return foundTask;
     //}
 
-    public T FindTaskByTitle<T>(string taskTitle) where T : ITask
+    //public T FindTaskByTitle<T>(string taskTitle) where T : ITask
+    //{
+    //    ITask? foundTask = Teams
+    //        .SelectMany(team => team.Boards)
+    //        .SelectMany(board => board.Tasks)
+    //        .FirstOrDefault(task => task.Title == taskTitle && task is T);
+
+    //    if (foundTask == null)
+    //    {
+    //        throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
+    //    }
+
+    //    if (foundTask is T typedTask)
+    //    {
+    //        return typedTask;
+    //    }
+
+    //    throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
+    //}
+
+    public T FindTaskByTitle<T>(string taskTitle, IBoard board) where T : ITask
     {
-        ITask? foundTask = Teams
-            .SelectMany(team => team.Boards)
-            .SelectMany(board => board.Tasks)
+        ITask? foundTask = board.Tasks
             .FirstOrDefault(task => task.Title == taskTitle && task is T);
 
         if (foundTask == null)
