@@ -181,7 +181,7 @@ public class Repository : IRepository
         ITask? foundTask = Teams
             .SelectMany(team => team.Boards)
             .SelectMany(board => board.Tasks)
-            .FirstOrDefault(task => task.Title == taskTitle);
+            .FirstOrDefault(task => task.Title == taskTitle && task is T);
 
         if (foundTask == null)
         {

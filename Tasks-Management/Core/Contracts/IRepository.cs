@@ -6,8 +6,8 @@ namespace TasksManagement.Core.Contracts;
 
 public interface IRepository
 {
-    public List<ITeam> Teams { get; }
-    public List<IMember> Members { get; }
+    List<ITeam> Teams { get; }
+    List<IMember> Members { get; }
 
     ITeam CreateTeam(string name);
     IBoard CreateBoard(string name, string teamName);
@@ -21,5 +21,5 @@ public interface IRepository
     IMember FindMemberByName(string member);
     IBoard FindBoardByName(string boardName, ITeam team);
     IList<ITask> FindAllTasks();
-    ITask FindTaskByTitle(string taskTitle);
+    T FindTaskByTitle<T>(string taskTitle) where T : ITask;
 }

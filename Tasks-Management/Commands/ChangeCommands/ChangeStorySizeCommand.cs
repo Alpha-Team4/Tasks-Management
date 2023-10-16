@@ -21,10 +21,7 @@ public class ChangeStorySizeCommand : BaseCommand
                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments} Received: {CommandParameters.Count}");
         }
 
-        IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
-        //IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
-        //IStory story = (IStory)Repository.FindTaskByTitle(CommandParameters[0]);
-
+        IStory story = Repository.FindTaskByTitle<IStory>(CommandParameters[0]);
 
         story.Size = ParseSize(CommandParameters[1]);
 
