@@ -8,7 +8,7 @@ public class Story : Task, IStory
     private const string PriorityChangedMessage = "Priority changed from '{0}' to '{1}'";
     private const string SizeChangedMessage = "Size changed from '{0}' to '{1}'";
     private const string StatusChangedMessage = "Status changed from '{0}' to '{1}'";
-    private const string AssigneeChangedMessage = "Assignee changed from '{0}' to '{1}'";
+    private const string AssigneeChangedMessage = "Story '{0}' assigned to '{1}'";
 
     private Priority priority;
     private Size size;
@@ -18,8 +18,6 @@ public class Story : Task, IStory
     public Story(string title, string description, IBoard board)
         : base(title, description)
     {
-        this.assignee = assignee;
-
         priority = Priority.Low;
         size = Size.Small;
         status = StatusStory.NotDone;
@@ -66,7 +64,7 @@ public class Story : Task, IStory
         get => assignee;
         set
         {
-            var message = string.Format(AssigneeChangedMessage, assignee, value);
+            var message = string.Format(AssigneeChangedMessage, Title, value.Name);
             AddEvent(message);
 
             assignee = value;

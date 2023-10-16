@@ -30,6 +30,7 @@ public class CommandFactory : ICommandFactory
 
         switch (commandType)
         {
+            // Create Commands
             case CommandType.CreateTeam:
                 return new CreateTeamCommand(commandParameters, repository);
 
@@ -44,32 +45,33 @@ public class CommandFactory : ICommandFactory
 
             case CommandType.CreateStory:
                 return new CreateStoryCommand(commandParameters, repository);
-            case CommandType.CreateFeedback:
-                return new CreateFeedbackCommand(commandParameters, repository);
-            case CommandType.ChangeBugStatus:
-                return new ChangeBugStatusCommand(commandParameters, repository);
-            case CommandType.ChangeStorySize:
-                return new ChangeStorySizeCommand(commandParameters, repository);
-            case CommandType.ChangeStoryStatus:
-                return new ChangeStoryStatusCommand(commandParameters, repository);
-            case CommandType.ChangeFeedbackStatus:
-                return new ChangeFeedbackStatusCommand(commandParameters, repository);
 
             case CommandType.CreateFeedback:
                 return new CreateFeedbackCommand(commandParameters, repository);
+
+            // Change Commands
+            case CommandType.ChangeStoryStatus:
+                return new ChangeStoryStatusCommand(commandParameters, repository);
+
+            case CommandType.ChangeFeedbackStatus:
+                return new ChangeFeedbackStatusCommand(commandParameters, repository);
 
             case CommandType.ChangeRating:
                 return new ChangeRatingCommand(commandParameters, repository);
 
-            //case CommandType.ChangeAssignee:
-            //    return new ChangeAssigneeCommand(commandParameters, repository);
+            case CommandType.ChangeBugAssignee:
+                return new ChangeBugAssigneeCommand(commandParameters, repository);
 
-            //case CommandType.ChangeBugStatus:
-            //    return new ChangeBugStatusCommand(commandParameters, repository);
+            case CommandType.ChangeStoryAssignee:
+                return new ChangeStoryAssigneeCommand(commandParameters, repository);
 
-            //case CommandType.ChangeStorySize:
-            //    return new ChangeStorySizeCommand(commandParameters, repository);
+            case CommandType.ChangeBugStatus:
+                return new ChangeBugStatusCommand(commandParameters, repository);
 
+            case CommandType.ChangeStorySize:
+                return new ChangeStorySizeCommand(commandParameters, repository);
+
+            // Show Commands
             case CommandType.ShowTeams:
                 return new ShowTeamsCommand(repository);
 
@@ -79,6 +81,8 @@ public class CommandFactory : ICommandFactory
             case CommandType.ShowBoardActivity:
                 return new ShowBoardActivityCommand(commandParameters, repository);
 
+
+            // List Commands
             case CommandType.ListTasks:
                 return new ListTasksCommand(commandParameters, repository);
 

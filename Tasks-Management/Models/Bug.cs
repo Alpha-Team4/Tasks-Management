@@ -9,7 +9,7 @@ public class Bug : Task, IBug
     private const string PriorityChangedMessage = "Priority changed from '{0}' to '{1}'";
     private const string SeverityChangedMessage = "Severity changed from '{0}' to '{1}'";
     private const string StatusChangedMessage = "Status changed from '{0}' to '{1}'";
-    private const string AssigneeChangedMessage = "Assignee changed from '{0}' to '{1}'";
+    private const string AssigneeChangedMessage = "Bug '{0}' assigned to '{1}'";
 
     private Priority priority;
     private Severity severity;
@@ -68,7 +68,7 @@ public class Bug : Task, IBug
         get => assignee;
         set
         {
-            var message = string.Format(AssigneeChangedMessage, assignee, value);
+            var message = string.Format(AssigneeChangedMessage, Title, value.Name);
             AddEvent(message);
 
             assignee = value;

@@ -46,7 +46,7 @@ public class Engine : IEngine
                 var commandName = command.GetType().Name; // get command type to determine color output
 
                 // different output color for success / list messages
-                if (commandName.StartsWith("List"))
+                if (commandName.StartsWith("List") || commandName.StartsWith("Show"))
                 {
                     PrintColoredLine(result.Trim(), ConsoleOutputColor);
                 }
