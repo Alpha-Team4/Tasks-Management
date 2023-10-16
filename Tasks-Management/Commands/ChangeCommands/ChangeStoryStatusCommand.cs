@@ -35,7 +35,7 @@ public class ChangeStoryStatusCommand : BaseCommand
 
         story.Status = newStoryStatus;
 
-        return $"Story {story.Title} status changed to {story.Status}.";
+        return $"Story {story.Title} status changed to {newStoryStatus}.";
     }
 
     private StatusStory ParseStatus(string value)

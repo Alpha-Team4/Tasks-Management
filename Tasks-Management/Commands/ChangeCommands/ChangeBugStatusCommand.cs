@@ -1,6 +1,7 @@
 ﻿using TasksManagement.Commands.Abstracts;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
+using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
@@ -24,11 +25,16 @@ public class ChangeBugStatusCommand : BaseCommand
         }
 
         IBug bug = Repository.FindTaskByTitle<IBug>(CommandParameters[0]);
+        var newBugStatus = ParseStatus(CommandParameters[1]);
 
-        bug.Status = ParseStatus(CommandParameters[1]);
+        if (newBugStatus == bug.Status)
+        {
+            return $"Bug {bug.Title} status already {newBugStatus}.";
+        }
 
-        return $"Bug {bug.Title} status changed to {bug.Status}.";
+        bug.Status = newBugStatus;
 
+        return $"Bug {bug.Title} status changed to {newBugStatus}.";
     }
 
     private StatusBug ParseStatus(string value)
