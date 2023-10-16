@@ -55,8 +55,7 @@ public class Board : IBoard
         }
 
         return string.Join(Environment.NewLine,
-                tasks.Select(task => task.ToString())
-            );
+                tasks.Select(task => task.ToString()));
     }
 
     public override string ToString()

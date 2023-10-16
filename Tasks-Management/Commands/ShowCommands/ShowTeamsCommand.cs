@@ -19,18 +19,13 @@ public class ShowTeamsCommand : BaseCommand
 
     public override string Execute()
     {
-        if (Repository.Teams.Count > 0)
+        if (!Repository.Teams.Any())
         {
-            var sb = new StringBuilder();
-            foreach (var team in Repository.Teams)
-            {
-                sb.AppendLine(team.Name);
-            }
-
-            return sb.ToString().TrimEnd();
+            throw new EntityNotFoundException(NoTeamsMessage);
         }
 
-        throw new EntityNotFoundException(NoTeamsMessage);
+        return string.Join(Environment.NewLine,
+            Repository.Teams.Select(team => team.Name));
     }
 }
 
