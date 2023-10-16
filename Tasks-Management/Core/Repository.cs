@@ -3,6 +3,7 @@ using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
+using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Core;
 
