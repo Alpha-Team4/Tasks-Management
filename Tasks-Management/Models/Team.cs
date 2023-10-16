@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TasksManagement.Models.Contracts;
+using TasksManagement.Exceptions;
+
 
 namespace TasksManagement.Models;
 public class Team : ITeam
@@ -11,6 +13,7 @@ public class Team : ITeam
     private const int TeamNameMinLength = 5;
     private const int TeamNameMaxLength = 15;
     private const string TeamNameErrorMessage = "Team name must be between {0} and {1} characters.";
+    private const string NoMembersMessage = "--NO MEMBERS--";
 
     private string name;
     private readonly IList<IBoard> boards = new List<IBoard>();
@@ -53,5 +56,26 @@ public class Team : ITeam
     public void AddBoard(IBoard board)
     {
         this.boards.Add(board);
+    }
+
+    public string PrintAllMembers()
+    {
+        if (!members.Any())
+        {
+            return NoMembersMessage;
+        }
+
+        return string.Join(Environment.NewLine, 
+                members.Select(member => member.Name)
+            );
+    }
+
+    public override string ToString()
+    {
+        return $"""
+                Name: {Name}
+                   Members:
+                     {PrintAllMembers()}
+                """;
     }
 }

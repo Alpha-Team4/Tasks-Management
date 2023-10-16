@@ -3,5 +3,5 @@ public interface IHasHistory
 {
     public IList<IEvent> History { get; }
 
-    public void AddEvent(IEvent @event);
+    public void AddEvent(IEvent eventToAdd);
 }
