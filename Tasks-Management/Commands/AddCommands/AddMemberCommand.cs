@@ -27,7 +27,7 @@ public class AddMemberCommand : BaseCommand
         var member = Repository.FindMemberByName(CommandParameters[1]);
         var memberExist = team.Members.Any(m => m.Name == member.Name);
       
-        if(!memberExist)
+        if(memberExist)
         {
             throw new NameAlreadyExistsException
                 (string.Format(AddMemberErrorMessage, member.Name));
@@ -35,6 +35,6 @@ public class AddMemberCommand : BaseCommand
 
         team.Members.Add(member);
 
-        return string.Format(AddMemberOutputMessage, member, team);
+        return string.Format(AddMemberOutputMessage, member.Name, team.Name);
     }
 }
