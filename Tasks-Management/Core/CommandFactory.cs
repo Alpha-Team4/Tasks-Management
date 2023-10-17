@@ -90,10 +90,16 @@ public class CommandFactory : ICommandFactory
             case CommandType.ShowBoardActivity:
                 return new ShowBoardActivityCommand(commandParameters, repository);
 
+            case CommandType.ShowMemberActivity:
+                return new ShowMemberActivityCommand(commandParameters, repository);
 
             // List Commands
             case CommandType.ListTasks:
                 return new ListTasksCommand(commandParameters, repository);
+
+            // Add Commands
+            case CommandType.AddMember:
+                return new AddMemberCommand(commandParameters, repository);
 
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");

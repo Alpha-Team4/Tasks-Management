@@ -8,8 +8,6 @@ public class Member : IMember
     private const int MemberNameMaxLength = 15;
     private const string MemberNameErrorMessage = "Member name must be between {0} and {1} characters.";
     private const string NoTasksFoundMessage = "--NO TASKS--";
-    private const string NoHistoryFoundMessage = "--NO HISTORY--";
-
     private string name;
     private readonly IList<IEvent> history = new List<IEvent>();
     private readonly IList<ITask> tasks = new List<ITask>(); 
