@@ -10,6 +10,8 @@ public class Member : IMember
     private const string NoTasksFoundMessage = "--NO TASKS--";
     private const string NoHistoryFoundMessage = "--NO HISTORY--";
 
+    private const string TaskAddedMessage = "Task '{0}' assigned to member '{1}'.";
+
     private string name;
     private readonly IList<IEvent> history = new List<IEvent>();
     private readonly IList<ITask> tasks = new List<ITask>(); 
@@ -17,7 +19,7 @@ public class Member : IMember
     public Member(string name)
     {
 
-        this.Name = name;
+        Name = name;
     } 
     public string Name
     {
@@ -41,7 +43,9 @@ public class Member : IMember
 
     public void AddTask(ITask task)
     {
-        this.tasks.Add(task);
+        tasks.Add(task);
+        var message = string.Format(TaskAddedMessage, task.Title, Name);
+        AddEvent(message);
     }
 
     public string PrintAllTasks()
@@ -58,7 +62,7 @@ public class Member : IMember
     public override string ToString()
     {
         return $"""
-                Name: {this.Name}
+                Name: {Name}
                    Tasks:
                      {PrintAllTasks()}
                 """;
