@@ -51,6 +51,7 @@ public class ChangeBugSeverityCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidBugSeverityErrorMessage, value));
+        throw new InvalidUserInputException
+            (string.Format(InvalidBugSeverityErrorMessage, value));
     }
 }

@@ -11,6 +11,7 @@ public class ChangeStorySizeCommand : BaseCommand
     private const string ChangeStorySizeErrorMessage = "Story {0} size already {1}.";
     private const string ChangeStorySizeOutputMessage = "Story {0} size changed to {1}.";
     private const string InvalidStorySizeErrorMessage = "None of the enums in Size match the value {0}.";
+
     public ChangeStorySizeCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
     {
@@ -48,6 +49,7 @@ public class ChangeStorySizeCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidStorySizeErrorMessage, value));
+        throw new InvalidUserInputException
+            (string.Format(InvalidStorySizeErrorMessage, value));
     }
 }

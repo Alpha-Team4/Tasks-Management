@@ -52,6 +52,7 @@ public class ChangeStoryStatusCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidStoryStatusErrorMessage, value));
+        throw new InvalidUserInputException
+            (string.Format(InvalidStoryStatusErrorMessage, value));
     }
 }

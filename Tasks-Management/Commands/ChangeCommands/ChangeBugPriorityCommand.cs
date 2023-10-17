@@ -51,6 +51,7 @@ public class ChangeBugPriorityCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidBugPriorityErrorMessage, value));
+        throw new InvalidUserInputException
+            (string.Format(InvalidBugPriorityErrorMessage, value));
     }
 }

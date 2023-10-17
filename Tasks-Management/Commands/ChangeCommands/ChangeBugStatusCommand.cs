@@ -51,6 +51,7 @@ public class ChangeBugStatusCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidBugStatusErrorMessage, value));
+        throw new InvalidUserInputException
+            (string.Format(InvalidBugStatusErrorMessage, value));
     }
 }

@@ -50,6 +50,7 @@ public class ChangeFeedbackStatusCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidFeedbackStatusErrorMessage, value));
+        throw new InvalidUserInputException
+            (string.Format(InvalidFeedbackStatusErrorMessage, value));
     }
 }

@@ -21,6 +21,7 @@ public enum CommandType
     ChangeSeverity,
     ChangeStorySize,
     ChangeStoryStatus,
+    ChangeStoryPriority,
     ChangeFeedbackStatus,
     ChangeRating,
     ListTasks,
