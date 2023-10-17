@@ -6,7 +6,7 @@ using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Commands.ChangeCommands;
-internal class ChangeRatingCommand : BaseCommand
+public class ChangeRatingCommand : BaseCommand
 {
     public const int ExpectedNumberOfArguments = 4;
 
