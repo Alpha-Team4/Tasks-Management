@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TasksManagement.Models.Contracts;
+﻿namespace TasksManagement.Models.Contracts;
 public interface IBoard : IHasHistory, IHasTasks
 {
     public string Name { get; }

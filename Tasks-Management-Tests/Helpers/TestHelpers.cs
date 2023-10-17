@@ -5,6 +5,8 @@ using static TasksManagement_Tests.Helpers.TestData;
 namespace TasksManagement_Tests.Helpers;
 public class TestHelpers
 {
+    public static int TaskIdCounter { get; set; }
+
     public static ITeam InitializeTestTeam()
     {
         return new Team(TeamData.ValidName);
@@ -20,31 +22,122 @@ public class TestHelpers
         return new Board(BoardData.ValidName);
     }
 
-    public static ITask InitializeTestBug()
+    public static IBug InitializeTestBug()
     {
-        return new Bug(
-            TaskData.ValidTitle,
-            TaskData.ValidDescription,
-            InitializeTestBoard()
+        try
+        {
+            var bug = new Bug(
+                TaskData.ValidTitle,
+                TaskData.ValidDescription,
+                InitializeTestBoard()
             );
+
+            TaskIdCounter++;
+            return bug;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
-    public static ITask InitializeTestStory()
+    public static IBug InitializeTestBug(string title, string description, IBoard board)
     {
-        return new Story(
-            TaskData.ValidTitle,
-            TaskData.ValidDescription,
-            InitializeTestBoard()
+        try
+        {
+            var bug = new Bug(
+                title,
+                description,
+                board
             );
+
+            TaskIdCounter++;
+            return bug;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
-    public static ITask InitializeTestFeedback()
+    public static IStory InitializeTestStory()
     {
-        return new Feedback(
-            TaskData.ValidTitle,
-            TaskData.ValidDescription,
-            0
+        try
+        {
+            var story = new Story(
+                TaskData.ValidTitle,
+                TaskData.ValidDescription,
+                InitializeTestBoard()
             );
+
+            TaskIdCounter++;
+            return story;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public static IStory InitializeTestStory(string title, string description, IBoard board)
+    {
+        try
+        {
+            var story = new Story(
+                title,
+                description,
+                board
+            );
+
+            TaskIdCounter++;
+            return story;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+
+    public static IFeedback InitializeTestFeedback()
+    {
+        try
+        {
+            var feedback = new Feedback(
+                TaskData.ValidTitle,
+                TaskData.ValidDescription
+                );
+
+            TaskIdCounter++;
+            return feedback;
+        }
+        catch
+        {
+            throw;
+        }
+
+
+    }
+
+    public static IFeedback InitializeTestFeedback(string title, string description, IBoard board)
+    {
+        try
+        {
+            var feedback = new Feedback(
+                TaskData.ValidTitle,
+                TaskData.ValidDescription
+                );
+
+            TaskIdCounter++;
+            
+            return feedback;
+
+        }
+        catch
+        {
+            throw;
+        }
+
     }
 
     public static IEvent InitializeTestEvent()

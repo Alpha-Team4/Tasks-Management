@@ -2,6 +2,4 @@
 public interface IHasHistory
 {
     public IList<IEvent> History { get; }
-
-    public void AddEvent(string message);
 }

@@ -34,7 +34,7 @@ public class Member : IMember
 
     public IList<ITask> Tasks => new List<ITask>(tasks);
 
-    public void AddEvent(string message)
+    private void AddEvent(string message)
     {
         history.Add(new Event(message));
     }

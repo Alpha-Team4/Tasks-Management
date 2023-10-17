@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TasksManagement.Models.Contracts;
-using TasksManagement.Exceptions;
-
+﻿using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
 public class Team : ITeam
@@ -54,7 +47,7 @@ public class Team : ITeam
         this.boards.Add(board);
     }
 
-    public void AddEvent(string message)
+    private void AddEvent(string message)
     {
         history.Add(new Event(message));
     }
