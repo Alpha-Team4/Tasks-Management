@@ -67,6 +67,8 @@ public class CommandFactory : ICommandFactory
 
             case CommandType.ChangeBugStatus:
                 return new ChangeBugStatusCommand(commandParameters, repository);
+            case CommandType.ChangeBugPriority:
+                return new ChangeBugPriorityCommand(commandParameters, repository);
 
             case CommandType.ChangeStorySize:
                 return new ChangeStorySizeCommand(commandParameters, repository);

@@ -8,7 +8,7 @@ using TasksManagement.Models.Enums;
 namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugSeverityCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 4;
+    private const int ExpectedNumberOfArguments = 4;
     private const string ChangeBugSeverityErrorMessage = "Bug {0} severity already {1}.";
     private const string ChangeBugSeverityOutputMessage = "Bug {0} severity changed to {1}.";
     private const string InvalidBugSeverityErrorMessage = "None of the enums in Severity match the value {0}.";
@@ -45,7 +45,7 @@ public class ChangeBugSeverityCommand : BaseCommand
         return string.Format(ChangeBugSeverityOutputMessage, title, newBugSeverity);
     }
 
-    protected Severity ParseSeverity(string value)
+    private Severity ParseSeverity(string value)
     {
         if (Enum.TryParse(value, true, out Severity result))
         {

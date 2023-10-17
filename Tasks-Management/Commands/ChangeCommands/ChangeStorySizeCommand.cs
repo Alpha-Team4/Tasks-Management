@@ -7,7 +7,7 @@ using TasksManagement.Models.Enums;
 namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeStorySizeCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 4;
+    private const int ExpectedNumberOfArguments = 4;
     private const string ChangeStorySizeErrorMessage = "Story {0} size already {1}.";
     private const string ChangeStorySizeOutputMessage = "Story {0} size changed to {1}.";
     private const string InvalidStorySizeErrorMessage = "None of the enums in Size match the value {0}.";

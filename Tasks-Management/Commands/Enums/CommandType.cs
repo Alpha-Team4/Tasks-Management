@@ -15,7 +15,7 @@ public enum CommandType
     ShowTeamActivity,
     ShowBoardActivity,
     ChangeBugStatus,
-    ChangePriority,
+    ChangeBugPriority,
     ChangeBugAssignee,
     ChangeStoryAssignee,
     ChangeSeverity,
