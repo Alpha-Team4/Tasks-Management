@@ -8,9 +8,13 @@ using TasksManagement.Models.Enums;
 namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugSeverityCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 2;
+    public const int ExpectedNumberOfArguments = 4;
+    private const string ChangeBugSeverityErrorMessage = "Bug {0} severity already {1}.";
+    private const string ChangeBugSeverityOutputMessage = "Bug {0} severity changed to {1}.";
+    private const string InvalidBugSeverityErrorMessage = "None of the enums in Severity match the value {0}.";
 
-    public ChangeBugSeverityCommand(IList<string> commandParameters, IRepository repository) : base(commandParameters, repository)
+    public ChangeBugSeverityCommand(IList<string> commandParameters, IRepository repository) 
+        : base(commandParameters, repository)
     {
     }
 
@@ -19,16 +23,26 @@ public class ChangeBugSeverityCommand : BaseCommand
         if (CommandParameters.Count != ExpectedNumberOfArguments)
         {
             throw new InvalidUserInputException
-               ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments} Received: {CommandParameters.Count}");
+               ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments}" +
+                $" Received: {CommandParameters.Count}");
         }
 
-        IBug bug = Repository.FindTaskByTitle<IBug>(CommandParameters[0]);
+        var team = Repository.FindTeamByName(CommandParameters[0]);
+        var board = Repository.FindBoardByName(CommandParameters[1], team);
+        var title = CommandParameters[2];
+        var newBugSeverity = ParseSeverity(CommandParameters[3]);
 
+        IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
 
-        bug.Severity = ParseSeverity(CommandParameters[1]);
+        if (newBugSeverity == bug.Severity)
+        {
+            throw new ArgumentException
+                (string.Format(ChangeBugSeverityErrorMessage, title, newBugSeverity));
+        }
 
-        return $"Bug {bug.Title} severity changed to {bug.Severity}";
+        bug.Severity = newBugSeverity;
 
+        return string.Format(ChangeBugSeverityOutputMessage, title, newBugSeverity);
     }
 
     protected Severity ParseSeverity(string value)
@@ -37,6 +51,6 @@ public class ChangeBugSeverityCommand : BaseCommand
         {
             return result;
         }
-        throw new ArgumentException($"None of the enums in Severity match the value {value}.");
+        throw new InvalidUserInputException(string.Format(InvalidBugSeverityErrorMessage, value));
     }
 }

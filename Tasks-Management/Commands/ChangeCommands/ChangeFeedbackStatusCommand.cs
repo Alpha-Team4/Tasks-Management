@@ -7,8 +7,10 @@ using TasksManagement.Models.Enums;
 namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeFeedbackStatusCommand : BaseCommand
 {
-    private const int ExpectedNumberOfArguments = 2;
-    private const string InvalidStatusError = "None of the enums in FeedbackStatus match the value {0}.";
+    private const int ExpectedNumberOfArguments = 4;
+    private const string ChangeFeedbackStatusErrorMessage = "Feedback {0} status already {1}.";
+    private const string ChangeFeedbackStatusOutputMessage = "Feedback {0} status changed to {1}.";
+    private const string InvalidFeedbackStatusErrorMessage = "None of the enums in FeedbackStatus match the value {0}.";
 
     public ChangeFeedbackStatusCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -20,20 +22,26 @@ public class ChangeFeedbackStatusCommand : BaseCommand
         if (CommandParameters.Count != ExpectedNumberOfArguments)
         {
             throw new InvalidUserInputException
-                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments} Received: {CommandParameters.Count}");
+                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments}" +
+                 $" Received: {CommandParameters.Count}");
         }
 
-        IFeedback feedback = Repository.FindTaskByTitle<IFeedback>(CommandParameters[0]);
-        var newFeedbackStatus = ParseStatus(CommandParameters[1]);
+        var team = Repository.FindTeamByName(CommandParameters[0]);
+        var board = Repository.FindBoardByName(CommandParameters[1], team);
+        var title = CommandParameters[2];
+        var newFeedbackStatus = ParseStatus(CommandParameters[3]);
+
+        IFeedback feedback = Repository.FindTaskByTitle<IFeedback>(title, board);
 
         if (newFeedbackStatus == feedback.Status)
         {
-            return $"Feedback {feedback.Title} status already {newFeedbackStatus}.";
+            throw new ArgumentException
+                (string.Format(ChangeFeedbackStatusErrorMessage, title, newFeedbackStatus));
         }
 
         feedback.Status = newFeedbackStatus;
 
-        return $"Feedback {feedback.Title} status changed to {newFeedbackStatus}.";
+        return string.Format(ChangeFeedbackStatusOutputMessage, title, newFeedbackStatus);
     }
 
     private StatusFeedback ParseStatus(string value)
@@ -42,6 +50,6 @@ public class ChangeFeedbackStatusCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidStatusError, value));
+        throw new InvalidUserInputException(string.Format(InvalidFeedbackStatusErrorMessage, value));
     }
 }

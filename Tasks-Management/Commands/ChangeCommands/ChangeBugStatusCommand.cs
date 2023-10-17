@@ -8,8 +8,10 @@ using TasksManagement.Models.Enums;
 namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugStatusCommand : BaseCommand
 {
-    private const int ExpectedNumberOfArguments = 2;
-    private const string InvalidStatusError = "None of the enums in BugStatus match the value {0}.";
+    private const int ExpectedNumberOfArguments = 4;
+    private const string ChangeBugStatusErrorMessage = "Bug {0} status already {1}.";
+    private const string ChangeBugStatusOutputMessage = "Bug {0} status changed to {1}.";
+    private const string InvalidBugStatusErrorMessage = "None of the enums in BugStatus match the value {0}.";
 
     public ChangeBugStatusCommand(IList<string> commandParameters, IRepository repository) 
         : base(commandParameters, repository)
@@ -21,20 +23,26 @@ public class ChangeBugStatusCommand : BaseCommand
         if (CommandParameters.Count != ExpectedNumberOfArguments)
         {
             throw new InvalidUserInputException
-                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments} Received: {CommandParameters.Count}");
+                ($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments}" +
+                 $" Received: {CommandParameters.Count}");
         }
 
-        IBug bug = Repository.FindTaskByTitle<IBug>(CommandParameters[0]);
-        var newBugStatus = ParseStatus(CommandParameters[1]);
+        var team = Repository.FindTeamByName(CommandParameters[0]);
+        var board = Repository.FindBoardByName(CommandParameters[1], team);
+        var title = CommandParameters[2];
+        var newBugStatus = ParseStatus(CommandParameters[3]);
+
+        IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
 
         if (newBugStatus == bug.Status)
         {
-            return $"Bug {bug.Title} status already {newBugStatus}.";
+            throw new ArgumentException
+                (string.Format(ChangeBugStatusErrorMessage, title, newBugStatus));
         }
 
         bug.Status = newBugStatus;
 
-        return $"Bug {bug.Title} status changed to {newBugStatus}.";
+        return string.Format(ChangeBugStatusOutputMessage, title, newBugStatus);
     }
 
     private StatusBug ParseStatus(string value)
@@ -43,6 +51,6 @@ public class ChangeBugStatusCommand : BaseCommand
         {
             return result;
         }
-        throw new InvalidUserInputException(string.Format(InvalidStatusError, value));
+        throw new InvalidUserInputException(string.Format(InvalidBugStatusErrorMessage, value));
     }
 }
