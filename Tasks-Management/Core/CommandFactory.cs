@@ -53,6 +53,9 @@ public class CommandFactory : ICommandFactory
             case CommandType.ChangeStoryStatus:
                 return new ChangeStoryStatusCommand(commandParameters, repository);
 
+            case CommandType.ChangeBugStatus:
+                return new ChangeBugStatusCommand(commandParameters, repository);
+
             case CommandType.ChangeFeedbackStatus:
                 return new ChangeFeedbackStatusCommand(commandParameters, repository);
 
@@ -65,9 +68,6 @@ public class CommandFactory : ICommandFactory
             case CommandType.ChangeStoryAssignee:
                 return new ChangeStoryAssigneeCommand(commandParameters, repository);
 
-            case CommandType.ChangeBugStatus:
-                return new ChangeBugStatusCommand(commandParameters, repository);
-
             case CommandType.ChangeBugPriority:
                 return new ChangeBugPriorityCommand(commandParameters, repository);
 
@@ -76,6 +76,9 @@ public class CommandFactory : ICommandFactory
 
             case CommandType.ChangeStorySize:
                 return new ChangeStorySizeCommand(commandParameters, repository);
+
+            case CommandType.ChangeBugSeverity:
+                return new ChangeBugSeverityCommand(commandParameters, repository);
 
             // Show Commands
             case CommandType.ShowTeams:
