@@ -174,9 +174,9 @@ public abstract class Task : ITask
     {
         return $"""
                 {GetType().Name} (ID: #{Id})
-                   Title: {Title}
-                   Description: {Description}
-                   Status: {GetCurrentStatus()}
+                  Title: {Title}
+                  Description: {Description}
+                  Status: {GetCurrentStatus()}
                 """;
     }
 }

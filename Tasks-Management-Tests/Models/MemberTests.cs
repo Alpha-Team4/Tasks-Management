@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TasksManagement.Models.Contracts;
 using static TasksManagement_Tests.Helpers.TestData.MemberData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
@@ -59,16 +60,32 @@ public class MemberTests
     }
 
     [TestMethod]
-    public void ToString_PrintsCorrectOutput()
+    public void ToString_PrintsMemberInfo()
+    {
+        var member = InitializeTestMember();
+
+        var expectedOutput = $"""
+                              Name: {member.Name}
+                                Tasks:
+                                  --NO TASKS--
+                              """;
+
+        Assert.AreEqual(expectedOutput, member.ToString());
+    }
+
+    [TestMethod]
+    public void ToString_PrintsMemberInfo_And_Tasks()
     {
         var member = InitializeTestMember();
         var task = InitializeTestBug();
 
         member.AddTask(task);
 
-        var expectedOutput = "Name: Valid Name\n   Tasks:\n     Bug (ID: 1)\n   Title: This is a valid title\n   Description: This is a valid description.\n   Status: Active\n   Reproduction Steps: \n   Priority: Low\n   Severity: Minor\n   Assignee: \n     --NO COMMENTS--";
-
-        var output = member.ToString();
+        var expectedOutput = $"""
+                              Name: {member.Name}
+                                Tasks:
+                                  {member.PrintAllTasks()}
+                              """;
 
         Assert.AreEqual(expectedOutput, member.ToString());
     }

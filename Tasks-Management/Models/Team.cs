@@ -68,8 +68,8 @@ public class Team : ITeam
     {
         return $"""
                 Name: {Name}
-                   Members:
-                     {PrintAllMembers()}
+                  Members:
+                    {PrintAllMembers()}
                 """;
     }
 }

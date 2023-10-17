@@ -16,22 +16,22 @@ public class Board : IBoard
 
     public Board(string name) 
     {
-        this.Name = name;
+        Name = name;
     }  
     public string Name
     {
-        get => this.name;
+        get => name;
         private set
         {
             Validator.ValidateStringLength(value, BoardNameMinLength, BoardNameMaxLength,
                 string.Format(BoardNameErrorMessage, BoardNameMinLength, BoardNameMaxLength));
-            this.name = value;
+            name = value;
         }
     }
 
-    public IList<IEvent> History => new List<IEvent>(this.history);
+    public IList<IEvent> History => new List<IEvent>(history);
 
-    public IList<ITask> Tasks => new List<ITask>(this.tasks);
+    public IList<ITask> Tasks => new List<ITask>(tasks);
 
     private void AddEvent(string message)
     {
@@ -40,7 +40,7 @@ public class Board : IBoard
 
     public void AddTask(ITask taskToAdd)
     {
-        this.tasks.Add(taskToAdd);
+        tasks.Add(taskToAdd);
 
         var message = string.Format(TaskAddedMessage, taskToAdd.Title, Name);
         AddEvent(message);
@@ -53,16 +53,17 @@ public class Board : IBoard
             return NoTasksFoundMessage;
         }
 
-        return string.Join(Environment.NewLine,
-                tasks.Select(task => task.ToString()));
+        return string.Join("\r\n",
+                tasks.Select(task => task.ToString())
+                );
     }
 
     public override string ToString()
     {
         return $"""
                 Name: {Name}
-                   Tasks:
-                     {PrintAllTasks()}
+                  Tasks:
+                    {PrintAllTasks()}
                 """;
     }
 }

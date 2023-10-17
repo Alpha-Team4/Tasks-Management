@@ -59,14 +59,31 @@ public class BoardTests
     }
 
     [TestMethod]
-    public void ToString_ReturnsCorrectOutput()
+    public void ToString_PrintsBoardInfo()
     {
         var board = InitializeTestBoard();
 
         var expectedOutput = $"""
                               Name: {board.Name}
-                                 Tasks:
-                                   --NO TASKS--
+                                Tasks:
+                                  --NO TASKS--
+                              """;
+
+        Assert.AreEqual(expectedOutput, board.ToString());
+    }
+
+    [TestMethod]
+    public void ToString_PrintsBoardInfo_And_Tasks()
+    {
+        var board = InitializeTestBoard();
+        var task = InitializeTestBug();
+
+        board.AddTask(task);
+
+        var expectedOutput = $"""
+                              Name: {board.Name}
+                                Tasks:
+                                  {board.PrintAllTasks()}
                               """;
 
         Assert.AreEqual(expectedOutput, board.ToString());
