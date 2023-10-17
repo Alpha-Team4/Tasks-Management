@@ -1,4 +1,4 @@
 ﻿namespace TasksManagement.Commands.ListCommands;
-internal class ListTasksWithAssignee
+public class ListAssignedTasks
 {
 }
