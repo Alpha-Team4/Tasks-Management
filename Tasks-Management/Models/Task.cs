@@ -156,7 +156,7 @@ public abstract class Task : ITask
 
     public IList<IEvent> History => new List<IEvent>(history);
 
-    public void AddEvent(string message)
+    protected void AddEvent(string message)
     {
         history.Add(new Event(message));
     }

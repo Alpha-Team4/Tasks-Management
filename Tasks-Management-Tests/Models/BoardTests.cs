@@ -1,6 +1,10 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Xml.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TasksManagement_Tests.Helpers;
+using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestData.BoardData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
+using TasksManagement.Models;
 
 namespace TasksManagement.Models.Tests;
 
@@ -10,7 +14,7 @@ public class BoardTests
     [TestMethod]
     public void Constructor_AssignsCorrectName()
     {
-        var board = new Board(ValidName);
+        var board = InitializeTestBoard();
 
         Assert.AreEqual(ValidName, board.Name);
     }
@@ -18,7 +22,7 @@ public class BoardTests
     [TestMethod]
     public void AddTask_AddsTaskToBoardTasksList()
     {
-        var board = new Board(ValidName);
+        var board = InitializeTestBoard();
         var task = InitializeTestBug();
 
         board.AddTask(task);
@@ -29,11 +33,42 @@ public class BoardTests
     [TestMethod]
     public void AddEvent_AddsEventToBoardEventList()
     {
-        var board = new Board(ValidName);
-        var testEvent = InitializeTestEvent();
+        var board = InitializeTestBoard();
+        board.AddTask(InitializeTestBug());
 
-        board.AddEvent(testEvent);
+        Assert.IsTrue(board.History.Any());
+    }
 
-        Assert.AreEqual(testEvent, board.History.FirstOrDefault());
+    [TestMethod]
+    public void PrintAllTasks_ReturnsContainingTasks()
+    {
+        var board = InitializeTestBoard();
+        var task = InitializeTestBug();
+
+        board.AddTask(task);
+
+        Assert.AreEqual(task.ToString(), board.PrintAllTasks());
+    }
+
+    [TestMethod]
+    public void PrintAllTasks_ReturnsNoTasksHeader()
+    {
+        var board = InitializeTestBoard();
+
+        Assert.AreEqual("--NO TASKS--", board.PrintAllTasks());
+    }
+
+    [TestMethod]
+    public void ToString_ReturnsCorrectOutput()
+    {
+        var board = InitializeTestBoard();
+
+        var expectedOutput = $"""
+                              Name: {board.Name}
+                                 Tasks:
+                                   --NO TASKS--
+                              """;
+
+        Assert.AreEqual(expectedOutput, board.ToString());
     }
 }

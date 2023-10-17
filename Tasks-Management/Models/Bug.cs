@@ -1,10 +1,12 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 using TasksManagement.Commands.Enums;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
+[assembly: InternalsVisibleTo("TasksManagement-Tests")]
 namespace TasksManagement.Models;
-public class Bug : Task, IBug
+internal class Bug : Task, IBug
 {
     private const string PriorityChangedMessage = "Priority changed from '{0}' to '{1}'";
     private const string SeverityChangedMessage = "Severity changed from '{0}' to '{1}'";

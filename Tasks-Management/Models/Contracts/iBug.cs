@@ -13,4 +13,8 @@ public interface IBug : ITask
     public IMember Assignee { get; set; }
 
     public IList<string> ReproductionSteps { get; }
+
+    public void AddReproductionStep(string step);
+
+    public string PrintReproductionSteps();
 }

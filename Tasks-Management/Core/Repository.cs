@@ -167,11 +167,6 @@ public class Repository : IRepository
             .OfType<T>()
             .FirstOrDefault(task => task.Title == taskTitle);
 
-        if (foundTask == null)
-        {
-            throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
-        }
-
         if (foundTask is T typedTask)
         {
             return typedTask;

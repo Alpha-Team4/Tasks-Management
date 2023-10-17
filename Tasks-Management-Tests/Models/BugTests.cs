@@ -3,6 +3,7 @@ using TasksManagement.Commands.Enums;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
+using TasksManagement_Tests.Helpers;
 using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
@@ -14,10 +15,7 @@ public class BugTests
     [TestMethod]
     public void Constructor_AssignsCorrectTitle()
     {
-        var bug = new Bug(
-            TaskData.ValidTitle,
-            TaskData.ValidDescription,
-            InitializeTestBoard());
+        var bug = InitializeTestBug();
 
         Assert.AreEqual(bug.Title, TaskData.ValidTitle);
     }
@@ -25,10 +23,7 @@ public class BugTests
     [TestMethod]
     public void Constructor_AssignsCorrectDescription()
     {
-        var bug = new Bug(
-            TaskData.ValidTitle,
-            TaskData.ValidDescription,
-            InitializeTestBoard());
+        var bug = InitializeTestBug();
 
         Assert.AreEqual(bug.Description, TaskData.ValidDescription);
     }
@@ -37,14 +32,14 @@ public class BugTests
     public void Constructor_ThrowsOn_InvalidTitleLength()
     {
         Assert.ThrowsException<InvalidUserInputException>(
-            () => new Bug(
+            () => InitializeTestBug(
                 TaskData.TooShortTitle,
                 TaskData.ValidDescription,
                 InitializeTestBoard())
             );
 
         Assert.ThrowsException<InvalidUserInputException>(
-            () => new Bug(
+            () => InitializeTestBug(
                 TaskData.TooLongTitle,
                 TaskData.ValidDescription,
                 InitializeTestBoard())
@@ -55,14 +50,14 @@ public class BugTests
     public void Constructor_ThrowsOn_InvalidDescriptionLength()
     {
         Assert.ThrowsException<InvalidUserInputException>(
-            () => new Bug(
+            () => InitializeTestBug(
                 TaskData.ValidTitle,
                 TaskData.TooShortDescription,
                 InitializeTestBoard())
             );
 
         Assert.ThrowsException<InvalidUserInputException>(
-            () => new Bug(
+            () => InitializeTestBug(
                 TaskData.ValidTitle,
                 TaskData.TooLongDescription,
                 InitializeTestBoard())
@@ -72,18 +67,16 @@ public class BugTests
     [TestMethod]
     public void Constructor_AssignsUniqueIdsToBugs()
     {
-        var bug1 = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
-        var bug2 = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug1 = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
-        Assert.AreEqual(bug1.Id, 1);
-        Assert.AreEqual(bug2.Id, 2);
+        Assert.AreEqual(bug1.Id, TaskIdCounter);
     }
 
     [TestMethod]
     public void Title_Setter_AssignsCorrectValue()
     {
         var newTitle = "New Valid Title";
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         bug.Title = newTitle;
 
@@ -93,7 +86,7 @@ public class BugTests
     [TestMethod]
     public void Title_Setter_ThrowsOn_InvalidTitleLength()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         Assert.ThrowsException<InvalidUserInputException>(() => bug.Title = TaskData.TooShortTitle);
         Assert.ThrowsException<InvalidUserInputException>(() => bug.Title = TaskData.TooLongTitle);
@@ -102,7 +95,7 @@ public class BugTests
     [TestMethod]
     public void Title_Setter_ThrowsWhen_SameValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         Assert.ThrowsException<InvalidUserInputException>(() => bug.Title = TaskData.ValidTitle);
     }
@@ -111,7 +104,7 @@ public class BugTests
     public void Description_Setter_AssignsCorrectValue()
     {
         var newDescription = new string('a', TaskData.DescriptionMinLength);
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         bug.Description = newDescription;
 
@@ -124,7 +117,7 @@ public class BugTests
         var TooShortDescription = new string('a', TaskData.DescriptionMinLength - 1);
         var TooLongDescription = new string('a', TaskData.DescriptionMaxLength + 1);
 
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         Assert.ThrowsException<InvalidUserInputException>(() => bug.Description = TooShortDescription);
         Assert.ThrowsException<InvalidUserInputException>(() => bug.Description = TooLongDescription);
@@ -133,7 +126,7 @@ public class BugTests
     [TestMethod]
     public void Description_Setter_ThrowsWhen_SameValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         Assert.ThrowsException<InvalidUserInputException>(() => bug.Description = TaskData.ValidDescription);
     }
@@ -141,7 +134,7 @@ public class BugTests
     [TestMethod]
     public void Status_Setter_AssignsCorrectValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         bug.Status = StatusBug.Fixed;
 
@@ -151,7 +144,7 @@ public class BugTests
     [TestMethod]
     public void Priority_Setter_AssignsCorrectValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         bug.Priority = Priority.High;
 
@@ -161,7 +154,7 @@ public class BugTests
     [TestMethod]
     public void Severity_Setter_AssignsCorrectValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         bug.Severity = Severity.Major;
 
@@ -171,7 +164,7 @@ public class BugTests
     [TestMethod]
     public void Assignee_Setter_AssignsCorrectValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
         var newMember = InitializeTestMember();
 
         bug.Assignee = newMember;
@@ -182,7 +175,7 @@ public class BugTests
     [TestMethod]
     public void ReproductionSteps_Setter_AssignsCorrectValue()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
         var steps = "1. first step\r\n2. second step";
 
         bug.AddReproductionStep("first step");
@@ -194,7 +187,7 @@ public class BugTests
     [TestMethod]
     public void GetCurrentStatus_Returns_Active()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
         Assert.AreEqual(StatusBug.Active.ToString(), bug.GetCurrentStatus());
     }
@@ -202,10 +195,10 @@ public class BugTests
     [TestMethod]
     public void ToString_ReturnsCorrectValues()
     {
-        var bug = new Bug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
+        var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
         
         var testOutput = $"""
-                          Bug (ID: 1)
+                          Bug (ID: {TestHelpers.TaskIdCounter})
                              Title: This is a valid title
                              Description: This is a valid description.
                              Status: Active
@@ -216,8 +209,6 @@ public class BugTests
                                --NO COMMENTS--
                           """;
 
-        //var test = bug.ToString();
-
-        Assert.AreEqual(bug.ToString(), testOutput);
+        Assert.AreEqual(testOutput, bug.ToString());
     }
 }

@@ -4,4 +4,6 @@ public interface IHasTasks
     public IList<ITask> Tasks { get; }
 
     public void AddTask(ITask task);
+
+    public string PrintAllTasks();
 }

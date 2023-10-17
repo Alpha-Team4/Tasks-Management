@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TasksManagement.Models.Contracts;
+﻿using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Models;
 public class Board : IBoard
@@ -34,7 +33,7 @@ public class Board : IBoard
 
     public IList<ITask> Tasks => new List<ITask>(this.tasks);
 
-    public void AddEvent(string message)
+    private void AddEvent(string message)
     {
         history.Add(new Event(message));
     }

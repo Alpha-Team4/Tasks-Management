@@ -3,9 +3,9 @@ public interface ITask : IHasHistory
 {
     public int Id { get; }
 
-    public string Title { get; }
+    public string Title { get; set; }
 
-    public string Description { get; }
+    public string Description { get; set; }
 
     public string AddComment(IComment comment);
 
