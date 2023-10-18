@@ -1,7 +1,6 @@
 ﻿using TasksManagement.Commands.Abstracts;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
-using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
@@ -9,8 +8,8 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugStatusErrorMessage = "Bug {0} status already {1}.";
-    private const string ChangeBugStatusOutputMessage = "Bug {0} status changed to {1}.";
+    private const string ChangeBugStatusErrorMessage = "Bug '{0}' status already '{1}'.";
+    private const string ChangeBugStatusOutputMessage = "Bug '{0}' status changed to '{1}'.";
     private const string InvalidBugStatusErrorMessage = "None of the enums in BugStatus match the value {0}.";
 
     public ChangeBugStatusCommand(IList<string> commandParameters, IRepository repository) 

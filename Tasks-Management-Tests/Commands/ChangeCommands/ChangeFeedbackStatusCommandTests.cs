@@ -7,7 +7,7 @@ using static TasksManagement_Tests.Helpers.TestData;
 namespace TasksManagement.Commands.ChangeCommands.Tests;
 
 [TestClass]
-public class ChangeBugSeverityCommandTests
+public class ChangeFeedbackStatusCommandTests
 {
     [TestMethod]
     public void Constructor_InitializesCommand()
@@ -15,86 +15,84 @@ public class ChangeBugSeverityCommandTests
         var testRepo = new Repository();
         var testParams = new List<string>();
 
-        var sut = new ChangeBugSeverityCommand(testParams, testRepo);
+        var sut = new ChangeFeedbackStatusCommand(testParams, testRepo);
 
-        Assert.IsInstanceOfType(sut, typeof(ChangeBugSeverityCommand));
+        Assert.IsInstanceOfType(sut, typeof(ChangeFeedbackStatusCommand));
     }
 
     [TestMethod]
-    public void Execute_ChangesBugSeverity()
+    public void Execute_ChangesFeedbackStatus()
     {
         // arrange
         var testRepo = new Repository();
 
         testRepo.CreateTeam(TeamData.ValidName);
         testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        testRepo.CreateBug(
+        testRepo.CreateFeedback(
             TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName
             );
-        
+
         var testParams = new List<string> {
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
-            "Critical"
+            "Scheduled"
         };
-        
-        var expectedOutput = $"Bug '{TaskData.ValidTitle}' severity changed to '{Severity.Critical}'.";
+
+        var expectedOutput = $"Feedback '{TaskData.ValidTitle}' status changed to '{StatusFeedback.Scheduled}'.";
 
         //act
-        var sut = new ChangeBugSeverityCommand(testParams, testRepo);
+        var sut = new ChangeFeedbackStatusCommand(testParams, testRepo);
 
         Assert.AreEqual(expectedOutput, sut.Execute());
     }
 
     [TestMethod]
-    public void Execute_Throws_When_SeverityIsTheSame()
+    public void Execute_Throws_When_StatusIsTheSame()
     {
         // arrange
         var testRepo = new Repository();
 
         testRepo.CreateTeam(TeamData.ValidName);
         testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        testRepo.CreateBug(
+        testRepo.CreateFeedback(
             TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName
             );
-        
+
         var testParams = new List<string> {
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
             "0"
         };
-        
+
         //act
-        var sut = new ChangeBugSeverityCommand(testParams, testRepo);
+        var sut = new ChangeFeedbackStatusCommand(testParams, testRepo);
 
         Assert.ThrowsException<ArgumentException>(() => sut.Execute());
     }
 
     [TestMethod]
-    public void Execute_Throws_When_SeverityCannotBeParsed()
+    public void Execute_Throws_When_StatusCannotBeParsed()
     {
         // arrange
         var testRepo = new Repository();
 
         testRepo.CreateTeam(TeamData.ValidName);
         testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        testRepo.CreateBug(
+        testRepo.CreateFeedback(
             TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName
             );
-        
+
         var testParams = new List<string> {
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
-            "wrongSeverity"
+            "wrongStatus"
         };
-        
-        var expectedOutput = $"Bug '{TaskData.ValidTitle}' severity changed to '{Severity.Minor}'.";
 
         //act
-        var sut = new ChangeBugSeverityCommand(testParams, testRepo);
+        var sut = new ChangeFeedbackStatusCommand(testParams, testRepo);
 
         Assert.ThrowsException<InvalidUserInputException>(() => sut.Execute());
     }
@@ -105,7 +103,7 @@ public class ChangeBugSeverityCommandTests
         var testRepo = new Repository();
         var testParams = new List<string> { "testparam", "testparam2", "testparam3" };
 
-        var sut = new ChangeBugSeverityCommand(testParams, testRepo);
+        var sut = new ChangeFeedbackStatusCommand(testParams, testRepo);
 
         Assert.ThrowsException<InvalidUserInputException>(() => sut.Execute());
     }

@@ -8,8 +8,8 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeFeedbackStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeFeedbackStatusErrorMessage = "Feedback {0} status already {1}.";
-    private const string ChangeFeedbackStatusOutputMessage = "Feedback {0} status changed to {1}.";
+    private const string ChangeFeedbackStatusErrorMessage = "Feedback '{0}' status already '{1}'.";
+    private const string ChangeFeedbackStatusOutputMessage = "Feedback '{0}' status changed to '{1}'.";
     private const string InvalidFeedbackStatusErrorMessage = "None of the enums in FeedbackStatus match the value {0}.";
 
     public ChangeFeedbackStatusCommand(IList<string> commandParameters, IRepository repository)
