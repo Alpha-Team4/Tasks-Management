@@ -8,6 +8,7 @@ public enum CommandType
     CreateStory,
     CreateFeedback,
     AddMember,
+    AddComment,
     ShowAllMembers,
     ShowTeams,
     ShowMembers,

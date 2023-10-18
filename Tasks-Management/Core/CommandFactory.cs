@@ -106,6 +106,8 @@ public class CommandFactory : ICommandFactory
             // Add Commands
             case CommandType.AddMember:
                 return new AddMemberCommand(commandParameters, repository);
+            case CommandType.AddComment:
+                return new AddCommentCommand(commandParameters, repository);
 
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");
