@@ -18,7 +18,6 @@ public class Member : IMember
 
     public Member(string name)
     {
-
         Name = name;
     } 
     public string Name
@@ -50,7 +49,7 @@ public class Member : IMember
 
     public void RemoveTask(ITask task)
     {
-        this.Tasks.Remove(task);    
+        tasks.Remove(task);    
     }
 
     public string PrintAllTasks()

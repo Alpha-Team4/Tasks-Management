@@ -32,10 +32,15 @@ public class ListBugsCommand : BaseCommand
              $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }
 
-        var bugs = Repository.Tasks.OfType<IBug>().ToList();
+        var bugs = Repository.FindAllTasks().OfType<IBug>().ToList();
         var statusFilter = ParseStatus(CommandParameters[0]);
 
-        if (CommandParameters.Count == 1 && bugs.Any())
+        if (bugs.Any())
+        {
+            throw new EntityNotFoundException(NoBugsErrorMessage);
+        }
+
+        if (CommandParameters.Count == 1)
         {
             var filteredBugsByStatus = bugs
                 .Where(bug => bug.Status == statusFilter)
@@ -53,27 +58,23 @@ public class ListBugsCommand : BaseCommand
                 (string.Format(NoBugsWithStatus, statusFilter));
 
         }
-        else if (bugs.Any())
+        var assignee = Repository.FindMemberByName(CommandParameters[1]);
+
+        var filteredBugsByAssignee = bugs
+            .Where(bug => bug.Assignee == assignee && bug.Status == statusFilter)
+            .OrderBy(bug => bug.Title)
+            .ThenBy(bug => bug.Priority)
+            .ThenBy(bug => bug.Severity)
+            .ToList();
+
+        if (filteredBugsByAssignee.Any())
         {
-            var assignee = Repository.FindMemberByName(CommandParameters[1]);
-
-            var filteredBugsByAssignee = bugs
-                .Where(bug => bug.Assignee == assignee && bug.Status == statusFilter)
-                .OrderBy(bug => bug.Title)
-                .ThenBy(bug => bug.Priority)
-                .ThenBy(bug => bug.Severity)
-                .ToList();
-
-            if (filteredBugsByAssignee.Any())
-            {
-                return string.Join(Environment.NewLine, filteredBugsByAssignee);
-            }
-
-            throw new EntityNotFoundException
-                (string.Format(NoBugsWithAssignee, assignee.Name));
+            return string.Join(Environment.NewLine, filteredBugsByAssignee);
         }
 
-        throw new EntityNotFoundException(NoBugsErrorMessage);
+        throw new EntityNotFoundException
+            (string.Format(NoBugsWithAssignee, assignee.Name));
+
     }
 
     private StatusBug ParseStatus(string value)

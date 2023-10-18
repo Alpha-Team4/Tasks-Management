@@ -86,7 +86,7 @@ public class Story : Task, IStory
                   Size: {size}
                   Priority: {priority}
                   Assignee: {assignee}
-                    {ShowAllComments}
+                    {ShowAllComments()}
                 """;
     }
 }
