@@ -14,8 +14,8 @@ public class ListBugsCommand : BaseCommand
     private const int MaxExpectedNumberOfArguments = 2;
     private const string InvalidBugStatusErrorMessage = "None of the enums in 'BugStatus' match the value {0}.";
     private const string NoBugsErrorMessage = "No bugs yet.";
-    private const string NoBugsWithStatus = "There are no bugs with the '{0}' status.";
-    private const string NoBugsWithAssignee = "There are no bugs assigned to {0}.";
+    private const string NoBugsWithStatusErrorMessage = "There are no bugs with the '{0}' status.";
+    private const string NoBugsWithAssigneeErrorMessage = "There are no bugs assigned to {0}.";
 
     public ListBugsCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -55,9 +55,10 @@ public class ListBugsCommand : BaseCommand
             }
 
             throw new EntityNotFoundException
-                (string.Format(NoBugsWithStatus, statusFilter));
+                (string.Format(NoBugsWithStatusErrorMessage, statusFilter));
 
         }
+
         var assignee = Repository.FindMemberByName(CommandParameters[1]);
 
         var filteredBugsByAssignee = bugs
@@ -73,8 +74,7 @@ public class ListBugsCommand : BaseCommand
         }
 
         throw new EntityNotFoundException
-            (string.Format(NoBugsWithAssignee, assignee.Name));
-
+            (string.Format(NoBugsWithAssigneeErrorMessage, assignee.Name));
     }
 
     private StatusBug ParseStatus(string value)
