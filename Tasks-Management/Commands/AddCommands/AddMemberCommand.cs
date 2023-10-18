@@ -33,7 +33,7 @@ public class AddMemberCommand : BaseCommand
                 (string.Format(AddMemberErrorMessage, member.Name));
         }
 
-        team.Members.Add(member);
+        team.AddMember(member);
 
         return string.Format(AddMemberOutputMessage, member.Name, team.Name);
     }
