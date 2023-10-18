@@ -7,8 +7,8 @@ public class Feedback : Task, IFeedback
 {
     private const int RatingMinValue = 0;
     private const int RatingMaxValue = 5;
-    private const string RatingChangeMessage = "Feedback '{0}' rating changed from {1} to {2}.";
-    private const string StatusChangeMessage = "Feedback '{0}' status changed from {1} to {2}.";
+    private const string RatingChangeMessage = "Feedback '{0}' rating changed to '{1}'.";
+    private const string StatusChangeMessage = "Feedback '{0}' status changed to '{1}'.";
 
     private Rating rating;
     private StatusFeedback status;
