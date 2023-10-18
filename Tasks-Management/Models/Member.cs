@@ -48,6 +48,11 @@ public class Member : IMember
         AddEvent(message);
     }
 
+    public void RemoveTask(ITask task)
+    {
+        this.Tasks.Remove(task);    
+    }
+
     public string PrintAllTasks()
     {
         if (!tasks.Any())
