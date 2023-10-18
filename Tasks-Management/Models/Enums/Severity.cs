@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TasksManagement.Models.Enums;
 public enum Severity
 {
-    Critical,
+    Minor,
     Major,
-    Minor
+    Critical
 }

@@ -16,8 +16,8 @@ public class Comment : IComment
 
     public Comment(string content, string author)
     {
-        this.Content = content;
-        this.Author = author;
+        Content = content;
+        Author = author;
     }
 
     public string Content
@@ -26,7 +26,7 @@ public class Comment : IComment
         private set
         {
             Validator.ValidateIntRange(value.Length, CommentMinLength, CommentMaxLength, InvalidCommentError);
-            this.content = value;
+            content = value;
         }
     }
 
@@ -36,8 +36,8 @@ public class Comment : IComment
     {
         return $"""
                 {CommentHeader}
-                    {this.Content}
-                    Member: {this.Author}
+                  {Content}
+                    Member: {Author}
                 {CommentHeader}
                 """;
     }

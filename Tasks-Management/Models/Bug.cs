@@ -107,14 +107,14 @@ internal class Bug : Task, IBug
     {
         return $"""
                 Bug (ID: {Id})
-                   Title: {Title}
-                   Description: {Description}
-                   Status: {status}
-                   Reproduction Steps: {PrintReproductionSteps()}
-                   Priority: {priority}
-                   Severity: {severity}
-                   Assignee: {assignee}
-                     {ShowAllComments()}
+                  Title: {Title}
+                  Description: {Description}
+                  Status: {status}
+                  Reproduction Steps: {PrintReproductionSteps()}
+                  Priority: {priority}
+                  Severity: {severity}
+                  Assignee: {assignee}
+                    {ShowAllComments()}
                 """;
     }
 }

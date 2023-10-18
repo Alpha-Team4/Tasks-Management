@@ -55,16 +55,17 @@ public class Member : IMember
             return NoTasksFoundMessage;
         }
 
-        return string.Join(Environment.NewLine,
-            tasks.Select(task => task.ToString()));
+        return string.Join("\r\n",
+            tasks.Select(task => task.ToString())
+            );
     }
 
     public override string ToString()
     {
         return $"""
                 Name: {Name}
-                   Tasks:
-                     {PrintAllTasks()}
+                  Tasks:
+                    {PrintAllTasks()}
                 """;
     }
 }

@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TasksManagement.Commands.Enums;
 using TasksManagement.Exceptions;
-using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
-using TasksManagement_Tests.Helpers;
 using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
@@ -198,15 +196,15 @@ public class BugTests
         var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
         
         var testOutput = $"""
-                          Bug (ID: {TestHelpers.TaskIdCounter})
-                             Title: This is a valid title
-                             Description: This is a valid description.
-                             Status: Active
-                             Reproduction Steps: 
-                             Priority: Low
-                             Severity: Minor
-                             Assignee: 
-                               --NO COMMENTS--
+                          Bug (ID: {TaskIdCounter})
+                            Title: This is a valid title
+                            Description: This is a valid description.
+                            Status: Active
+                            Reproduction Steps: 
+                            Priority: Low
+                            Severity: Minor
+                            Assignee: 
+                              --NO COMMENTS--
                           """;
 
         Assert.AreEqual(testOutput, bug.ToString());

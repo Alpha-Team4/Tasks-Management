@@ -15,9 +15,10 @@ public class CreateBoardCommand : BaseCommand
 
     public override string Execute()
     {
-        if (CommandParameters.Count < ExpectedNumberOfArguments)
+        if (CommandParameters.Count != ExpectedNumberOfArguments)
         {
-            throw new InvalidUserInputException($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
+            throw new InvalidUserInputException($"Invalid number of arguments. " +
+                $"Expected: {ExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }
 
         var boardName = CommandParameters[0];
