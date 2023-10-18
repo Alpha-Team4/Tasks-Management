@@ -12,7 +12,7 @@ public class ListBugsCommand : BaseCommand
 {
     private const int MinExpectedNumberOfArguments = 1;
     private const int MaxExpectedNumberOfArguments = 2;
-    private const string InvalidBugStatusErrorMessage = "None of the enums in BugStatus match the value {0}.";
+    private const string InvalidBugStatusErrorMessage = "None of the enums in 'BugStatus' match the value {0}.";
     private const string NoBugsErrorMessage = "No bugs yet.";
     private const string NoBugsWithStatus = "There are no bugs with the '{0}' status.";
     private const string NoBugsWithAssignee = "There are no bugs assigned to {0}.";
@@ -37,15 +37,16 @@ public class ListBugsCommand : BaseCommand
 
         if (CommandParameters.Count == 1 && bugs.Any())
         {
-            var filteredBugsbyStatus = bugs
+            var filteredBugsByStatus = bugs
                 .Where(bug => bug.Status == statusFilter)
                 .OrderBy(bug => bug.Title)
                 .ThenBy(bug => bug.Priority)
-                .ThenBy(bug => bug.Severity);
+                .ThenBy(bug => bug.Severity)
+                .ToList();
 
-            if (filteredBugsbyStatus.Any())
+            if (filteredBugsByStatus.Any())
             {
-                return string.Join(Environment.NewLine, filteredBugsbyStatus);
+                return string.Join(Environment.NewLine, filteredBugsByStatus);
             }
 
             throw new EntityNotFoundException
@@ -60,7 +61,8 @@ public class ListBugsCommand : BaseCommand
                 .Where(bug => bug.Assignee == assignee && bug.Status == statusFilter)
                 .OrderBy(bug => bug.Title)
                 .ThenBy(bug => bug.Priority)
-                .ThenBy(bug => bug.Severity);
+                .ThenBy(bug => bug.Severity)
+                .ToList();
 
             if (filteredBugsByAssignee.Any())
             {

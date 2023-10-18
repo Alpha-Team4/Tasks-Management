@@ -96,8 +96,12 @@ public class CommandFactory : ICommandFactory
             // List Commands
             case CommandType.ListTasks:
                 return new ListTasksCommand(commandParameters, repository);
+
             case CommandType.ListBugs:
                 return new ListBugsCommand(commandParameters, repository);
+
+            case CommandType.ListStories:
+                return new ListStoriesCommand(commandParameters, repository);
 
             // Add Commands
             case CommandType.AddMember:
