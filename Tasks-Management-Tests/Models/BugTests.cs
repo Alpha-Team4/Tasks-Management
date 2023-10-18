@@ -1,10 +1,7 @@
-﻿using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TasksManagement.Commands.Enums;
 using TasksManagement.Exceptions;
-using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
-using TasksManagement_Tests.Helpers;
 using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
@@ -209,8 +206,6 @@ public class BugTests
                             Assignee: 
                               --NO COMMENTS--
                           """;
-
-        var test = bug.ToString();
 
         Assert.AreEqual(testOutput, bug.ToString());
     }

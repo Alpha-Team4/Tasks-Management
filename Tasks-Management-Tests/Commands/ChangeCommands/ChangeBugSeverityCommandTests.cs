@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace TasksManagement.Commands.ChangeCommands.Tests;
 
 [TestClass]
-public class CreateBoardCommandTests
+public class ChangeBugSeverityCommandTests
 {
     [TestMethod]
     public void ChangeBugSeverityCommandTest()
