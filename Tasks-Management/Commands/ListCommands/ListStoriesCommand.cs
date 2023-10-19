@@ -8,7 +8,7 @@ using TasksManagement.Models.Enums;
 namespace TasksManagement.Commands.ListCommands;
 public class ListStoriesCommand : BaseCommand
 {
-    private const int MinExpectedNumberOfArguments = 1;
+    private const int MinExpectedNumberOfArguments = 0;
     private const int MaxExpectedNumberOfArguments = 2;
     private const string InvalidStoryStatusErrorMessage = "None of the enums in 'StoryStatus' match the value {0}.";
     private const string NoStoriesErrorMessage = "No stories yet.";
@@ -32,6 +32,13 @@ public class ListStoriesCommand : BaseCommand
 
         switch(CommandParameters.Count) 
         {
+            case 0:
+                var orderedStories = stories.OrderBy(story => story.Title)
+                .ThenBy(story => story.Priority)
+                .ThenBy(story => story.Size)
+                .ToList();
+
+                return string.Join(Environment.NewLine, orderedStories);
             case 1:
                 assigneeName = CommandParameters[0];
                 if (Repository.Members.Exists(member => member.Name == assigneeName))
