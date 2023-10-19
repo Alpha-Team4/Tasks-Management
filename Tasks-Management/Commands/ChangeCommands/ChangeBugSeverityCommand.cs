@@ -1,4 +1,5 @@
 ﻿using TasksManagement.Commands.Abstracts;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
@@ -29,7 +30,7 @@ public class ChangeBugSeverityCommand : BaseCommand
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
         var title = CommandParameters[2];
-        var newBugSeverity = ParseSeverity(CommandParameters[3]);
+        var newBugSeverity = Validator.ParseTEnum<Severity>(CommandParameters[3], InvalidBugSeverityErrorMessage);
 
         IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
 
@@ -42,15 +43,5 @@ public class ChangeBugSeverityCommand : BaseCommand
         bug.Severity = newBugSeverity;
 
         return string.Format(ChangeBugSeverityOutputMessage, title, newBugSeverity);
-    }
-
-    private Severity ParseSeverity(string value)
-    {
-        if (Enum.TryParse(value, true, out Severity result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidBugSeverityErrorMessage, value));
     }
 }

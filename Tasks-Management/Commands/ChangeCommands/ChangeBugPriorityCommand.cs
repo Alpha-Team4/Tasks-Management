@@ -29,29 +29,19 @@ public class ChangeBugPriorityCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newBugPriority = ParsePriority(CommandParameters[3]);
+        var bugTitle = CommandParameters[2];
+        var newBugPriority = Validator.ParseTEnum<Priority>(CommandParameters[3], InvalidBugPriorityErrorMessage);
 
-        IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
+        IBug bug = Repository.FindTaskByTitle<IBug>(bugTitle, board);
 
         if (newBugPriority == bug.Priority)
         {
             throw new ArgumentException
-                (string.Format(ChangeBugPriorityErrorMessage, title, newBugPriority));
+                (string.Format(ChangeBugPriorityErrorMessage, bugTitle, newBugPriority));
         }
 
         bug.Priority = newBugPriority;
 
-        return string.Format(ChangeBugPriorityOutputMessage, title, newBugPriority);
-    }
-
-    private Priority ParsePriority(string value)
-    {
-        if (Enum.TryParse(value, true, out Priority result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidBugPriorityErrorMessage, value));
+        return string.Format(ChangeBugPriorityOutputMessage, bugTitle, newBugPriority);
     }
 }

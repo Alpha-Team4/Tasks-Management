@@ -1,4 +1,5 @@
 ﻿using TasksManagement.Commands.Abstracts;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
@@ -28,29 +29,19 @@ public class ChangeBugStatusCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newBugStatus = ParseStatus(CommandParameters[3]);
+        var bugTitle = CommandParameters[2];
+        var newBugStatus = Validator.ParseTEnum<StatusBug>(CommandParameters[3], InvalidBugStatusErrorMessage);
 
-        IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
+        IBug bug = Repository.FindTaskByTitle<IBug>(bugTitle, board);
 
         if (newBugStatus == bug.Status)
         {
             throw new ArgumentException
-                (string.Format(ChangeBugStatusErrorMessage, title, newBugStatus));
+                (string.Format(ChangeBugStatusErrorMessage, bugTitle, newBugStatus));
         }
 
         bug.Status = newBugStatus;
 
-        return string.Format(ChangeBugStatusOutputMessage, title, newBugStatus);
-    }
-
-    private StatusBug ParseStatus(string value)
-    {
-        if (Enum.TryParse(value, true, out StatusBug result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidBugStatusErrorMessage, value));
+        return string.Format(ChangeBugStatusOutputMessage, bugTitle, newBugStatus);
     }
 }

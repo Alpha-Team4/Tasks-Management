@@ -45,4 +45,15 @@ public static class Validator
             throw new InvalidUserInputException(message);
         }
     }
+
+    public static T ParseTEnum<T>(string value, string errorMessage) where T : struct, Enum
+    {
+        if (Enum.TryParse(value, true, out T result))
+        {
+            return result;
+        }
+
+        throw new InvalidUserInputException
+            (string.Format(errorMessage, value));
+    }
 }
