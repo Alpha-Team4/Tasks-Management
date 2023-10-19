@@ -87,11 +87,17 @@ public class CommandFactory : ICommandFactory
             case CommandType.ShowBoards:
                 return new ShowBoardsCommand(commandParameters, repository);
 
+            case CommandType.ShowMembers:
+                return new ShowMembersCommand(commandParameters, repository);
+
             case CommandType.ShowBoardActivity:
                 return new ShowBoardActivityCommand(commandParameters, repository);
 
             case CommandType.ShowMemberActivity:
                 return new ShowMemberActivityCommand(commandParameters, repository);
+
+            case CommandType.ShowTeamActivity:
+                return new ShowTeamActivityCommand(commandParameters, repository);
 
             // List Commands
             case CommandType.ListTasks:
@@ -108,6 +114,14 @@ public class CommandFactory : ICommandFactory
                 return new AddMemberCommand(commandParameters, repository);
             case CommandType.AddComment:
                 return new AddCommentCommand(commandParameters, repository);
+
+            // Assign Command
+            case CommandType.AssignTask:
+                return new AssignTaskToMembersCommand(commandParameters, repository);
+
+            // Unassign Command
+            case CommandType.UnassignTask:
+                return new UnassignTaskToMemberCommand(commandParameters, repository);
 
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");

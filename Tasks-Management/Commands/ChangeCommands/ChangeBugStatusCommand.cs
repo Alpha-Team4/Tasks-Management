@@ -9,8 +9,8 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugStatusErrorMessage = "Bug {0} status is already {1}.";
-    private const string ChangeBugStatusOutputMessage = "Bug {0} status changed to {1}.";
+    private const string ChangeBugStatusErrorMessage = "Bug '{0}' status is already {1}.";
+    private const string ChangeBugStatusOutputMessage = "Bug '{0}' status changed to {1}.";
     private const string InvalidBugStatusErrorMessage = "{0} is not a valid status.";
 
     public ChangeBugStatusCommand(IList<string> commandParameters, IRepository repository) 

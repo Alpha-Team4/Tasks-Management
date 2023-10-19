@@ -9,9 +9,9 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeStoryPriorityCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeStoryPriorityErrorMessage = "Story {0} priority already {1}.";
-    private const string ChangeStoryPriorityOutputMessage = "Story {0} priority changed to {1}.";
-    private const string InvalidStoryPriorityErrorMessage = "None of the enums in Priority match the value {0}.";
+    private const string ChangeStoryPriorityErrorMessage = "Story '{0}' priority is already {1}.";
+    private const string ChangeStoryPriorityOutputMessage = "Story '{0}' priority changed to {1}.";
+    private const string InvalidStoryPriorityErrorMessage = "{0} is not a valid priority.";
 
     public ChangeStoryPriorityCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -29,29 +29,18 @@ public class ChangeStoryPriorityCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newStoryPriority = ParsePriority(CommandParameters[3]);
-
-        IStory story = Repository.FindTaskByTitle<IStory>(title, board);
+        var story = Repository.FindTaskByTitle<IStory>(CommandParameters[2], board);
+        var newStoryPriority = Validator.ParseTEnum<Priority>
+            (CommandParameters[3], InvalidStoryPriorityErrorMessage);
 
         if (newStoryPriority == story.Priority)
         {
             throw new ArgumentException
-                (string.Format(ChangeStoryPriorityErrorMessage, title, newStoryPriority));
+                (string.Format(ChangeStoryPriorityErrorMessage, story.Title, newStoryPriority));
         }
 
         story.Priority = newStoryPriority;
 
-        return string.Format(ChangeStoryPriorityOutputMessage, title, newStoryPriority);
-    }
-
-    private Priority ParsePriority(string value)
-    {
-        if (Enum.TryParse(value, true, out Priority result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidStoryPriorityErrorMessage, value));
+        return string.Format(ChangeStoryPriorityOutputMessage, story.Title, newStoryPriority);
     }
 }

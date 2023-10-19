@@ -9,8 +9,8 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeFeedbackRatingCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugStatusErrorMessage = "Feedback {0} rating is already {1}.";
-    private const string ChangeBugStatusOutputMessage = "Feedback {0} rating changed to {1}.";
+    private const string ChangeBugStatusErrorMessage = "Feedback '{0}' rating is already {1}.";
+    private const string ChangeBugStatusOutputMessage = "Feedback '{0}' rating changed to {1}.";
     private const string InvalidFeedbackRatingErrorMessage = "{0} is not a valid rating.";
 
     public ChangeFeedbackRatingCommand(IList<string> commandParameters, IRepository repository)
