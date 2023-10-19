@@ -1,4 +1,5 @@
-﻿using TasksManagement.Commands.Abstracts;
+﻿using System.Security.Cryptography.X509Certificates;
+using TasksManagement.Commands.Abstracts;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
@@ -21,57 +22,43 @@ public class ListStoriesCommand : BaseCommand
 
     public override string Execute()
     {
-        if (CommandParameters.Count < MinExpectedNumberOfArguments
-            || CommandParameters.Count > MaxExpectedNumberOfArguments)
-        {
-            throw new InvalidUserInputException
-            ($"Invalid number of arguments. Expected: {MinExpectedNumberOfArguments} - " +
-             $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
-        }
-
         var stories = Repository.FindAllTasks().OfType<IStory>().ToList();
-        var statusFilter = ParseStatus(CommandParameters[0]);
-
+        string assigneeName;
+        StatusStory statusFilter;
         if (!stories.Any())
         {
             throw new EntityNotFoundException(NoStoriesErrorMessage);
         }
 
-        if (CommandParameters.Count == 1)
+        switch(CommandParameters.Count) 
         {
-            var filteredStoriesByStatus = stories
-                .Where(story => story.Status == statusFilter)
-                .OrderBy(story => story.Title)
-                .ThenBy(story => story.Priority)
-                .ThenBy(story => story.Size)
-                .ToList();
+            case 1:
+                assigneeName = CommandParameters[0];
+                if (Repository.Members.Exists(member => member.Name == assigneeName))
+                {
+                    var filteredStories = FilterStoriesByAssignee(stories, assigneeName);
+                    return string.Join(Environment.NewLine, filteredStories);
+                }
+                else
+                {
+                    statusFilter = ParseStatus(CommandParameters[0]);
+                    var filteredStories = FilterStoriesByStatus(stories, statusFilter);
+                    return string.Join(Environment.NewLine, filteredStories);
+                }
+            case 2:
+                statusFilter = ParseStatus(CommandParameters[0]);
+                assigneeName = CommandParameters[1];
+                var filteredStoriesByStatus = FilterStoriesByStatus(stories, statusFilter);
+                var filteredStoriesByAssignee = FilterStoriesByAssignee(filteredStoriesByStatus, assigneeName);
+                return string.Join (Environment.NewLine, filteredStoriesByAssignee);
 
-            if (filteredStoriesByStatus.Any())
-            {
-                return string.Join(Environment.NewLine, filteredStoriesByStatus);
-            }
-
-            throw new EntityNotFoundException
-                (string.Format(NoStoriesWithStatusErrorMessage, statusFilter));
-
+            default:
+                throw new InvalidUserInputException
+                        ($"Invalid number of arguments. Expected: {MinExpectedNumberOfArguments} - " +
+                         $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }
 
-        var assignee = Repository.FindMemberByName(CommandParameters[1]);
 
-        var filteredStoriesByAssignee = stories
-            .Where(story => story.Assignee == assignee && story.Status == statusFilter)
-            .OrderBy(story => story.Title)
-            .ThenBy(story => story.Priority)
-            .ThenBy(story => story.Size)
-            .ToList();
-
-        if (filteredStoriesByAssignee.Any())
-        {
-            return string.Join(Environment.NewLine, filteredStoriesByAssignee);
-        }
-
-        throw new EntityNotFoundException
-            (string.Format(NoStoriesWithAssigneeErrorMessage, assignee.Name));
     }
 
     private StatusStory ParseStatus(string value)
@@ -84,4 +71,100 @@ public class ListStoriesCommand : BaseCommand
         throw new InvalidUserInputException
             (string.Format(InvalidStoryStatusErrorMessage, value));
     }
+
+    private List<IStory> FilterStoriesByStatus(List<IStory> stories, StatusStory statusFilter)
+    {
+        if (!stories.Select(story => story.Status == statusFilter).Any())
+        {
+            throw new EntityNotFoundException(string.Format(NoStoriesWithStatusErrorMessage, statusFilter));  
+        }
+        return stories.Where(story => story.Status == statusFilter)
+                .OrderBy(story => story.Title)
+                .ThenBy(story => story.Priority)
+                .ThenBy(story => story.Size)
+                .ToList();
+    }
+
+    private List<IStory> FilterStoriesByAssignee(List<IStory> stories, string assigneeName)
+    {
+        var assignee = Repository.FindMemberByName(assigneeName);
+        if (!assignee.Tasks.OfType<IStory>().Any())
+        {
+            throw new EntityNotFoundException(string.Format(NoStoriesWithAssigneeErrorMessage, assigneeName));
+        }    
+        return stories.Where(story => story.Assignee.Name == assigneeName)
+                .OrderBy(story => story.Title)
+                .ThenBy(story => story.Priority)
+                .ThenBy(story => story.Size)
+                .ToList();
+    }
+
+
+
+    //public override string Execute()
+    //{
+    //    if (CommandParameters.Count < MinExpectedNumberOfArguments
+    //        || CommandParameters.Count > MaxExpectedNumberOfArguments)
+    //    {
+    //        throw new InvalidUserInputException
+    //        ($"Invalid number of arguments. Expected: {MinExpectedNumberOfArguments} - " +
+    //         $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
+    //    }
+
+    //    var stories = Repository.FindAllTasks().OfType<IStory>().ToList();
+    //    var statusFilter = ParseStatus(CommandParameters[0]);
+
+    //    if (!stories.Any())
+    //    {
+    //        throw new EntityNotFoundException(NoStoriesErrorMessage);
+    //    }
+
+    //    if (CommandParameters.Count == 1)
+    //    {
+    //        var filteredStoriesByStatus = stories
+    //            .Where(story => story.Status == statusFilter)
+    //            .OrderBy(story => story.Title)
+    //            .ThenBy(story => story.Priority)
+    //            .ThenBy(story => story.Size)
+    //            .ToList();
+
+    //        if (filteredStoriesByStatus.Any())
+    //        {
+    //            return string.Join(Environment.NewLine, filteredStoriesByStatus);
+    //        }
+
+    //        throw new EntityNotFoundException
+    //            (string.Format(NoStoriesWithStatusErrorMessage, statusFilter));
+
+    //    }
+
+    //    var assignee = Repository.FindMemberByName(CommandParameters[1]);
+
+    //    var filteredStoriesByAssignee = stories
+    //        .Where(story => story.Assignee == assignee && story.Status == statusFilter)
+    //        .OrderBy(story => story.Title)
+    //        .ThenBy(story => story.Priority)
+    //        .ThenBy(story => story.Size)
+    //        .ToList();
+
+    //    if (filteredStoriesByAssignee.Any())
+    //    {
+    //        return string.Join(Environment.NewLine, filteredStoriesByAssignee);
+    //    }
+
+    //    throw new EntityNotFoundException
+    //        (string.Format(NoStoriesWithAssigneeErrorMessage, assignee.Name));
+    //}
+
+    //private StatusStory ParseStatus(string value)
+    //{
+    //    if (Enum.TryParse(value, true, out StatusStory result))
+    //    {
+    //        return result;
+    //    }
+
+    //    throw new InvalidUserInputException
+    //        (string.Format(InvalidStoryStatusErrorMessage, value));
+    //}
+
 }
