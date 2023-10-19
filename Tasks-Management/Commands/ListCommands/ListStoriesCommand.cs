@@ -55,9 +55,9 @@ public class ListStoriesCommand : BaseCommand
             case 2:
                 statusFilter = ParseStatus(CommandParameters[0]);
                 assigneeName = CommandParameters[1];
-                var filteredStoriesByStatus = FilterStoriesByStatus(stories, statusFilter);
                 var filteredStoriesByAssignee = FilterStoriesByAssignee(assigneeName);
-                return string.Join (Environment.NewLine, filteredStoriesByAssignee);
+                var filteredStoriesByStatus = FilterStoriesByStatus(filteredStoriesByAssignee, statusFilter);          
+                return string.Join (Environment.NewLine, filteredStoriesByStatus);
 
             default:
                 throw new InvalidUserInputException
