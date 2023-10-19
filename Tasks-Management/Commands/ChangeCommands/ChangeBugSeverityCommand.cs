@@ -1,4 +1,5 @@
 ﻿using TasksManagement.Commands.Abstracts;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
@@ -8,9 +9,9 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugSeverityCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugSeverityErrorMessage = "Bug '{0}' severity already '{1}'.";
-    private const string ChangeBugSeverityOutputMessage = "Bug '{0}' severity changed to '{1}'.";
-    private const string InvalidBugSeverityErrorMessage = "None of the enums in Severity match the value {0}.";
+    private const string ChangeBugSeverityErrorMessage = "Bug {0} severity is already {1}.";
+    private const string ChangeBugSeverityOutputMessage = "Bug {0} severity changed to {1}.";
+    private const string InvalidBugSeverityErrorMessage = "{0} is not a valid severity.";
 
     public ChangeBugSeverityCommand(IList<string> commandParameters, IRepository repository) 
         : base(commandParameters, repository)
@@ -28,29 +29,18 @@ public class ChangeBugSeverityCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newBugSeverity = ParseSeverity(CommandParameters[3]);
-
-        IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
+        var bug = Repository.FindTaskByTitle<IBug>(CommandParameters[2], board);
+        var newBugSeverity = Validator.ParseTEnum<Severity>
+            (CommandParameters[3], InvalidBugSeverityErrorMessage);
 
         if (newBugSeverity == bug.Severity)
         {
             throw new ArgumentException
-                (string.Format(ChangeBugSeverityErrorMessage, title, newBugSeverity));
+                (string.Format(ChangeBugSeverityErrorMessage, bug.Title, newBugSeverity));
         }
 
         bug.Severity = newBugSeverity;
 
-        return string.Format(ChangeBugSeverityOutputMessage, title, newBugSeverity);
-    }
-
-    private Severity ParseSeverity(string value)
-    {
-        if (Enum.TryParse(value, true, out Severity result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidBugSeverityErrorMessage, value));
+        return string.Format(ChangeBugSeverityOutputMessage, bug.Title, newBugSeverity);
     }
 }

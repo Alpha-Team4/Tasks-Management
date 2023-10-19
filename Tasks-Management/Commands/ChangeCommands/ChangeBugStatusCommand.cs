@@ -1,4 +1,5 @@
 ﻿using TasksManagement.Commands.Abstracts;
+using TasksManagement.Commands.Enums;
 using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
@@ -8,9 +9,9 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugStatusErrorMessage = "Bug '{0}' status already '{1}'.";
-    private const string ChangeBugStatusOutputMessage = "Bug '{0}' status changed to '{1}'.";
-    private const string InvalidBugStatusErrorMessage = "None of the enums in BugStatus match the value {0}.";
+    private const string ChangeBugStatusErrorMessage = "Bug {0} status is already {1}.";
+    private const string ChangeBugStatusOutputMessage = "Bug {0} status changed to {1}.";
+    private const string InvalidBugStatusErrorMessage = "{0} is not a valid status.";
 
     public ChangeBugStatusCommand(IList<string> commandParameters, IRepository repository) 
         : base(commandParameters, repository)
@@ -28,29 +29,18 @@ public class ChangeBugStatusCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newBugStatus = ParseStatus(CommandParameters[3]);
-
-        IBug bug = Repository.FindTaskByTitle<IBug>(title, board);
+        var bug = Repository.FindTaskByTitle<IBug>(CommandParameters[2], board);
+        var newBugStatus = Validator.ParseTEnum<StatusBug>
+            (CommandParameters[3], InvalidBugStatusErrorMessage);
 
         if (newBugStatus == bug.Status)
         {
             throw new ArgumentException
-                (string.Format(ChangeBugStatusErrorMessage, title, newBugStatus));
+                (string.Format(ChangeBugStatusErrorMessage, bug.Title, newBugStatus));
         }
 
         bug.Status = newBugStatus;
 
-        return string.Format(ChangeBugStatusOutputMessage, title, newBugStatus);
-    }
-
-    private StatusBug ParseStatus(string value)
-    {
-        if (Enum.TryParse(value, true, out StatusBug result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidBugStatusErrorMessage, value));
+        return string.Format(ChangeBugStatusOutputMessage, bug.Title, newBugStatus);
     }
 }

@@ -11,8 +11,8 @@ public class ListStoriesCommand : BaseCommand
     private const int MaxExpectedNumberOfArguments = 2;
     private const string InvalidStoryStatusErrorMessage = "None of the enums in 'StoryStatus' match the value {0}.";
     private const string NoStoriesErrorMessage = "No stories yet.";
-    private const string NoStoriesWithStatus = "There are no stories with the '{0}' status.";
-    private const string NoStoriesWithAssignee = "There are no stories assigned to {0}.";
+    private const string NoStoriesWithStatusErrorMessage = "There are no stories with the '{0}' status.";
+    private const string NoStoriesWithAssigneeErrorMessage = "There are no stories assigned to {0}.";
 
     public ListStoriesCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -29,10 +29,15 @@ public class ListStoriesCommand : BaseCommand
              $"{MaxExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }
 
-        var stories = Repository.Tasks.OfType<IStory>().ToList();
+        var stories = Repository.FindAllTasks().OfType<IStory>().ToList();
         var statusFilter = ParseStatus(CommandParameters[0]);
 
-        if (CommandParameters.Count == 1 && stories.Any())
+        if (!stories.Any())
+        {
+            throw new EntityNotFoundException(NoStoriesErrorMessage);
+        }
+
+        if (CommandParameters.Count == 1)
         {
             var filteredStoriesByStatus = stories
                 .Where(story => story.Status == statusFilter)
@@ -47,30 +52,26 @@ public class ListStoriesCommand : BaseCommand
             }
 
             throw new EntityNotFoundException
-                (string.Format(NoStoriesWithStatus, statusFilter));
+                (string.Format(NoStoriesWithStatusErrorMessage, statusFilter));
 
         }
-        else if (stories.Any())
+
+        var assignee = Repository.FindMemberByName(CommandParameters[1]);
+
+        var filteredStoriesByAssignee = stories
+            .Where(story => story.Assignee == assignee && story.Status == statusFilter)
+            .OrderBy(story => story.Title)
+            .ThenBy(story => story.Priority)
+            .ThenBy(story => story.Size)
+            .ToList();
+
+        if (filteredStoriesByAssignee.Any())
         {
-            var assignee = Repository.FindMemberByName(CommandParameters[1]);
-
-            var filteredStoriesByAssignee = stories
-                .Where(story => story.Assignee == assignee && story.Status == statusFilter)
-                .OrderBy(story => story.Title)
-                .ThenBy(story => story.Priority)
-                .ThenBy(story => story.Size)
-                .ToList();
-
-            if (filteredStoriesByAssignee.Any())
-            {
-                return string.Join(Environment.NewLine, filteredStoriesByAssignee);
-            }
-
-            throw new EntityNotFoundException
-                (string.Format(NoStoriesWithAssignee, assignee.Name));
+            return string.Join(Environment.NewLine, filteredStoriesByAssignee);
         }
 
-        throw new EntityNotFoundException(NoStoriesErrorMessage);
+        throw new EntityNotFoundException
+            (string.Format(NoStoriesWithAssigneeErrorMessage, assignee.Name));
     }
 
     private StatusStory ParseStatus(string value)

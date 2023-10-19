@@ -9,8 +9,7 @@ public class Event : IEvent
     public Event(string description)
     {
         this.description = description;
-
-        time = DateTime.Now;
+        this.time = DateTime.Now;
     }
 
     public DateTime Time => time;

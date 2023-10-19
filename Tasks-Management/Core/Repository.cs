@@ -11,12 +11,11 @@ public class Repository : IRepository
     public const string NoTasksMessage = "No tasks found.";
 
     private readonly List<ITeam> teams = new();
+
     private readonly List<IMember> members = new();
-    private readonly List<ITask> tasks = new();
 
     public List<ITeam> Teams => new(teams);
     public List<IMember> Members => new(members);
-    public List<ITask> Tasks => new(tasks);
 
     public ITeam CreateTeam(string teamName)
     {
@@ -89,7 +88,6 @@ public class Repository : IRepository
 
         var bug = new Bug(title, description, board);
         board.AddTask(bug);
-        tasks.Add(bug);
         return bug;
     }
 
@@ -100,7 +98,6 @@ public class Repository : IRepository
 
         var story = new Story(title, description, board);
         board.AddTask(story);
-        tasks.Add(story);
         return story;
     }
 
@@ -111,7 +108,6 @@ public class Repository : IRepository
 
         var feedback = new Feedback(title, description);
         board.AddTask(feedback);
-        tasks.Add(feedback);
         return feedback;
     }
 

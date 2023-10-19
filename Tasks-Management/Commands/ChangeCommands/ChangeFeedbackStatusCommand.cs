@@ -8,9 +8,9 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeFeedbackStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeFeedbackStatusErrorMessage = "Feedback '{0}' status already '{1}'.";
-    private const string ChangeFeedbackStatusOutputMessage = "Feedback '{0}' status changed to '{1}'.";
-    private const string InvalidFeedbackStatusErrorMessage = "None of the enums in FeedbackStatus match the value {0}.";
+    private const string ChangeFeedbackStatusErrorMessage = "Feedback {0} status is already {1}.";
+    private const string ChangeFeedbackStatusOutputMessage = "Feedback {0} status changed to {1}.";
+    private const string InvalidFeedbackStatusErrorMessage = "{0} is not a valid status.";
 
     public ChangeFeedbackStatusCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -28,29 +28,18 @@ public class ChangeFeedbackStatusCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newFeedbackStatus = ParseStatus(CommandParameters[3]);
-
-        IFeedback feedback = Repository.FindTaskByTitle<IFeedback>(title, board);
+        var feedback = Repository.FindTaskByTitle<IFeedback>(CommandParameters[2], board);
+        var newFeedbackStatus = Validator.ParseTEnum<StatusFeedback>
+            (CommandParameters[3], InvalidFeedbackStatusErrorMessage);
 
         if (newFeedbackStatus == feedback.Status)
         {
             throw new ArgumentException
-                (string.Format(ChangeFeedbackStatusErrorMessage, title, newFeedbackStatus));
+                (string.Format(ChangeFeedbackStatusErrorMessage, feedback.Title, newFeedbackStatus));
         }
 
         feedback.Status = newFeedbackStatus;
 
-        return string.Format(ChangeFeedbackStatusOutputMessage, title, newFeedbackStatus);
-    }
-
-    private StatusFeedback ParseStatus(string value)
-    {
-        if (Enum.TryParse(value, true, out StatusFeedback result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidFeedbackStatusErrorMessage, value));
+        return string.Format(ChangeFeedbackStatusOutputMessage, feedback.Title, newFeedbackStatus);
     }
 }

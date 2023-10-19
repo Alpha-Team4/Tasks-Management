@@ -152,7 +152,6 @@ public abstract class Task : ITask
         return sb.ToString().Trim();
     }
 
-    public int MyProperty { get; set; }
 
     public IList<IEvent> History => new List<IEvent>(history);
 

@@ -8,7 +8,6 @@ public interface IRepository
 {
     List<ITeam> Teams { get; }
     List<IMember> Members { get; }
-    List<ITask> Tasks { get; }
     ITeam CreateTeam(string name);
     IBoard CreateBoard(string name, string teamName);
     IMember CreateMember(string memberName);

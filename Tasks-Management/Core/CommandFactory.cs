@@ -59,8 +59,8 @@ public class CommandFactory : ICommandFactory
             case CommandType.ChangeFeedbackStatus:
                 return new ChangeFeedbackStatusCommand(commandParameters, repository);
 
-            case CommandType.ChangeRating:
-                return new ChangeRatingCommand(commandParameters, repository);
+            case CommandType.ChangeFeedbackRating:
+                return new ChangeFeedbackRatingCommand(commandParameters, repository);
 
             case CommandType.ChangeBugAssignee:
                 return new ChangeBugAssigneeCommand(commandParameters, repository);
