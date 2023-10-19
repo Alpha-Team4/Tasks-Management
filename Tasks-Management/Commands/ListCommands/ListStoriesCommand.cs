@@ -43,7 +43,7 @@ public class ListStoriesCommand : BaseCommand
                 assigneeName = CommandParameters[0];
                 if (Repository.Members.Exists(member => member.Name == assigneeName))
                 {
-                    var filteredStories = FilterStoriesByAssignee(stories, assigneeName);
+                    var filteredStories = FilterStoriesByAssignee(assigneeName);
                     return string.Join(Environment.NewLine, filteredStories);
                 }
                 else
@@ -56,7 +56,7 @@ public class ListStoriesCommand : BaseCommand
                 statusFilter = ParseStatus(CommandParameters[0]);
                 assigneeName = CommandParameters[1];
                 var filteredStoriesByStatus = FilterStoriesByStatus(stories, statusFilter);
-                var filteredStoriesByAssignee = FilterStoriesByAssignee(filteredStoriesByStatus, assigneeName);
+                var filteredStoriesByAssignee = FilterStoriesByAssignee(assigneeName);
                 return string.Join (Environment.NewLine, filteredStoriesByAssignee);
 
             default:
@@ -92,14 +92,14 @@ public class ListStoriesCommand : BaseCommand
                 .ToList();
     }
 
-    private List<IStory> FilterStoriesByAssignee(List<IStory> stories, string assigneeName)
+    private List<IStory> FilterStoriesByAssignee(string assigneeName)
     {
         var assignee = Repository.FindMemberByName(assigneeName);
         if (!assignee.Tasks.OfType<IStory>().Any())
         {
             throw new EntityNotFoundException(string.Format(NoStoriesWithAssigneeErrorMessage, assigneeName));
         }    
-        return stories.Where(story => story.Assignee.Name == assigneeName)
+        return assignee.Tasks.OfType<IStory>()
                 .OrderBy(story => story.Title)
                 .ThenBy(story => story.Priority)
                 .ThenBy(story => story.Size)

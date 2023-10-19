@@ -3,7 +3,7 @@ using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Models;
-public class Story : Task, IStory
+public class Story : Task, IStory, IHasAssignee
 {
     private const string PriorityChangedMessage = "Priority changed from '{0}' to '{1}'";
     private const string SizeChangedMessage = "Size changed to '{0}'";

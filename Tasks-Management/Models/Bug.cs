@@ -6,7 +6,7 @@ using TasksManagement.Models.Enums;
 
 [assembly: InternalsVisibleTo("TasksManagement-Tests")]
 namespace TasksManagement.Models;
-internal class Bug : Task, IBug
+internal class Bug : Task, IBug, IHasAssignee
 {
     private const string PriorityChangedMessage = "Priority changed from '{0}' to '{1}'";
     private const string SeverityChangedMessage = "Severity changed from '{0}' to '{1}'";

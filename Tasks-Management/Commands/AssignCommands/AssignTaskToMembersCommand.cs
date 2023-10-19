@@ -25,6 +25,10 @@ public class AssignTaskToMembersCommand : BaseCommand
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
         var task = Repository.FindTaskByTitle<ITask>(CommandParameters[2], board);
+        if (task is not IHasAssignee)
+        {
+            throw new InvalidUserInputException("This task cannot have an assignee.");
+        }
         var member = Repository.FindMemberByName(CommandParameters[3]);
         
         if (member.Tasks.Contains(task))
