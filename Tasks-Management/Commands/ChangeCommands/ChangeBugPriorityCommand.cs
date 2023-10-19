@@ -9,9 +9,9 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugPriorityCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugPriorityErrorMessage = "Bug {0} priority already {1}.";
+    private const string ChangeBugPriorityErrorMessage = "Bug {0} priority is already {1}.";
     private const string ChangeBugPriorityOutputMessage = "Bug {0} priority changed to {1}.";
-    private const string InvalidBugPriorityErrorMessage = "None of the enums in Priority match the value {0}.";
+    private const string InvalidBugPriorityErrorMessage = "{0} is not a valid priority.";
 
     public ChangeBugPriorityCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -29,19 +29,18 @@ public class ChangeBugPriorityCommand : BaseCommand
 
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var bugTitle = CommandParameters[2];
-        var newBugPriority = Validator.ParseTEnum<Priority>(CommandParameters[3], InvalidBugPriorityErrorMessage);
-
-        IBug bug = Repository.FindTaskByTitle<IBug>(bugTitle, board);
+        var bug = Repository.FindTaskByTitle<IBug>(CommandParameters[2], board);
+        var newBugPriority = Validator.ParseTEnum<Priority>
+            (CommandParameters[3], InvalidBugPriorityErrorMessage);
 
         if (newBugPriority == bug.Priority)
         {
             throw new ArgumentException
-                (string.Format(ChangeBugPriorityErrorMessage, bugTitle, newBugPriority));
+                (string.Format(ChangeBugPriorityErrorMessage, bug.Title, newBugPriority));
         }
 
         bug.Priority = newBugPriority;
 
-        return string.Format(ChangeBugPriorityOutputMessage, bugTitle, newBugPriority);
+        return string.Format(ChangeBugPriorityOutputMessage, bug.Title, newBugPriority);
     }
 }

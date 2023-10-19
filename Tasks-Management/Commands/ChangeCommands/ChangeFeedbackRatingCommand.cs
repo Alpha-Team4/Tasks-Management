@@ -6,11 +6,14 @@ using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Commands.ChangeCommands;
-public class ChangeRatingCommand : BaseCommand
+public class ChangeFeedbackRatingCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 4;
+    private const int ExpectedNumberOfArguments = 4;
+    private const string ChangeBugStatusErrorMessage = "Feedback {0} rating is already {1}.";
+    private const string ChangeBugStatusOutputMessage = "Feedback {0} rating changed to {1}.";
+    private const string InvalidFeedbackRatingErrorMessage = "{0} is not a valid rating.";
 
-    public ChangeRatingCommand(IList<string> commandParameters, IRepository repository)
+    public ChangeFeedbackRatingCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
     {
     }
@@ -27,26 +30,16 @@ public class ChangeRatingCommand : BaseCommand
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
         var feedback = Repository.FindTaskByTitle<IFeedback>(CommandParameters[2], board);
-        var rating = ParseRating(CommandParameters[3]);
+        var rating = Validator.ParseTEnum<Rating>
+            (CommandParameters[3], InvalidFeedbackRatingErrorMessage);
 
         if (feedback.Rating == rating)
         {
-            throw new ArgumentException($"Rating is already set to {rating}");
+            throw new ArgumentException(string.Format(ChangeBugStatusErrorMessage, feedback.Title, rating));
         }
 
         feedback.Rating = rating;
 
-        return $"Feedback {feedback.Title} rating changed to {feedback.Rating}.";
-
-    }
-
-    private Rating ParseRating(string rating)
-    {
-        if (Enum.TryParse(rating, true, out Rating result))
-        {
-            return result;
-        }
-
-        throw new ArgumentException($"{rating} is not a valid rating.");
+        return string.Format(ChangeBugStatusOutputMessage, feedback.Title, rating);
     }
 }
