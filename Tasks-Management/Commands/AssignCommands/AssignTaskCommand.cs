@@ -4,12 +4,12 @@ using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
 
 namespace TasksManagement.Commands.AssignCommands;
-public class AssignTaskToMembersCommand : BaseCommand
+public class AssignTaskCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
     private const string TaskAlreadyAssignedErrorMessage = "Invalid input. Task {0} is already assigned to member {1}.";
     private const string TaskAddedToMemberMessage = "Task {0} assigned to member {1}.";
-    public AssignTaskToMembersCommand(IList<string> commandParameters, IRepository repository) 
+    public AssignTaskCommand(IList<string> commandParameters, IRepository repository) 
         : base(commandParameters, repository)
     {
     }

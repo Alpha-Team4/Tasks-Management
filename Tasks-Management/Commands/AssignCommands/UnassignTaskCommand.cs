@@ -3,12 +3,12 @@ using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
 
 namespace TasksManagement.Commands.AssignCommands;
-public class UnassignTaskToMemberCommand : BaseCommand
+public class UnassignTaskCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 2;
     private const string TaskNotAssignedErrorMessage = "Invalid input. Task {0} is not assigned to member {1}.";
     private const string TaskUnassignedMessage = "Task {0} unassigned from member {1}.";
-    public UnassignTaskToMemberCommand(IList<string> commandParameters, IRepository repository)
+    public UnassignTaskCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
     {
     }

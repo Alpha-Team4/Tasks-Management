@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TasksManagement.Commands.Enums;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Enums;
@@ -65,9 +66,11 @@ public class BugTests
     [TestMethod]
     public void Constructor_AssignsUniqueIdsToBugs()
     {
+        ResetTaskLastIssuedIdState();
+
         var bug1 = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
 
-        Assert.AreEqual(bug1.Id, TaskIdCounter);
+        Assert.AreEqual(bug1.Id, 1);
     }
 
     [TestMethod]
@@ -193,10 +196,11 @@ public class BugTests
     [TestMethod]
     public void ToString_ReturnsCorrectValues()
     {
+        ResetTaskLastIssuedIdState();
         var bug = InitializeTestBug(TaskData.ValidTitle, TaskData.ValidDescription, InitializeTestBoard());
         
         var testOutput = $"""
-                          Bug (ID: {TaskIdCounter})
+                          Bug (ID: 1)
                             Title: This is a valid title
                             Description: This is a valid description.
                             Status: Active

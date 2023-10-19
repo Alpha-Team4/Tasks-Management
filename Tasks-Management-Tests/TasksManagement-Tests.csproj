@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Addcommands\" />
+    <Folder Include="Commands\AddCommands\" />
     <Folder Include="Commands\AssignCommands\" />
     <Folder Include="Commands\ShowCommands\" />
     <Folder Include="Core\" />

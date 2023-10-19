@@ -30,6 +30,18 @@ public class CommandFactory : ICommandFactory
 
         switch (commandType)
         {
+            // Add Commands
+            case CommandType.AddMember:
+                return new AddMemberCommand(commandParameters, repository);
+            case CommandType.AddComment:
+                return new AddCommentCommand(commandParameters, repository);
+
+            // Assign Tasks
+            case CommandType.AssignTask:
+                return new AssignTaskCommand(commandParameters, repository);
+            case CommandType.UnassignTask:
+                return new UnassignTaskCommand(commandParameters, repository);
+
             // Create Commands
             case CommandType.CreateTeam:
                 return new CreateTeamCommand(commandParameters, repository);
@@ -108,20 +120,6 @@ public class CommandFactory : ICommandFactory
 
             case CommandType.ListStories:
                 return new ListStoriesCommand(commandParameters, repository);
-
-            // Add Commands
-            case CommandType.AddMember:
-                return new AddMemberCommand(commandParameters, repository);
-            case CommandType.AddComment:
-                return new AddCommentCommand(commandParameters, repository);
-
-            // Assign Command
-            case CommandType.AssignTask:
-                return new AssignTaskToMembersCommand(commandParameters, repository);
-
-            // Unassign Command
-            case CommandType.UnassignTask:
-                return new UnassignTaskToMemberCommand(commandParameters, repository);
 
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");

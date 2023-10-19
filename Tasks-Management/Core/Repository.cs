@@ -2,7 +2,6 @@
 using TasksManagement.Exceptions;
 using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
-using TasksManagement.Models.Enums;
 
 namespace TasksManagement.Core;
 
@@ -11,7 +10,6 @@ public class Repository : IRepository
     public const string NoTasksMessage = "No tasks found.";
 
     private readonly List<ITeam> teams = new();
-
     private readonly List<IMember> members = new();
 
     public List<ITeam> Teams => new(teams);
@@ -175,22 +173,4 @@ public class Repository : IRepository
 
         throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
     }
-
-    //public T FindTaskByTitle<T>(string taskTitle, IBoard board) where T : ITask
-    //{
-    //    ITask? foundTask = board.Tasks
-    //        .FirstOrDefault(task => task.Title == taskTitle && task is T);
-
-    //    if (foundTask == null)
-    //    {
-    //        throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
-    //    }
-
-    //    if (foundTask is T typedTask)
-    //    {
-    //        return typedTask;
-    //    }
-
-    //    throw new EntityNotFoundException($"Task with name '{taskTitle}' was not found!");
-    //}
 }

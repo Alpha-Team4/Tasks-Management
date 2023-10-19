@@ -1,11 +1,20 @@
-﻿using TasksManagement.Models;
+﻿using System.Reflection;
+using TasksManagement.Models;
 using TasksManagement.Models.Contracts;
 using static TasksManagement_Tests.Helpers.TestData;
+using Task = TasksManagement.Models.Task;
 
 namespace TasksManagement_Tests.Helpers;
 public class TestHelpers
 {
-    public static int TaskIdCounter { get; set; }
+    public static void ResetTaskLastIssuedIdState()
+    {
+        var field = typeof(Task).GetField("lastIssuedId", BindingFlags.Static | BindingFlags.NonPublic);
+        if (field != null)
+        {
+            field.SetValue(null, 0);
+        }
+    }
 
     public static ITeam InitializeTestTeam()
     {
@@ -32,7 +41,6 @@ public class TestHelpers
                 InitializeTestBoard()
             );
 
-            TaskIdCounter++;
             return bug;
         }
         catch
@@ -51,7 +59,6 @@ public class TestHelpers
                 board
             );
 
-            TaskIdCounter++;
             return bug;
         }
         catch
@@ -70,7 +77,6 @@ public class TestHelpers
                 InitializeTestBoard()
             );
 
-            TaskIdCounter++;
             return story;
         }
         catch
@@ -89,7 +95,6 @@ public class TestHelpers
                 board
             );
 
-            TaskIdCounter++;
             return story;
         }
         catch
@@ -108,7 +113,6 @@ public class TestHelpers
                 TaskData.ValidDescription
                 );
 
-            TaskIdCounter++;
             return feedback;
         }
         catch
@@ -128,8 +132,6 @@ public class TestHelpers
                 TaskData.ValidDescription
                 );
 
-            TaskIdCounter++;
-            
             return feedback;
 
         }
