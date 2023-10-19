@@ -4,11 +4,14 @@ using TasksManagement.Core;
 using TasksManagement.Exceptions;
 using TasksManagement.Models.Contracts;
 using TasksManagement.Models.Enums;
+using TasksManagement.Models;
 
 namespace TasksManagement.Commands.ChangeCommands;
 internal class ChangeBugAssigneeCommand : BaseCommand
 {
-    public const int ExpectedNumberOfArguments = 4;
+    private const int ExpectedNumberOfArguments = 4;
+    private const string ChangeBugAssigneeErrorMessage = "Bug '{0}' is already assigned to {1}.";
+    private const string ChangeBugAssigneeOutputMessage = "Bug '{0}' assigned to {1}.";
 
     public ChangeBugAssigneeCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -31,11 +34,11 @@ internal class ChangeBugAssigneeCommand : BaseCommand
 
         if (bug.Assignee is not null && bug.Assignee.Name == assignee)
         {
-            throw new ArgumentException($"Bug '{bug.Title}' is already assigned to {assignee}.");
+            throw new ArgumentException(string.Format(ChangeBugAssigneeErrorMessage, bug.Title, assignee));
         }
 
         bug.Assignee = Repository.FindMemberByName(assignee);
 
-        return $"Bug '{bug.Title}' assigned to {assignee}.";
+        return string.Format(ChangeBugAssigneeOutputMessage, bug.Title, assignee);
     }
 }

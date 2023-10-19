@@ -9,7 +9,6 @@ public enum CommandType
     CreateFeedback,
     AddMember,
     AddComment,
-    ShowAllMembers,
     ShowTeams,
     ShowMembers,
     ShowBoards,
@@ -31,4 +30,6 @@ public enum CommandType
     ListStories,
     ListFeedback,
     ListAssigned,
+    AssignTask,
+    UnassignTask
 }

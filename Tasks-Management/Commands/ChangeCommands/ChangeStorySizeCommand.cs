@@ -8,9 +8,9 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeStorySizeCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeStorySizeErrorMessage = "Story {0} size already {1}.";
-    private const string ChangeStorySizeOutputMessage = "Story {0} size changed to {1}.";
-    private const string InvalidStorySizeErrorMessage = "None of the enums in Size match the value {0}.";
+    private const string ChangeStorySizeErrorMessage = "Story '{0}' size already {1}.";
+    private const string ChangeStorySizeOutputMessage = "Story '{0}' size changed to {1}.";
+    private const string InvalidStorySizeErrorMessage = "{0} is not a valid size.";
 
     public ChangeStorySizeCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
@@ -27,29 +27,18 @@ public class ChangeStorySizeCommand : BaseCommand
         }
         var team = Repository.FindTeamByName(CommandParameters[0]);
         var board = Repository.FindBoardByName(CommandParameters[1], team);
-        var title = CommandParameters[2];
-        var newStorySize = ParseSize(CommandParameters[3]);
-
-        IStory story = Repository.FindTaskByTitle<IStory>(title, board);
+        var story = Repository.FindTaskByTitle<IStory>(CommandParameters[2], board);
+        var newStorySize = Validator.ParseTEnum<Size>
+            (CommandParameters[3], InvalidStorySizeErrorMessage);
 
         if (newStorySize == story.Size)
         {
             throw new ArgumentException
-                (string.Format(ChangeStorySizeErrorMessage, title, newStorySize));
+                (string.Format(ChangeStorySizeErrorMessage, story.Title, newStorySize));
         }
 
         story.Size = newStorySize;
 
-        return string.Format(ChangeStorySizeOutputMessage, title, newStorySize);
-    }
-
-    private Size ParseSize(string value)
-    {
-        if (Enum.TryParse(value, true, out Size result))
-        {
-            return result;
-        }
-        throw new InvalidUserInputException
-            (string.Format(InvalidStorySizeErrorMessage, value));
+        return string.Format(ChangeStorySizeOutputMessage, story.Title, newStorySize);
     }
 }

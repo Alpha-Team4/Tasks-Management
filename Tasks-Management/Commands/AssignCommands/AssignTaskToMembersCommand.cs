@@ -38,6 +38,6 @@ public class AssignTaskToMembersCommand : BaseCommand
 
         member.AddTask(task);
 
-        return string.Format(TaskAddedToMemberMessage, task, member); 
+        return string.Format(TaskAddedToMemberMessage, task.Title, member.Name); 
     }
 }

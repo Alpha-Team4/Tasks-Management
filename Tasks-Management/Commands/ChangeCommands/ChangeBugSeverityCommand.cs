@@ -9,8 +9,8 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeBugSeverityCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeBugSeverityErrorMessage = "Bug {0} severity is already {1}.";
-    private const string ChangeBugSeverityOutputMessage = "Bug {0} severity changed to {1}.";
+    private const string ChangeBugSeverityErrorMessage = "Bug '{0}' severity is already {1}.";
+    private const string ChangeBugSeverityOutputMessage = "Bug '{0}' severity changed to {1}.";
     private const string InvalidBugSeverityErrorMessage = "{0} is not a valid severity.";
 
     public ChangeBugSeverityCommand(IList<string> commandParameters, IRepository repository) 
