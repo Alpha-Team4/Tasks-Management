@@ -35,7 +35,7 @@ public class ListBugsCommand : BaseCommand
         var bugs = Repository.FindAllTasks().OfType<IBug>().ToList();
         var statusFilter = ParseStatus(CommandParameters[0]);
 
-        if (bugs.Any())
+        if (!bugs.Any())
         {
             throw new EntityNotFoundException(NoBugsErrorMessage);
         }

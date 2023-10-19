@@ -32,7 +32,7 @@ public class ListStoriesCommand : BaseCommand
         var stories = Repository.FindAllTasks().OfType<IStory>().ToList();
         var statusFilter = ParseStatus(CommandParameters[0]);
 
-        if (stories.Any())
+        if (!stories.Any())
         {
             throw new EntityNotFoundException(NoStoriesErrorMessage);
         }
