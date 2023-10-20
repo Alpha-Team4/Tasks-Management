@@ -16,12 +16,8 @@ public class Feedback : Task, IFeedback
     public Feedback(string title, string description)
         : base(title, description)
     {
-        isInitializing = true;
-
         rating = Rating.NoRating;
         status = StatusFeedback.New;
-
-        isInitializing = false;
     }
 
     public Rating Rating

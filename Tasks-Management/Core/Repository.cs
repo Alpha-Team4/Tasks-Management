@@ -84,7 +84,7 @@ public class Repository : IRepository
         var team = FindTeamByName(teamName);
         var board = FindBoardByName(boardName, team);
 
-        var bug = new Bug(title, description, board);
+        var bug = new Bug(title, description);
         board.AddTask(bug);
         return bug;
     }
@@ -94,7 +94,7 @@ public class Repository : IRepository
         var team = FindTeamByName(teamName);
         var board = FindBoardByName(boardName, team);
 
-        var story = new Story(title, description, board);
+        var story = new Story(title, description);
         board.AddTask(story);
         return story;
     }

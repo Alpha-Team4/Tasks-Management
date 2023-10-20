@@ -15,7 +15,7 @@ public class Story : Task, IStory, IHasAssignee
     private StatusStory status;
     private IMember assignee;
 
-    public Story(string title, string description, IBoard board)
+    public Story(string title, string description)
         : base(title, description)
     {
         priority = Priority.Low;
