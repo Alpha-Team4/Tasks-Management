@@ -10,8 +10,8 @@ namespace TasksManagement.Commands.ChangeCommands;
 public class ChangeStoryStatusCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
-    private const string ChangeStoryStatusErrorMessage = "Story '{0}' status already {1}.";
-    private const string ChangeStoryStatusOutputMessage = "Story '{0}' status changed to {1}.";
+    private const string ChangeStoryStatusErrorMessage = "Story '{0}' status already '{1}'.";
+    private const string ChangeStoryStatusOutputMessage = "Story '{0}' status changed to '{1}'.";
     private const string InvalidStoryStatusErrorMessage = "{0} is not a valid status.";
     public ChangeStoryStatusCommand(IList<string> commandParameters, IRepository repository)
         : base(commandParameters, repository)
