@@ -30,6 +30,18 @@ public class MemberTests
     }
 
     [TestMethod]
+    public void RemoveTask_RemovesTaskFromMemberTasksList()
+    {
+        var member = InitializeTestMember();
+        var task = InitializeTestBug();
+
+        member.AddTask(task);
+        member.RemoveTask(task);
+
+        Assert.IsTrue(!member.Tasks.Any());
+    }
+
+    [TestMethod]
     public void PrintAllTasks_PrintsSingleTask()
     {
         var member = InitializeTestMember();
