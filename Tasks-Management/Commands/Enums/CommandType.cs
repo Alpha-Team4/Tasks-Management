@@ -1,8 +1,10 @@
 ﻿namespace TasksManagement.Commands.Enums;
 public enum CommandType
 {
-    AssignTask,
-    UnassignTask,
+    AssignStory,
+    UnassignStory,
+    AssignBug,
+    UnassignBug,
     CreateTeam,
     CreateBoard,
     CreateMember,

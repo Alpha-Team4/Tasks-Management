@@ -37,10 +37,14 @@ public class CommandFactory : ICommandFactory
                 return new AddCommentCommand(commandParameters, repository);
 
             // Assign Tasks
-            case CommandType.AssignTask:
-                return new AssignTaskCommand(commandParameters, repository);
-            case CommandType.UnassignTask:
-                return new UnassignTaskCommand(commandParameters, repository);
+            case CommandType.AssignStory:
+                return new AssignStoryCommand(commandParameters, repository);
+            case CommandType.UnassignStory:
+                return new UnassignStoryCommand(commandParameters, repository);
+            case CommandType.AssignBug:
+                return new AssignBugCommand(commandParameters, repository);
+            case CommandType.UnassignBug:
+                return new UnassignBugCommand(commandParameters, repository);
 
             // Create Commands
             case CommandType.CreateTeam:
