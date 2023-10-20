@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using TasksManagement.Commands.AssignCommands;
 using TasksManagement.Commands.ListCommands;
 using TasksManagement.Core;
 using TasksManagement.Exceptions;
@@ -112,6 +113,26 @@ public class ListBugsCommandTests
     }
 
     [TestMethod]
+    public void Execute_ThrowsOn_InvalidStatusInput()
+    {
+        ResetTaskLastIssuedIdState();
+        var testRepo = new Repository();
+        testRepo.CreateTeam(TeamData.ValidName);
+        testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
+        testRepo.CreateBug(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+
+        ResetTaskLastIssuedIdState();
+        var testBug = InitializeTestBug();
+
+        var sut = new ListBugsCommand(
+                new List<string> { "InvalidStatus" },
+                testRepo
+            );
+
+        Assert.ThrowsException<InvalidUserInputException>(() => sut.Execute());
+    }
+
+    [TestMethod]
     public void Execute_ThrowsOn_NoFilteredBugsFound()
     {
         var testRepo = new Repository();
@@ -127,31 +148,50 @@ public class ListBugsCommandTests
         Assert.ThrowsException<EntityNotFoundException>(() => sut.Execute());
     }
 
-    //[TestMethod]
-    //public void Execute_Returns_ListFilteredBy_StatusAndAssignee()
-    //{
-    //    ResetTaskLastIssuedIdState();
-    //    var testRepo = new Repository();
-    //    testRepo.CreateTeam(TeamData.ValidName);
-    //    testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-    //    testRepo.CreateBug(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
-    //    testRepo.CreateMember(MemberData.ValidName);
+    [TestMethod]
+    public void Execute_Returns_ListFilteredBy_StatusAndAssignee()
+    {
+        ResetTaskLastIssuedIdState();
+        var testRepo = new Repository();
+        testRepo.CreateTeam(TeamData.ValidName);
+        testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
+        testRepo.CreateBug(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        testRepo.CreateMember(MemberData.ValidName);
 
-    //    ResetTaskLastIssuedIdState();
-    //    var testBug = InitializeTestBug();
+        ResetTaskLastIssuedIdState();
+        var testBug = InitializeTestBug();
+        testBug.Assignee = InitializeTestMember();
 
-    //    var assign = new AssignTaskCommand(
-    //            new List<string> { TeamData.ValidName, BoardData.ValidName, TaskData.ValidTitle, MemberData.ValidName },
-    //            testRepo
-    //        );
+        var assign = new AssignBugCommand(
+                new List<string> { TeamData.ValidName, BoardData.ValidName, TaskData.ValidTitle, MemberData.ValidName },
+                testRepo
+            );
 
-    //    assign.Execute();
+        assign.Execute();
 
-    //    var sut = new ListBugsCommand(
-    //        new List<string> { "Active", MemberData.ValidName },
-    //        testRepo
-    //    );
+        var sut = new ListBugsCommand(
+            new List<string> { "Active", MemberData.ValidName },
+            testRepo
+        );
 
-    //    Assert.AreEqual(testBug.ToString(), sut.Execute());
-    //}
+        Assert.AreEqual(testBug.ToString(), sut.Execute());
+    }
+
+    [TestMethod]
+    public void Execute_ThrowsOn_NoAssigneeFound()
+    {
+        ResetTaskLastIssuedIdState();
+        var testRepo = new Repository();
+        testRepo.CreateTeam(TeamData.ValidName);
+        testRepo.CreateBoard(BoardData.ValidName, TeamData.ValidName);
+        testRepo.CreateBug(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        testRepo.CreateMember(MemberData.ValidName);
+
+        var sut = new ListBugsCommand(
+            new List<string> { "Active", MemberData.ValidName },
+            testRepo
+        );
+
+        Assert.ThrowsException<EntityNotFoundException>(() => sut.Execute());
+    }
 }

@@ -37,8 +37,7 @@ public class TestHelpers
         {
             var bug = new Bug(
                 TaskData.ValidTitle,
-                TaskData.ValidDescription,
-                InitializeTestBoard()
+                TaskData.ValidDescription
             );
 
             return bug;
@@ -55,8 +54,7 @@ public class TestHelpers
         {
             var bug = new Bug(
                 title,
-                description,
-                board
+                description
             );
 
             return bug;
@@ -73,8 +71,7 @@ public class TestHelpers
         {
             var story = new Story(
                 TaskData.ValidTitle,
-                TaskData.ValidDescription,
-                InitializeTestBoard()
+                TaskData.ValidDescription
             );
 
             return story;
@@ -91,8 +88,7 @@ public class TestHelpers
         {
             var story = new Story(
                 title,
-                description,
-                board
+                description
             );
 
             return story;

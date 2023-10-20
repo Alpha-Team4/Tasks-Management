@@ -103,6 +103,8 @@ internal class Bug : Task, IBug, IHasAssignee
 
     public override string ToString()
     {
+        var assigneeName = Assignee != null ? Assignee.Name : string.Empty;
+
         return $"""
                 Bug (ID: {Id})
                   Title: {Title}
@@ -111,7 +113,7 @@ internal class Bug : Task, IBug, IHasAssignee
                   Reproduction Steps: {PrintReproductionSteps()}
                   Priority: {priority}
                   Severity: {severity}
-                  Assignee: {assignee}
+                  Assignee: {assigneeName}
                     {ShowAllComments()}
                 """;
     }

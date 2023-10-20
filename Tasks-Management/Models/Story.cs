@@ -78,6 +78,8 @@ public class Story : Task, IStory, IHasAssignee
 
     public override string ToString()
     {
+        var assigneeName = Assignee != null ? Assignee.Name : string.Empty;
+
         return $"""
                 Story (ID: {Id})
                   Title: {Title}
@@ -85,7 +87,7 @@ public class Story : Task, IStory, IHasAssignee
                   Status: {status}
                   Size: {size}
                   Priority: {priority}
-                  Assignee: {assignee}
+                  Assignee: {assigneeName}
                     {ShowAllComments()}
                 """;
     }
