@@ -4,7 +4,7 @@ using TasksManagement.Exceptions;
 using TasksManagement.Commands.Abstracts;
 
 namespace TasksManagement.Commands.ShowCommands;
-internal class ShowMembersCommand : BaseCommand
+public class ShowMembersCommand : BaseCommand
 {
     // TODO
     // Overload show all members (no params)

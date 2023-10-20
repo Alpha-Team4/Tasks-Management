@@ -69,7 +69,6 @@ internal class Bug : Task, IBug, IHasAssignee
         set
         {
             var message = string.Format(AssigneeChangedMessage, Title, value.Name);
-            AddEvent(message);
 
             assignee = value;
         }

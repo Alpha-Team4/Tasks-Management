@@ -65,7 +65,6 @@ public class Story : Task, IStory, IHasAssignee
         set
         {
             var message = string.Format(AssigneeChangedMessage, Title, value.Name);
-            AddEvent(message);
 
             assignee = value;
         }
