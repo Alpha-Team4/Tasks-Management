@@ -21,6 +21,21 @@ public class TestHelpers
         return new Team(TeamData.ValidName);
     }
 
+    public static ITeam InitializeTestTeam(string name)
+    {
+        try
+        {
+            var team = new Team(name);
+
+            return team;
+        }
+        catch
+        {
+            throw;
+        }
+        
+    }
+
     public static IMember InitializeTestMember()
     {
         return new Member(MemberData.ValidName);
@@ -82,7 +97,7 @@ public class TestHelpers
         }
     }
 
-    public static IStory InitializeTestStory(string title, string description, IBoard board)
+    public static IStory InitializeTestStory(string title, string description)
     {
         try
         {
@@ -141,5 +156,12 @@ public class TestHelpers
     public static IEvent InitializeTestEvent()
     {
         return new Event("test description");
+    }
+
+    public static IComment InitializeTestComment()
+    {
+            return new Comment(
+                CommentData.ValidContent,
+                CommentData.ValidAuthor);
     }
 }

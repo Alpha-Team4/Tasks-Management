@@ -33,7 +33,7 @@ public class Board : IBoard
 
     public IList<ITask> Tasks => new List<ITask>(tasks);
 
-    private void AddEvent(string message)
+    public void AddEvent(string message)
     {
         history.Add(new Event(message));
     }

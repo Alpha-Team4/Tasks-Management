@@ -10,4 +10,6 @@ public interface ITeam : IHasHistory
     public void AddMember(IMember member);
 
     public void AddBoard(IBoard board);
+
+    string PrintAllMembers();
 }

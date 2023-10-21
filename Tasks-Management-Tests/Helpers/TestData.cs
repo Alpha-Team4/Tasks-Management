@@ -50,6 +50,13 @@ public static class TestData
                                                   """;
     }
 
+    public static class CommentData
+    {
+        public const int ContentMinLength = 3;
+        public const int ContentMaxLength = 300;
 
+        public const string ValidContent = "Content";
+        public const string ValidAuthor = "Author";
+    }
 
 }
