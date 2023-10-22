@@ -47,7 +47,7 @@ public class Team : ITeam
         this.boards.Add(board);
     }
 
-    private void AddEvent(string message)
+    public void AddEvent(string message)
     {
         history.Add(new Event(message));
     }

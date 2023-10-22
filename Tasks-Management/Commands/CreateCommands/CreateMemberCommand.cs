@@ -15,7 +15,8 @@ public class CreateMemberCommand : BaseCommand
 
     public override string Execute()
     {
-        if (CommandParameters.Count < MinExpectedNumberOfArguments || CommandParameters.Count > MaxExpectedNumberOfArguments)
+        if (CommandParameters.Count < MinExpectedNumberOfArguments 
+            || CommandParameters.Count > MaxExpectedNumberOfArguments)
         {
             throw new InvalidUserInputException
                 ($"Invalid number of arguments. Expected: {MinExpectedNumberOfArguments} - {MaxExpectedNumberOfArguments}" +

@@ -28,14 +28,14 @@ public abstract class Task : ITask
 
     private const string NoCommentsHeader = "--NO COMMENTS--";
     private const string CommentsSeparator = "----------";
-    private const string CommentsHeader = "--COMMENTS--;";
+    private const string CommentsHeader = "--COMMENTS--";
 
     private static int lastIssuedId = 0;
     protected bool isInitializing = false;
     private readonly int id;
     private string title;
     private string description;
-    private readonly IList<IComment> comments = new List<IComment>();
+    protected readonly IList<IComment> comments = new List<IComment>();
     protected readonly IList<IEvent> history = new List<IEvent>();
 
     public Task(string title, string description)
@@ -98,23 +98,24 @@ public abstract class Task : ITask
             description = value;
         }
     }
+    public IList<IEvent> History => new List<IEvent>(history);
+
+    public IList<IComment> Comments => new List<IComment>(comments);
 
     private int GetNextAvailableId()
     {
         return ++lastIssuedId;
     }
 
-    public string AddComment(IComment comment)
+    public void AddComment(IComment comment)
     {
         comments.Add(comment);
 
         var successMessage = string.Format(CommentAddedSuccessMessage, comment.Author, comment.Content);
         AddEvent(successMessage);
-
-        return successMessage;
     }
 
-    public string DeleteComment(IComment comment)
+    public void RemoveComment(IComment comment)
     {
         if (!comments.Contains(comment))
         {
@@ -125,8 +126,6 @@ public abstract class Task : ITask
 
         var successMessage = string.Format(CommentDeletedSuccessMessage, comment.Content);
         AddEvent(successMessage);
-
-        return successMessage;
     }
 
     public string ShowAllComments()
@@ -152,10 +151,7 @@ public abstract class Task : ITask
         return sb.ToString().Trim();
     }
 
-
-    public IList<IEvent> History => new List<IEvent>(history);
-
-    protected void AddEvent(string message)
+    public void AddEvent(string message)
     {
         history.Add(new Event(message));
     }

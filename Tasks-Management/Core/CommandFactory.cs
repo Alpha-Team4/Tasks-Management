@@ -125,6 +125,10 @@ public class CommandFactory : ICommandFactory
             case CommandType.ListStories:
                 return new ListStoriesCommand(commandParameters, repository);
 
+            case CommandType.ListFeedback:
+                return new ListFeedbackCommand(commandParameters, repository);
+
+
             default:
                 throw new InvalidOperationException($"Command with name '{commandType}' doesn't exist!");
         }
