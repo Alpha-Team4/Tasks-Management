@@ -35,7 +35,7 @@ namespace TasksManagement_Tests.Models
             string tooShortContent = "a";
 
             Assert.ThrowsException<InvalidUserInputException>
-                (() => InitializeTestComment(CommentData.ValidAuthor, tooShortContent));   
+                (() => InitializeTestComment(tooShortContent, CommentData.ValidAuthor));   
         }
 
         [TestMethod]
@@ -44,7 +44,7 @@ namespace TasksManagement_Tests.Models
             string tooLongContent = new string('a', CommentData.ContentMaxLength + 1);
 
             Assert.ThrowsException<InvalidUserInputException>
-                (() => InitializeTestComment(CommentData.ValidAuthor, tooLongContent));
+                (() => InitializeTestComment(tooLongContent, CommentData.ValidAuthor));
         }
 
     }
