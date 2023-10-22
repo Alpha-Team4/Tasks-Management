@@ -81,7 +81,7 @@ public class ListStoriesCommand : BaseCommand
 
     private List<IStory> FilterStoriesByStatus(List<IStory> stories, StatusStory statusFilter)
     {
-        if (!stories.Select(story => story.Status == statusFilter).Any())
+        if (!stories.Any(story => story.Status == statusFilter))
         {
             throw new EntityNotFoundException(string.Format(NoStoriesWithStatusErrorMessage, statusFilter));  
         }
