@@ -10,7 +10,7 @@ public class ChangeStoryPriorityCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
     private const string ChangeStoryPriorityErrorMessage = "Story '{0}' priority is already {1}.";
-    private const string ChangeStoryPriorityOutputMessage = "Story '{0}' priority changed to {1}.";
+    private const string ChangeStoryPriorityOutputMessage = "Story '{0}' priority changed to '{1}'.";
     private const string InvalidStoryPriorityErrorMessage = "{0} is not a valid priority.";
 
     public ChangeStoryPriorityCommand(IList<string> commandParameters, IRepository repository)
