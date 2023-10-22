@@ -12,7 +12,8 @@ public class ListFeedbackCommand : BaseCommand
     private const string InvalidFeedbackStatusErrorMessage = "None of the enums in 'StatusFeedback' match the value {0}.";
     private const string NoFeedbackErrorMessage = "No feedback yet.";
     private const string NoFeedbackWithStatusErrorMessage = "There are no feedback tasks with the '{0}' status.";
-    public ListFeedbackCommand(IList<string> commandParameters, IRepository repository) : base(commandParameters, repository)
+    public ListFeedbackCommand(IList<string> commandParameters, IRepository repository) 
+        : base(commandParameters, repository)
     {
 
     }
@@ -27,21 +28,25 @@ public class ListFeedbackCommand : BaseCommand
         switch(CommandParameters.Count) 
         {
             case 0:
-                var orderedFeedback = feedback.OrderBy(feedback => feedback.Title)
-                .ThenBy(feedback => feedback.Rating)
-                .ToList();
+                var orderedFeedback = feedback
+                    .OrderBy(feedback => feedback.Title)
+                    .ThenBy(feedback => feedback.Rating)
+                    .ToList();
 
                 return string.Join(Environment.NewLine, orderedFeedback);
             case 1:
-                var statusFilter = ParseStatus(CommandParameters[0]);
+                var statusFilter = Validator.ParseTEnum<StatusFeedback>
+                    (CommandParameters[0], InvalidFeedbackStatusErrorMessage);
+
                 if (!feedback.Any(f => f.Status == statusFilter))
                 {
                     throw new EntityNotFoundException(NoFeedbackWithStatusErrorMessage);
                 }
-                var filteredFeedback = feedback.Where(feedback => feedback.Status == statusFilter)
-                .OrderBy(feedback => feedback.Title)
-                .ThenBy(feedback => feedback.Rating)
-                .ToList();
+                var filteredFeedback = feedback
+                    .Where(feedback => feedback.Status == statusFilter)
+                    .OrderBy(feedback => feedback.Title)
+                    .ThenBy(feedback => feedback.Rating)
+                    .ToList();
 
                 return string.Join(Environment.NewLine, filteredFeedback);
             default:
@@ -51,16 +56,5 @@ public class ListFeedbackCommand : BaseCommand
 
         }
 
-    }
-
-    private StatusFeedback ParseStatus(string value)
-    {
-        if (Enum.TryParse(value, true, out StatusFeedback result))
-        {
-            return result;
-        }
-
-        throw new InvalidUserInputException
-            (string.Format(InvalidFeedbackStatusErrorMessage, value));
     }
 }

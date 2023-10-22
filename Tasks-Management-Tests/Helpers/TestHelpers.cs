@@ -134,7 +134,7 @@ public class TestHelpers
 
     }
 
-    public static IFeedback InitializeTestFeedback(string title, string description, IBoard board)
+    public static IFeedback InitializeTestFeedback(string title, string description)
     {
         try
         {
