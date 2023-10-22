@@ -17,12 +17,9 @@ public class ListFeedbackCommandTests
         var repository = new Repository();
 
         var command = new ListFeedbackCommand(
-            new List<string> { "status" },
-            repository);
-
+            new List<string> { "status" }, repository);
         var command2 = new ListFeedbackCommand(
-            new List<string> { },
-            repository);
+            new List<string> { }, repository);
 
         Assert.IsInstanceOfType(command, typeof(ListFeedbackCommand));
         Assert.IsInstanceOfType(command2, typeof(ListFeedbackCommand));
@@ -32,41 +29,37 @@ public class ListFeedbackCommandTests
     public void Execute_Throws_WhenTooManyParameters()
     {
         var repository = new Repository();
+
         repository.CreateTeam(TeamData.ValidName);
         repository.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        repository.CreateFeedback(
-            TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        repository.CreateFeedback(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
 
         var command = new ListFeedbackCommand(
             new List<string> { "New", "New", "Unscheduled"},
-            repository
-        );
+            repository);
 
-        Assert.ThrowsException<InvalidUserInputException>(
-            () => command.Execute());
+        Assert.ThrowsException<InvalidUserInputException>(() => command.Execute());
     }
 
     [TestMethod]
     public void Execute_ReturnsListOfAllFeedbacksWhenNoParams()
     {
         var repository = new Repository();
+
         repository.CreateTeam(TeamData.ValidName);
         repository.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        repository.CreateFeedback(
-            TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        repository.CreateFeedback(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
         var feedbackList = repository.FindAllTasks().OfType<IFeedback>().ToList();
 
         var command = new ListFeedbackCommand(
-            new List<string> { },
-            repository);
-        var result = command.Execute();
+            new List<string> { }, repository);
 
         var filteredFeedback = feedbackList
             .OrderBy(f => f.Title)
             .ThenBy(f => f.Rating);
         var expectedOutput = string.Join(Environment.NewLine, filteredFeedback);
 
-        Assert.AreEqual(expectedOutput, result);
+        Assert.AreEqual(expectedOutput, command.Execute());
     }
 
     [TestMethod]
@@ -75,15 +68,11 @@ public class ListFeedbackCommandTests
         var repository = new Repository();
         repository.CreateTeam(TeamData.ValidName);
         repository.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        repository.CreateFeedback(
-            TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        repository.CreateFeedback(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
         var feedbackList = repository.FindAllTasks().OfType<IFeedback>().ToList();
 
         var command = new ListFeedbackCommand(
-            new List<string> { "New" },
-            repository);
-
-        var result = command.Execute();
+            new List<string> { "New" }, repository);
 
         var filteredFeedback = feedbackList
             .Where(f => f.Status == StatusFeedback.New)
@@ -91,7 +80,7 @@ public class ListFeedbackCommandTests
             .ThenBy(f => f.Rating);
         var expectedOutput = string.Join(Environment.NewLine, filteredFeedback);
 
-        Assert.AreEqual(expectedOutput, result);
+        Assert.AreEqual(expectedOutput, command.Execute());
     }
 
     [TestMethod]
@@ -114,8 +103,7 @@ public class ListFeedbackCommandTests
         var repository = new Repository();
         repository.CreateTeam(TeamData.ValidName);
         repository.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        repository.CreateFeedback(
-            TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        repository.CreateFeedback(TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
 
         var command = new ListFeedbackCommand(
             new List<string> { "Unscheduled" },
