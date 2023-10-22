@@ -1,11 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TasksManagement.Commands.ShowCommands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TasksManagement.Commands.ListCommands;
 using TasksManagement.Core;
 using TasksManagement.Exceptions;
 using static TasksManagement_Tests.Helpers.TestData;

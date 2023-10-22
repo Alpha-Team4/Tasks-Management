@@ -1,9 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TasksManagement.Commands.CreateCommands;
 using TasksManagement.Core;
-using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
-using TasksManagement_Tests.Helpers;
 using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
