@@ -10,7 +10,7 @@ public class ChangeBugPriorityCommand : BaseCommand
 {
     private const int ExpectedNumberOfArguments = 4;
     private const string ChangeBugPriorityErrorMessage = "Bug '{0}' priority is already {1}.";
-    private const string ChangeBugPriorityOutputMessage = "Bug '{0}' priority changed to {1}.";
+    private const string ChangeBugPriorityOutputMessage = "Bug '{0}' priority changed to '{1}'.";
     private const string InvalidBugPriorityErrorMessage = "{0} is not a valid priority.";
 
     public ChangeBugPriorityCommand(IList<string> commandParameters, IRepository repository)
