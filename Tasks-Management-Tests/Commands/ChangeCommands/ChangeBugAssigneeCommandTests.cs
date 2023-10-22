@@ -1,14 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TasksManagement.Core;
 using TasksManagement.Exceptions;
-using TasksManagement.Models.Enums;
 using static TasksManagement_Tests.Helpers.TestData;
 using TasksManagement.Commands.ChangeCommands;
 
 namespace TasksManagement_Tests.Commands.ChangeCommands;
 
 [TestClass]
-public class ChangeStorySizeCommandTests
+public class ChangeBugAssigneeCommandTests
 {
     [TestMethod]
     public void Constructor_InitializesCommand()
@@ -19,12 +18,12 @@ public class ChangeStorySizeCommandTests
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
-            "Small"
+            MemberData.ValidName
         };
 
-        var command = new ChangeStorySizeCommand(testParams, repository);
+        var command = new ChangeBugAssigneeCommand(testParams, repository);
 
-        Assert.IsInstanceOfType(command, typeof(ChangeStorySizeCommand));
+        Assert.IsInstanceOfType(command, typeof(ChangeBugAssigneeCommand));
     }
 
     [TestMethod]
@@ -43,61 +42,64 @@ public class ChangeStorySizeCommandTests
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
-            "Small",
-            "Medium"
+            MemberData.ValidName,
+            MemberData.ValidName
         };
 
-        var command = new ChangeStorySizeCommand(testParams, repository);
-        var command2 = new ChangeStorySizeCommand(testParams2, repository);
+        var command = new ChangeBugAssigneeCommand(testParams, repository);
+        var command2 = new ChangeBugAssigneeCommand(testParams2, repository);
 
         Assert.ThrowsException<InvalidUserInputException>(() => command.Execute());
         Assert.ThrowsException<InvalidUserInputException>(() => command2.Execute());
     }
 
     [TestMethod]
-    public void Execute_ValidArguments_ChangesStorySize()
+    public void Execute_ValidArguments_ChangesBugAssignee()
     {
         var repository = new Repository();
 
         repository.CreateTeam(TeamData.ValidName);
         repository.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        repository.CreateStory
+        repository.CreateBug
             (TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        repository.CreateMember(MemberData.ValidName, TeamData.ValidName);
 
         var testParams = new List<string>
         {
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
-            "Medium"
+            MemberData.ValidName
         };
-        var command = new ChangeStorySizeCommand(testParams, repository);
+        var command = new ChangeBugAssigneeCommand(testParams, repository);
 
-        var expectedOutput = $"Story '{TaskData.ValidTitle}' size changed to {Size.Medium}.";
+        var expectedOutput = $"Bug '{TaskData.ValidTitle}' assigned to {MemberData.ValidName}.";
         var result = command.Execute();
 
         Assert.AreEqual(expectedOutput, result);
     }
 
     [TestMethod]
-    public void Execute_Throws_When_SizeIsTheSame()
+    public void Execute_Throw_WhenBugHasSameAssignee()
     {
         var repository = new Repository();
 
         repository.CreateTeam(TeamData.ValidName);
         repository.CreateBoard(BoardData.ValidName, TeamData.ValidName);
-        repository.CreateStory(
-            TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+        var bug = repository.CreateBug
+            (TaskData.ValidTitle, TaskData.ValidDescription, TeamData.ValidName, BoardData.ValidName);
+
+        bug.Assignee = repository.CreateMember(MemberData.ValidName, TeamData.ValidName);
 
         var testParams = new List<string>
         {
             TeamData.ValidName,
             BoardData.ValidName,
             TaskData.ValidTitle,
-            "Small"
+            MemberData.ValidName
         };
 
-        var command = new ChangeStorySizeCommand(testParams, repository);
+        var command = new ChangeBugAssigneeCommand(testParams, repository);
 
         Assert.ThrowsException<ArgumentException>(() => command.Execute());
     }
