@@ -139,8 +139,8 @@ public class TestHelpers
         try
         {
             var feedback = new Feedback(
-                TaskData.ValidTitle,
-                TaskData.ValidDescription
+                title,
+                description
                 );
 
             return feedback;
