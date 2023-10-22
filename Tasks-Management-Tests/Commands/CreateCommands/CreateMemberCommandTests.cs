@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TasksManagement.Commands.CreateCommands;
-using TasksManagement.Commands.ListCommands;
 using TasksManagement.Core;
-using TasksManagement.Core.Contracts;
 using TasksManagement.Exceptions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using static TasksManagement_Tests.Helpers.TestData;
 using static TasksManagement_Tests.Helpers.TestHelpers;
 
