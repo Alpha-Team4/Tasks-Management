@@ -164,4 +164,9 @@ public class TestHelpers
                 CommentData.ValidContent,
                 CommentData.ValidAuthor);
     }
+
+    public static IComment InitializeTestComment(string content, string author)
+    {
+        return new Comment(content, author);
+    }
 }
