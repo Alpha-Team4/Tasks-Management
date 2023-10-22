@@ -153,9 +153,9 @@ public class TestHelpers
 
     }
 
-    public static IEvent InitializeTestEvent()
+    public static IEvent InitializeTestEvent(string description)
     {
-        return new Event("test description");
+        return new Event(description);
     }
 
     public static IComment InitializeTestComment()
