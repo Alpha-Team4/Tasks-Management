@@ -28,7 +28,7 @@ public class ShowTeamActivityCommand : BaseCommand
         if (!team.History.Any())
         {
             throw new ArgumentException
-                (string.Format(NoTeamActivityFoundMessage));
+                (string.Format(NoTeamActivityFoundMessage, team.Name));
         }
 
         return string.Join(Environment.NewLine,
