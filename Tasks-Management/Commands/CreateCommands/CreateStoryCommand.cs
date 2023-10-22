@@ -20,7 +20,7 @@ public class CreateStoryCommand : BaseCommand
 
     public override string Execute()
     {
-        if (CommandParameters.Count < ExpectedNumberOfArguments)
+        if (CommandParameters.Count != ExpectedNumberOfArguments)
         {
             throw new InvalidUserInputException($"Invalid number of arguments. Expected: {ExpectedNumberOfArguments}, Received: {CommandParameters.Count}");
         }

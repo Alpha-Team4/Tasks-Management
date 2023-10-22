@@ -139,8 +139,8 @@ public class TestHelpers
         try
         {
             var feedback = new Feedback(
-                TaskData.ValidTitle,
-                TaskData.ValidDescription
+                title,
+                description
                 );
 
             return feedback;
@@ -152,16 +152,27 @@ public class TestHelpers
         }
 
     }
-
     public static IEvent InitializeTestEvent()
     {
         return new Event("test description");
     }
+
+    public static IEvent InitializeTestEvent(string description)
+    {
+        return new Event(description);
+    }
+
+
 
     public static IComment InitializeTestComment()
     {
             return new Comment(
                 CommentData.ValidContent,
                 CommentData.ValidAuthor);
+    }
+
+    public static IComment InitializeTestComment(string content, string author)
+    {
+        return new Comment(content, author);
     }
 }
